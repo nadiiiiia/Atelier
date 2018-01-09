@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Credit
  *
- * @ORM\Table(name="credit")
+ * @ORM\Table(name="atl_credit")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CreditRepository")
  */
 class Credit
