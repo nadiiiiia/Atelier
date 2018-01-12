@@ -1,0 +1,22 @@
+{% extends "::base.html.twig" %}
+
+
+{% block body %}
+
+<div class="row">
+    
+    <div class="col-lg-3">
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+        {% include 'UtilisateurBundle:Default:modulesUsed/sidebarUser.html.twig' %}
+    {% endif %}
+    </div>
+    
+    <div class=" col-lg-9">
+
+
+    {% block fos_user_content %}
+    {% endblock fos_user_content %}
+    </div>
+
+</div>
+{% endblock %}

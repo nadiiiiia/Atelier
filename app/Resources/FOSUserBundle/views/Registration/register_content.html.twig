@@ -1,0 +1,75 @@
+<div class="col-lg-3 col-md-3"></div>
+       <div class="col-lg-6 col-md-6">
+                <div class="testimonial-card z-depth-3">
+                    
+                    
+                    <div class="card-up  ">
+                                     
+                        
+                    </div>
+                    <div class="avatar"><img src="{{asset('bundles/stillinparis//img/login-avatar.png')}}" class="img-circle img-responsive">
+                    </div>
+                    <div class="card-content">
+                        
+                         {% trans_default_domain 'FOSUserBundle' %}
+                         
+                        <h4>{{ 'layout.register'|trans({}, 'FOSUserBundle') }}</h4>
+                         
+
+
+{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+<div class="input-field">
+                                    <i class="material-icons prefix">email</i>
+                                   
+                                    <label for="icon_email">{{ 'form.email'|trans({}, 'FOSUserBundle')}}</label>
+                                    {{form_widget(form.email, { 'attr': {'class': 'inputbox required'} }) }}
+                                    
+                                    <div class="  alert-danger"> {{ form_errors(form.email) }}</div>
+                                   </div>
+                                
+                            
+                                
+                                <div class="input-field">
+                                <i class="material-icons prefix">account_circle</i>
+                                <label  for="username" >{{'form.username'|trans({}, 'FOSUserBundle')}}</label>
+                                {{form_widget(form.username, { 'attr': {'class': 'inputbox required'} }) }}
+                                <div class="  alert-danger"> {{ form_errors(form.username) }}</div>
+                                </div>
+                  
+                                    <div class="input-field">
+                                    <i class="material-icons prefix">lock</i>
+                                 <label for="password">{{'form.password'|trans({}, 'FOSUserBundle')}}</label>
+                                 {{form_widget(form.plainPassword.first) }}
+                                 
+                                 
+                                 <div class="  alert-danger">    {{ form_errors(form.plainPassword.first) }}</div>
+                                 
+                                    </div>
+                                 
+	                        <div class="input-field">
+                                    <i class="material-icons prefix">lock</i>
+                                 <label for="verification">{{'form.password_confirmation'|trans({}, 'FOSUserBundle')}}</label>
+                                 {{form_widget(form.plainPassword.second, { 'attr': {'class': 'inputbox required'} }) }}
+                                 <div class=" alert-danger">   {{ form_errors(form.plainPassword.second) }}</div>
+                                   
+                                </div>
+                                    
+{{ form_widget(form) }}
+    <div>
+        <button type="submit"  class="btn btn-primary btn-md waves-effect waves-light">{{ 'registration.submit'|trans }}</button>
+    </div>
+{{ form_end(form) }}
+
+<div class="options">
+      <hr>
+                    <p>Vous avez déjà un compte ? <a href="{{path ('fos_user_security_login')}}">Connexion</a></p>
+                   
+                    </div>
+
+                         </div>
+                    </div>
+                </div>
+     <div class="col-lg-3 col-md-3"></div>  
+
+     
+

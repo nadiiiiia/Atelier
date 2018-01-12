@@ -1,0 +1,22 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+    
+                <h4>Editer mes informations</h4>
+
+
+                <hr>    
+                <div class="row">
+
+              
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-5">
+                    {% include "FOSUserBundle:Profile:edit_content.html.twig" %}
+                    </div>
+                    <div class="col-lg-3"></div>
+                </div>
+
+        <br>
+ 
+{% endblock fos_user_content %}
+

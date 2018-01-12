@@ -1,0 +1,35 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>Mot de passe perdu</h2>
+
+
+                <hr>    
+                <div class="row">
+
+                    <div class="col-lg-5">
+                        <h5>Récupération du mot de passe ?</h5>
+                 
+                        <em>
+                            Compléter le formulaire, votre mot de passe sera alors réinitialiser.<br /><br />
+                            Une fois validé, vous devrez utiliser le nouveau mot de passe que vous avez défini.
+                        </em>
+                    </div>
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-3">
+                        {% include "FOSUserBundle:Resetting:request_content.html.twig" %}
+                    </div>
+                    <div class="col-lg-2"></div>
+                </div>
+
+            </div>
+        </div>
+        <br>
+
+    </div>
+
+{% endblock %}

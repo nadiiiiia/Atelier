@@ -1,0 +1,28 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+     <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h4>Modifier votre mot de passe</h4>
+
+
+                <hr>    
+                <div class="row">
+
+              
+                    <div class="col-lg-4"></div>
+                    <div class="col-lg-4">
+                    {% include "FOSUserBundle:Resetting:reset_content.html.twig" %}
+                    </div>
+                    <div class="col-lg-4"></div>
+                </div>
+
+            </div>
+        </div>
+        <br>
+
+    </div>
+    
+
+{% endblock %}

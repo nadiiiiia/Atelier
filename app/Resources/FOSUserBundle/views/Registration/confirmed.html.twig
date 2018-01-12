@@ -1,0 +1,21 @@
+{% extends "base.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block body %}
+    
+    <div class="col-lg-2 col-md-"></div>
+       <div class="col-lg-8 col-md-8">
+                <div class="testimonial-card z-depth-3">
+                
+    <p class="confirmReg">{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p>
+    {% if targetUrl %}
+    <p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>
+    {% endif %}
+    
+      </div>
+                </div>
+     <div class="col-lg-3 col-md-3"></div>  
+
+     
+{% endblock  %}
