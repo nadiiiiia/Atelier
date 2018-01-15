@@ -1,11 +1,48 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
+
+    
+        <div class="row text-left">
+        <!--Grid column-->
+        <div class="col-md-3 mb-r">
+
+
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-md-6 mb-r pb-5">
+
+            <div class="card">
+                <div class="card-body z-depth-3">
 <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
-    <div>
-        <label for="username">{{ 'resetting.request.username'|trans }}</label>
-        <input type="text" id="username" name="username" required="required" />
-    </div>
-    <div>
-        <input type="submit" value="{{ 'resetting.request.submit'|trans }}" />
-    </div>
+    <br>
+          <div class="md-form">
+                            
+                             <input type="text" id="username" name="username" required="required" />
+                            <label for="username">Nom d''utilisateur ou adresse e-mail</label>
+                        </div>
+    
+    <div class="text-center">
+                            <input type="submit" value="Réinitialiser le mot de passe" class="btn btn-primary-inverse btn-md waves-effect waves-light" />
+
+
+                        </div>
 </form>
+
+                </div>
+
+
+            </div>
+
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-md-3 mb-r">
+
+
+        </div>
+        <!--Grid column-->
+
+    </div>
