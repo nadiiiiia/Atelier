@@ -1,178 +1,202 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+    <head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-    <title>L'Atelier.com</title>
+        <title>L'Atelier.com</title>
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <!-- Bootstrap core CSS -->
-    <link href="{{asset('bundles/atelier/css/bootstrap.min.css')}}" rel="stylesheet">
-	<link href="{{asset('bundles/atelier/css/style.css')}}" rel="stylesheet">
+        <!-- Bootstrap core CSS -->
+        <link href="{{asset('bundles/atelier/css/bootstrap.min.css')}}" rel="stylesheet">
+        <link href="{{asset('bundles/atelier/css/style.css')}}" rel="stylesheet">
 
-    <!-- Material Design Bootstrap -->
-    <link href="{{asset('bundles/atelier/css/mdb.min.css')}}" rel="stylesheet">
-    
         <!-- Material Design Bootstrap -->
-    <link href="{{asset('bundles/atelier/css/compiled.min.css')}}" rel="stylesheet">
+        <link href="{{asset('bundles/atelier/css/mdb.min.css')}}" rel="stylesheet">
+
+        <!-- Material Design Bootstrap -->
+        <link href="{{asset('bundles/atelier/css/compiled.min.css')}}" rel="stylesheet">
 
 
 
-</head>
+    </head>
     <body>
-        
-    <header>
-        <!--Navbar-->
-           <nav class="navbar navbar-expand-lg navbar-inverse navbar-dark">
-            <div class="container">
-                <a class="navbar-brand" href="#">L ' Atelier</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#">Accueil <span class="sr-only">(current)</span></a>
-                        </li>
-						 <li class="nav-item btn-group">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Catégories
-                            </a>
-                            <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="#">Catégorie 1</a>
-                                <a class="dropdown-item" href="#">Catégorie 2</a>
-                                <a class="dropdown-item" href="#">Catégorie 3</a>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Features</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Pricing</a>
-                        </li>
-						
-                       
-                    </ul>
-                   <!-- <form class="form-inline">
-                        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-                    </form> -->
-					<ul class="navbar-nav " >
-					<li class="nav-item dropdown show pull-right">
-                                <a class="nav-link dropdown-toggle-right waves-effect waves-light" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    <i class="fa fa-user"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right dropdown-danger " aria-labelledby="navbarDropdownMenuLink" style="position: absolute;">
-                                    <a class="dropdown-item waves-effect waves-light" href="{{ path('fos_user_security_login') }}">Connexion</a>
+
+        <header>
+            <!--Navbar-->
+            <nav class="navbar navbar-expand-lg navbar-inverse navbar-dark">
+                <div class="container">
+                    <a class="navbar-brand" href="#">L ' Atelier</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#">Accueil <span class="sr-only">(current)</span></a>
                             </li>
-							</ul>
-					
-                </div>
+                            <li class="nav-item btn-group">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Catégories
+                                </a>
+                                <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="#">Catégorie 1</a>
+                                    <a class="dropdown-item" href="#">Catégorie 2</a>
+                                    <a class="dropdown-item" href="#">Catégorie 3</a>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Features</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Pricing</a>
+                            </li>
+
+
+                        </ul>
+                        <!-- <form class="form-inline">
+                             <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                         </form> -->
+                        <ul class="navbar-nav " >
+
+                            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                                <li class="nav-item">
+                                    Bienvenu  <a href="{{ path('fos_user_profile_show') }}">{{ app.user.username}}</a> |
+                                    <a href="{{ path('fos_user_security_logout') }}">
+                                         <i class="fa fa-power-off"></i> 
+                                    </a> 
+                                </li>
+
+                            {% else %}
+
+                                <li class="nav-item btn-group">
+                                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-user"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+                                        <a class="dropdown-item" href="{{ path('fos_user_security_login') }}">Connexion</a>
+                                        <a class="dropdown-item" href="#">Inscription</a>
+                                    </div>
+                                </li>
+
+                            {% endif %}
+
+
+
+                        </ul>
+
+                    </div>
                 </div>
             </nav>
-        <!--/.Navbar-->
-    </header>
+            <!--/.Navbar-->
+        </header>
 
-        {% block body %}{% endblock %}
+        <main>
+            <!--Main layout-->
+            <div class="container">
+            {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
-    </body>
-    
-     <!--Footer-->
-    <footer class="page-footer center-on-small-only">
-        <!--Footer links-->
-        <div class="container-fluid">
-            <div class="row">
-                <!--First column-->
-                <div class="col-lg-3 col-md-6 ml-auto">
-                    <h5 class="title font-bold mt-3 mb-4">L'Atelier</h5>
-                    <p>Material Design (codenamed Quantum Paper) is a design language developed by Google.</p>
-                    <p>Material Design for Bootstrap (MDB) is a powerful Material Design UI KIT for most popular HTML, CSS, and JS framework - Bootstrap.</p>
-                </div>
-                <!--/.First column-->
-                <hr class="w-100 clearfix d-sm-none">
-                <!--Second column-->
-                <div class="col-lg-2 col-md-6 ml-auto">
-                    <h5 class="title font-bold mt-3 mb-4">Cooking books</h5>
-                    <ul>
-                        <li>
-                            <a href="#!">"Cooking A-Z" by Mike Kalynsky</a>
-                        </li>
-                        <li>
-                            <a href="#!">"No More Heat" by Joe Doe</a>
-                        </li>
-                        <li>
-                            <a href="#!">"Sea Food for Starters" by Alex Well</a>
-                        </li>
-                        <li>
-                            <a href="#!">"Easy Calories" by Samantha Bens</a>
-                        </li>
-                    </ul>
-                </div>
-                <!--/.Second column-->
-                <hr class="w-100 clearfix d-sm-none">
-                <!--Third column-->
-                <div class="col-lg-2 col-md-6 ml-auto">
-                    
-                </div>
-                <!--/.Third column-->
-                <hr class="w-100 clearfix d-sm-none">
-                <!--Fourth column-->
-                <div class="col-lg-2 col-md-6 ml-auto">
-                    <h5 class="title font-bold mt-3 mb-4">Find us on</h5>
-                    <ul>
-                        <li>
-                            <a href="#!">Facebook</a>
-                        </li>
-                        <li>
-                            <a href="#!">Youtube</a>
-                        </li>
-                        <li>
-                            <a href="#!">Instagram</a>
-                        </li>
-                        <li>
-                            <a href="#!">Pinterest</a>
-                        </li>
-                    </ul>
-                </div>
-                <!--/.Fourth column-->
+    </div>
+    <!--/.Main layout-->
+</main>
+</body>
+
+<!--Footer-->
+<footer class="page-footer center-on-small-only">
+    <!--Footer links-->
+    <div class="container-fluid">
+        <div class="row">
+            <!--First column-->
+            <div class="col-lg-3 col-md-6 ml-auto">
+                <h5 class="title font-bold mt-3 mb-4">L'Atelier</h5>
+                <p>Material Design (codenamed Quantum Paper) is a design language developed by Google.</p>
+                <p>Material Design for Bootstrap (MDB) is a powerful Material Design UI KIT for most popular HTML, CSS, and JS framework - Bootstrap.</p>
             </div>
-        </div>
-        <!--/.Footer links-->
-        <hr>
-
-
-        <!--Copyright-->
-        <div class="footer-copyright">
-            <div class="containter-fluid">
-                © 2018 Copyright: <a href="#"> L'Atelier.com </a>
+            <!--/.First column-->
+            <hr class="w-100 clearfix d-sm-none">
+            <!--Second column-->
+            <div class="col-lg-2 col-md-6 ml-auto">
+                <h5 class="title font-bold mt-3 mb-4">Cooking books</h5>
+                <ul>
+                    <li>
+                        <a href="#!">"Cooking A-Z" by Mike Kalynsky</a>
+                    </li>
+                    <li>
+                        <a href="#!">"No More Heat" by Joe Doe</a>
+                    </li>
+                    <li>
+                        <a href="#!">"Sea Food for Starters" by Alex Well</a>
+                    </li>
+                    <li>
+                        <a href="#!">"Easy Calories" by Samantha Bens</a>
+                    </li>
+                </ul>
             </div>
+            <!--/.Second column-->
+            <hr class="w-100 clearfix d-sm-none">
+            <!--Third column-->
+            <div class="col-lg-2 col-md-6 ml-auto">
+
+            </div>
+            <!--/.Third column-->
+            <hr class="w-100 clearfix d-sm-none">
+            <!--Fourth column-->
+            <div class="col-lg-2 col-md-6 ml-auto">
+                <h5 class="title font-bold mt-3 mb-4">Find us on</h5>
+                <ul>
+                    <li>
+                        <a href="#!">Facebook</a>
+                    </li>
+                    <li>
+                        <a href="#!">Youtube</a>
+                    </li>
+                    <li>
+                        <a href="#!">Instagram</a>
+                    </li>
+                    <li>
+                        <a href="#!">Pinterest</a>
+                    </li>
+                </ul>
+            </div>
+            <!--/.Fourth column-->
         </div>
-        <!--/.Copyright-->
-    </footer>
-    <!--/.Footer-->
+    </div>
+    <!--/.Footer links-->
+    <hr>
 
-    <!-- SCRIPTS -->
 
-    <!-- JQuery -->
-    <script type="text/javascript" src="{{asset('bundles/atelier/js/jquery-3.2.1.min.js')}}"></script>
+    <!--Copyright-->
+    <div class="footer-copyright">
+        <div class="containter-fluid">
+            © 2018 Copyright: <a href="#"> L'Atelier.com </a>
+        </div>
+    </div>
+    <!--/.Copyright-->
+</footer>
+<!--/.Footer-->
 
-    <!-- Bootstrap dropdown -->
-    <script type="text/javascript" src="{{asset('bundles/atelier/js/popper.min.js')}}"></script>
+<!-- SCRIPTS -->
 
-    <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="{{asset('bundles/atelier/js/bootstrap.min.js')}}"></script>
+<!-- JQuery -->
+<script type="text/javascript" src="{{asset('bundles/atelier/js/jquery-3.2.1.min.js')}}"></script>
 
-    <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="{{asset('bundles/atelier/js/mdb.min.js')}}"></script>
+<!-- Bootstrap dropdown -->
+<script type="text/javascript" src="{{asset('bundles/atelier/js/popper.min.js')}}"></script>
 
-    <script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="{{asset('bundles/atelier/js/bootstrap.min.js')}}"></script>
+
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="{{asset('bundles/atelier/js/mdb.min.js')}}"></script>
+
+<script>
     new WOW().init();
-    </script>
-    
+</script>
+
 </body>
 
 </html>

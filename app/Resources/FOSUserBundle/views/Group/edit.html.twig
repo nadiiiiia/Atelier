@@ -1,5 +1,5 @@
-{% extends "base.html.twig" %}
+{% extends "@FOSUser/layout.html.twig" %}
 
-{% block body %}
-{% include "FOSUserBundle:Group:edit_content.html.twig" %}
-{% endblock %}
+{% block fos_user_content %}
+{% include "@FOSUser/Group/edit_content.html.twig" %}
+{% endblock fos_user_content %}

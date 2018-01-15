@@ -1,61 +1,105 @@
-{% extends "::base.html.twig" %}
+{% extends "base.html.twig" %}
 
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block body %}
 
-    <div class="col-lg-3 col-md-3"></div>
-       <div class="col-lg-6 col-md-6">
-                <div class="testimonial-card z-depth-3">
-                    <div class="card-up  ">
-                        
-                        {% if error %}
-                            <div class="error-msg bg-danger">{{ error.messageKey|trans(error.messageData, 'security') }}    </div>
-                        {% endif %}
-                        
-                        
-                    </div>
-                    <div class="avatar"><img src="{{asset('bundles/stillinparis//img/login-avatar.png')}}" class="img-circle img-responsive">
-                    </div>
-                    <div class="card-content">
-                        
-                         {% trans_default_domain 'FOSUserBundle' %}
-                        <h4>{{ 'security.login.submit'|trans }}</h4>
-                         
+    <div class="row text-left">
+        <!--Grid column-->
+        <div class="col-md-3 mb-r">
 
-                        
-                         <form action="{{ path("fos_user_security_check") }}" method="post" >
-                          
-                                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-                                <div class="input-field">
-                                     <i class="material-icons prefix">account_circle</i>
-                                    <input id="icon_user" type="text" id="username" name="_username"  required="required">
-                                    <label for="username">{{ 'security.login.username'|trans }}</label>
-                                </div>
 
-                                <div class="input-field">
-                                    <i class="material-icons prefix">lock</i>
-                                    <input type="password" id="password" name="_password" required="required">
-                                    <label for="password">{{ 'security.login.password'|trans }}</label>
-                                </div>
-                                <div class="text-center">
-                                    
-                                    <button type="submit" class="btn btn-primary btn-md waves-effect waves-light">{{ 'security.login.submit'|trans }}</button>
-                                </div>
-                                <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-    <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
-                         
-                        </form>
-  <div class="options">
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-md-6 mb-r pb-5">
+
+            <div class="card">
+                <div class="card-body z-depth-3">
+                    {% if error %}
+                        <div class="error-msg bg-danger">{{ error.messageKey|trans(error.messageData, 'security') }}    </div>
+                    {% endif %}
+                    <br>
+                    <div class="avatar text-center"><img src="{{asset('bundles/atelier/img/login-avatar.jpg')}}" class="img-circle img-responsive"  height="100" width="100">
+                    </div>
+                    <br>
+
+                    <!--Header
+                    <div class="form-header atelier-header-color">
+                        <h3>
+                            <i class="fa fa-lock"></i> Connexion:</h3>
+                    </div>-->
+
+                    <!--Body-->
+                    <form action="{{ path("fos_user_security_check") }}" method="post" >
+
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+
+                        <div class="md-form">
+                            <i class="fa fa-user-circle prefix grey-text"></i>
+                            <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
+                            <label for="username">Utiltisateur</label>
+                        </div>
+
+                        <div class="md-form">
+                            <i class="fa fa-lock prefix grey-text"></i>
+                            <input type="password" id="password" name="_password" required="required" />
+                            <label for="password">Mot de passe</label>
+                        </div>
+
+                        <div class="text-center">
+                        <input type="submit" id="_submit" name="_submit" value="Connexion" class="btn btn-primary-inverse btn-md waves-effect waves-light" />
+
+                        <br>
+                            <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                            <label for="remember_me">Se souvenir de moi</label>
+                        
+                        </div>
+                    </form>
+                    <br>
+                    <div class="text-center">
+                        <h4>Ou</h4>
+
+                        <h5>Se connecter avec:</h5>
+                        <span>
+                            <!--Facebook-->
+                            <a type="button" class="btn-floating btn-fb waves-effect waves-light">
+                                <i class="fa fa-facebook"></i>
+                            </a>
+                            <!--Twitter-->
+                            <a type="button" class="btn-floating btn-tw waves-effect waves-light">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+                            <!--Google +-->
+                            <a type="button" class="btn-floating btn-gplus waves-effect waves-light">
+                                <i class="fa fa-google-plus"></i>
+                            </a>
+
+                        </span>
+                    </div>
+                      <div class="options text-right">
       <hr>
                     <p>Vous n'avez pas de compte ? <a href="{{path ('fos_user_registration_register')}}">Inscription</a></p>
                     <p><a href="{{ path("fos_user_resetting_request")}}">Mot de passe oublié?</a></p>
                     </div>
-                    
-                         </div>
-                    </div>
-                </div>
-     <div class="col-lg-3 col-md-3"></div>  
 
-     
+                </div>
+
+
+            </div>
+
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-md-3 mb-r">
+
+
+        </div>
+        <!--Grid column-->
+
+    </div>
+
+
 {% endblock  %}

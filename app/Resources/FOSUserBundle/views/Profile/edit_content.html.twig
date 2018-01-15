@@ -3,6 +3,6 @@
 {{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'fos_user_profile_edit' } }) }}
     {{ form_widget(form) }}
     <div>
-        <button type="submit" class="btn btn-primary btn-md waves-effect waves-light">{{ 'profile.edit.submit'|trans }}</button>
+        <input type="submit" value="{{ 'profile.edit.submit'|trans }}" />
     </div>
 {{ form_end(form) }}
