@@ -33,3 +33,15 @@ services:
     # AppBundle\Service\ExampleService:
     #     arguments:
     #         $someArgument: 'some_value'
+
+    guzzle_client.hwi_special:
+        class: Http\Adapter\Guzzle6\Client
+        factory:
+            - Http\Adapter\Guzzle6\Client
+            - createWithConfig
+        arguments:
+            - timeout: 10
+              verify_peer: false
+              max_redirects: 1
+              ignore_errors: false
+              proxy: "example.com:8080"
