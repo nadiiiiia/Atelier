@@ -76,14 +76,43 @@ fos_user:
     from_email:
         address: "%mailer_user%"
         sender_name: "%mailer_user%"
-doctrine:
-    dbal:
-        driver:   pdo_mysql
-        # ...
-        user:     '%database_user%'
-        password: '%database_password%'
-        
+    registration: 
+        form:
+            type: AppBundle\form\RegistrationType
 
 hwi_oauth:
-    http:
-        client: guzzle_client.hwi_special
+#    http:
+#        client: guzzle_client.hwi_special
+    connect:
+        confirmation: true
+        registration_form: fos_user.registration.form.factory
+    firewall_names: [main]
+    fosub:
+        username_iterations: 30
+        properties:
+            facebook: facebookID
+            google: googleID
+            twitter: twitterID
+    resource_owners:
+        #facebook Access
+        facebook:
+            type:                facebook
+            client_id:           ?
+            client_secret:       ?
+            scope:               "email"
+        #google Access
+        google:
+            type:                google
+            client_id:           ?
+            client_secret:       ?
+            scope:               "https://www.googleapis.com/auth/plus.login"
+            options:
+                request_visible_actions: "http://schemas.google.com/AddActivity http://schemas.google.com/CommentActivity"
+        #twitter Access
+        twitter:
+            type:                twitter
+            client_id:           ?
+            client_secret:       ?
+            options:
+                include_email: true
+               

@@ -21,6 +21,21 @@ class User extends BaseUser
     protected $id;
     
     /**
+     * @ORM\Column(type="string")
+     */
+    protected $facebookID;
+    
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $googleID;
+    
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $twitterID;
+    
+    /**
      *
      * @ORM\OneToMany(targetEntity="Event",mappedBy="utilisateur", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
