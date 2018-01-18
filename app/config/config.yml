@@ -76,9 +76,11 @@ fos_user:
     from_email:
         address: "%mailer_user%"
         sender_name: "%mailer_user%"
-    registration: 
-        form:
-            type: AppBundle\form\RegistrationType
+#    registration: 
+#        form:
+#            type: AppBundle\form\RegistrationType
+
+
 
 hwi_oauth:
 #    http:
@@ -86,7 +88,7 @@ hwi_oauth:
     connect:
         confirmation: true
         registration_form: fos_user.registration.form.factory
-    firewall_names: [main]
+    firewall_names: [secured_area]
     fosub:
         username_iterations: 30
         properties:
@@ -97,22 +99,26 @@ hwi_oauth:
         #facebook Access
         facebook:
             type:                facebook
-            client_id:           ?
-            client_secret:       ?
-            scope:               "email"
+            client_id:           1668809379846443
+            client_secret:       90707d332e620c7a2675aa4e2f91dab6
+            options:
+                display: popup
+                auth_type: rerequest
+                csrf: true
+
         #google Access
         google:
             type:                google
-            client_id:           ?
-            client_secret:       ?
+            client_id:           409925945437-47nmhffa3trgtmld14vt7jska3iltas0.apps.googleusercontent.com
+            client_secret:       AxxLGrr6t1oyhWuM-rrT56Xl
             scope:               "https://www.googleapis.com/auth/plus.login"
             options:
                 request_visible_actions: "http://schemas.google.com/AddActivity http://schemas.google.com/CommentActivity"
         #twitter Access
-        twitter:
-            type:                twitter
-            client_id:           ?
-            client_secret:       ?
-            options:
-                include_email: true
+#        twitter:
+#            type:                twitter
+#            client_id:           ?
+#            client_secret:       ?
+#            options:
+#                include_email: true
                

@@ -30,7 +30,7 @@
         "symfony/symfony": "3.4.*",
         "symfony/templating": "^3.4",
         "twig/twig": "^1.0||^2.0",
-        "hwi/oauth-bundle": "0.5.*-dev"
+        "hwi/oauth-bundle": "0.5.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

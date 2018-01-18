@@ -21,6 +21,21 @@ class User extends BaseUser
     protected $id;
     
     /**
+     * @ORM\Column(type="string")
+     */
+    protected $facebookID;
+    
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $googleID;
+    
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $twitterID;
+    
+    /**
      *
      * @ORM\OneToMany(targetEntity="Event",mappedBy="utilisateur", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
@@ -31,5 +46,39 @@ class User extends BaseUser
     {
         parent::__construct();
         $this->events = new ArrayCollection();
+    }
+
+    /**
+     * Add event
+     *
+     * @param \AppBundle\Entity\Event $event
+     *
+     * @return User
+     */
+    public function addEvent(\AppBundle\Entity\Event $event)
+    {
+        $this->events[] = $event;
+
+        return $this;
+    }
+
+    /**
+     * Remove event
+     *
+     * @param \AppBundle\Entity\Event $event
+     */
+    public function removeEvent(\AppBundle\Entity\Event $event)
+    {
+        $this->events->removeElement($event);
+    }
+
+    /**
+     * Get events
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEvents()
+    {
+        return $this->events;
     }
 }

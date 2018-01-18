@@ -81,4 +81,76 @@ class User extends BaseUser
     {
         return $this->events;
     }
+
+    /**
+     * Set facebookID
+     *
+     * @param string $facebookID
+     *
+     * @return User
+     */
+    public function setFacebookID($facebookID)
+    {
+        $this->facebookID = $facebookID;
+
+        return $this;
+    }
+
+    /**
+     * Get facebookID
+     *
+     * @return string
+     */
+    public function getFacebookID()
+    {
+        return $this->facebookID;
+    }
+
+    /**
+     * Set googleID
+     *
+     * @param string $googleID
+     *
+     * @return User
+     */
+    public function setGoogleID($googleID)
+    {
+        $this->googleID = $googleID;
+
+        return $this;
+    }
+
+    /**
+     * Get googleID
+     *
+     * @return string
+     */
+    public function getGoogleID()
+    {
+        return $this->googleID;
+    }
+
+    /**
+     * Set twitterID
+     *
+     * @param string $twitterID
+     *
+     * @return User
+     */
+    public function setTwitterID($twitterID)
+    {
+        $this->twitterID = $twitterID;
+
+        return $this;
+    }
+
+    /**
+     * Get twitterID
+     *
+     * @return string
+     */
+    public function getTwitterID()
+    {
+        return $this->twitterID;
+    }
 }
