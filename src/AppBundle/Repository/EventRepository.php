@@ -10,4 +10,17 @@ namespace AppBundle\Repository;
  */
 class EventRepository extends \Doctrine\ORM\EntityRepository
 {
+      public function byCategorie($categorie)
+            
+    {
+        $qb=$this->createQueryBuilder('u')
+               -> select('u')
+               ->where('u.category = :categorie')
+               ->andWhere('u.validation = 1')
+               ->orderBy('u.id') 
+               ->setParameter('categorie', $categorie);
+        return $qb->getQuery()->getResult();
+                       
+          
+    }
 }

@@ -44,9 +44,7 @@
                                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Catégories
                                 </a>
                                 <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
-                                    <a class="dropdown-item" href="#">Catégorie 1</a>
-                                    <a class="dropdown-item" href="#">Catégorie 2</a>
-                                    <a class="dropdown-item" href="#">Catégorie 3</a>
+                                    {{ render(controller('AppBundle:Category:menu')) }}
                                 </div>
                             </li>
                             <li class="nav-item">

@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+      <div class="col-lg-12 col-sm-6 ">
+        <h2 class="page-header">{{categoryName}} </h2>
+      </div>
+    </div>
+                
+                <br>
+    <!-- /.row -->
+                
+    <!-- Content Row -->
+    <div class="row">
+ <!-- col-md-4 -->
+<!--Card-->
+       {% for event in events %}
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="elegant-card z-depth-1 hoverable">
+                    <!-- Image wrapper -->
+                   
+                        <h5 class="card-label"> <span class="label rgba-black-light">{{event.category.nomCat}}</span></h5>
+                        <img src="{{event.image.path}}"  class="img-responsive" height="150">
+                        <div class="mask waves-effect waves-light"> </div>
+                    
+
+                    <!-- Button -->
+                    <a href="{{ path('presentation',{'id': event.id})}}"class="btn-floating btn-large waves-effect waves-light stylish-color"><i class="fa fa-chevron-right"></i></a>
+                    <!-- Content -->
+                    <div class="card-content">
+                        <h5>{{event.titre}}</h5>
+                        <p>{{event.description|raw}} <a>Lire la suite . . .</a></p>
+                     
+                    </div>
+                    <!-- Footer -->
+                    <div class="card-footer">
+                        <ul class="list-inline">
+                            <li><i class="fa fa-clock-o"></i>05/10/2015</li>
+                            <li><a href="#"><i class="fa fa-comments-o"></i>12</a></li>
+                            <li><a href="#"><i class="fa fa-facebook"> </i>21</a></li>
+                            <li><a href="#"><i class="fa fa-twitter"> </i>5</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--/.Card-->
+       
+      <!-- /.col-md-4 -->
+       {% endfor %}
+
+   
+        
+          <!-- Pagination-->
+    <div class="row text-center">
+      <div class="col-lg-12">
+          
+             {{ knp_pagination_render(events) }}
+
+      </div>
+    </div> 
+  
+    <!-- /.row -->
+{% endblock %}
+
