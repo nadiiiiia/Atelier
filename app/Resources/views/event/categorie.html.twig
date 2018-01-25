@@ -1,64 +1,87 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="row">
-      <div class="col-lg-12 col-sm-6 ">
-        <h2 class="page-header">{{categoryName}} </h2>
-      </div>
-    </div>
-                
-                <br>
-    <!-- /.row -->
-                
-    <!-- Content Row -->
-    <div class="row">
- <!-- col-md-4 -->
-<!--Card-->
-       {% for event in events %}
-            <div class="col-lg-4 col-md-6 col-sm-6">
-                <div class="elegant-card z-depth-1 hoverable">
-                    <!-- Image wrapper -->
-                   
-                        <h5 class="card-label"> <span class="label rgba-black-light">{{event.category.nomCat}}</span></h5>
-                        <img src="{{event.image.path}}"  class="img-responsive" height="150">
-                        <div class="mask waves-effect waves-light"> </div>
-                    
 
-                    <!-- Button -->
-                    <a href="{{ path('presentation',{'id': event.id})}}"class="btn-floating btn-large waves-effect waves-light stylish-color"><i class="fa fa-chevron-right"></i></a>
-                    <!-- Content -->
-                    <div class="card-content">
-                        <h5>{{event.titre}}</h5>
-                        <p>{{event.description|raw}} <a>Lire la suite . . .</a></p>
-                     
-                    </div>
-                    <!-- Footer -->
-                    <div class="card-footer">
-                        <ul class="list-inline">
-                            <li><i class="fa fa-clock-o"></i>05/10/2015</li>
-                            <li><a href="#"><i class="fa fa-comments-o"></i>12</a></li>
-                            <li><a href="#"><i class="fa fa-facebook"> </i>21</a></li>
-                            <li><a href="#"><i class="fa fa-twitter"> </i>5</a></li>
-                        </ul>
-                    </div>
+    <main>
+        <!--Main layout-->
+        <div class="container">
+
+            <!--Page heading-->
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="h1-responsive">{{categoryName}}
+                       <!-- <small class="text-muted">recipes for launches and desserts </small> -->
+                    </h1>
                 </div>
             </div>
-            <!--/.Card-->
-       
-      <!-- /.col-md-4 -->
-       {% endfor %}
+            <!--/.Page heading-->
+            <hr>
 
-   
-        
-          <!-- Pagination-->
-    <div class="row text-center">
-      <div class="col-lg-12">
-          
-             {{ knp_pagination_render(events) }}
+            <!--row-->
+            <div class="row mt-5 wow">
+                <!--column-->
+                 {% for event in events %}
+                <div class="col-lg-4 wow fadeIn" data-wow-delay="0.2s">
 
-      </div>
-    </div> 
-  
-    <!-- /.row -->
+                    <!--Card-->
+                    <div class="card">
+
+                        <!--Card image-->
+                        <img class="img-fluid" src="https://d.wildapricot.net/images/newsblog/bigstock-events-7444309.jpg" alt="Card image cap">
+
+                        <!--Card content-->
+                        <div class="card-body">
+                            <!--Title-->
+                            <h4 class="card-title">{{event.titre}}</h4>
+                            <!--Text-->
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-primary-atelier">Voir Plus</a>
+                        </div>
+
+                    </div>
+                    <!--/.Card-->
+                
+                </div>
+                {% endfor %}
+                <!--/. column-->
+
+
+            </div>
+            <!--/.row-->
+
+           
+            <hr>
+
+            <!--Pagination-->
+            <nav class="row flex-center wow fadeIn" data-wow-delay="0.2s">
+                <ul class="pagination">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#!" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                    </li>
+                    <li class="page-item active">
+                        <a class="page-link" href="#!">1 <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#!">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#!">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#!">4</a></li>
+                    <li class="page-item"><a class="page-link" href="#!">5</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#!" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <!--/.Pagination-->
+        </div>
+        <!--/.Main layout-->
+    </main>
 {% endblock %}
 
+{% block stylesheets %}
+    
+{% endblock %}
