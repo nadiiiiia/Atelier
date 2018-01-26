@@ -31,15 +31,13 @@
             <!--Navbar-->
             <nav class="navbar navbar-expand-lg navbar-inverse navbar-dark">
                 <div class="container">
-                    <a class="navbar-brand" href="#">L ' Atelier</a>
+                    <a class="navbar-brand" href="{{ path('homepage') }}">L ' Atelier</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav mr-auto">
-                            <li class="nav-item active">
-                                <a class="nav-link" href="#">Accueil <span class="sr-only">(current)</span></a>
-                            </li>
+                         
                             <li class="nav-item btn-group">
                                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Catégories
                                 </a>
@@ -48,10 +46,13 @@
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Features</a>
+                                <a class="nav-link" href="#">Comment ça marche ?</a>
+                            </li>
+                             <li class="nav-item">
+                                <a class="nav-link" href="#">Tarifs</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Pricing</a>
+                                <a class="nav-link" href="#">Contacts</a>
                             </li>
 
 
@@ -82,7 +83,7 @@
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
                                         <a class="dropdown-item" href="{{ path('fos_user_security_login') }}">Connexion</a>
-                                        <a class="dropdown-item" href="#">Inscription</a>
+                                        <a class="dropdown-item" href="{{path ('fos_user_registration_register')}}">Inscription</a>
                                     </div>
                                 </li>
 
@@ -110,65 +111,79 @@
 
 <!--Footer-->
 <footer class="page-footer center-on-small-only">
-    <!--Footer links-->
-    <div class="container-fluid">
-        <div class="row">
-            <!--First column-->
-            <div class="col-lg-3 col-md-6 ml-auto">
-                <h5 class="title font-bold mt-3 mb-4">L'Atelier</h5>
-                <p>Material Design (codenamed Quantum Paper) is a design language developed by Google.</p>
-                <p>Material Design for Bootstrap (MDB) is a powerful Material Design UI KIT for most popular HTML, CSS, and JS framework - Bootstrap.</p>
+        <!--Footer links-->
+        <div class="container">
+            <div class="row">
+                <!--First column-->
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="title font-bold mt-3 mb-4">L'Atelier</h5>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu blandit tortor. Nam id ipsum ligula. 
+					Donec eu accumsan felis.</p>
+                </div>
+                <!--/.First column-->
+                <hr class="w-100 clearfix d-sm-none">
+                <!--Second column-->
+                <div class="col-lg-2 col-md-6 ml-auto">
+                    <h5 class="title font-bold mt-3 mb-4">Partnaires</h5>
+                    <ul>
+                        <li>
+                            <a href="#!">Lorem ipsum</a>
+                        </li>
+                        <li>
+                            <a href="#!">Lorem ipsum</a>
+                        </li>
+                        <li>
+                            <a href="#!">Lorem ipsum</a>
+                        </li>
+                        <li>
+                            <a href="#!">Lorem ipsum</a>
+                        </li>
+                    </ul>
+                </div>
+                <!--/.Second column-->
+                <hr class="w-100 clearfix d-sm-none">
+                <!--Third column-->
+                <div class="col-lg-2 col-md-6 ml-auto">
+                    <h5 class="title font-bold mt-3 mb-4">Projets</h5>
+                    <ul>
+                        <li>
+                            <a href="#!">Lorem ipsum</a>
+                        </li>
+                        <li>
+                            <a href="#!">Lorem ipsum</a>
+                        </li>
+                        <li>
+                            <a href="#!">Lorem ipsum</a>
+                        </li>
+                        <li>
+                            <a href="#!">Lorem ipsum</a>
+                        </li>
+                    </ul>
+                </div>
+                <!--/.Third column-->
+                <hr class="w-100 clearfix d-sm-none">
+                <!--Fourth column-->
+                <div class="col-lg-2 col-md-6 ml-auto">
+                    <h5 class="title font-bold mt-3 mb-4">Nos Réseaux</h5>
+                    <ul>
+                        <li>
+                            <a href="#!">Facebook</a>
+                        </li>
+                        <li>
+                            <a href="#!">Youtube</a>
+                        </li>
+                        <li>
+                            <a href="#!">Instagram</a>
+                        </li>
+                        <li>
+                            <a href="#!">Pinterest</a>
+                        </li>
+                    </ul>
+                </div>
+                <!--/.Fourth column-->
             </div>
-            <!--/.First column-->
-            <hr class="w-100 clearfix d-sm-none">
-            <!--Second column-->
-            <div class="col-lg-2 col-md-6 ml-auto">
-                <h5 class="title font-bold mt-3 mb-4">Cooking books</h5>
-                <ul>
-                    <li>
-                        <a href="#!">"Cooking A-Z" by Mike Kalynsky</a>
-                    </li>
-                    <li>
-                        <a href="#!">"No More Heat" by Joe Doe</a>
-                    </li>
-                    <li>
-                        <a href="#!">"Sea Food for Starters" by Alex Well</a>
-                    </li>
-                    <li>
-                        <a href="#!">"Easy Calories" by Samantha Bens</a>
-                    </li>
-                </ul>
-            </div>
-            <!--/.Second column-->
-            <hr class="w-100 clearfix d-sm-none">
-            <!--Third column-->
-            <div class="col-lg-2 col-md-6 ml-auto">
-
-            </div>
-            <!--/.Third column-->
-            <hr class="w-100 clearfix d-sm-none">
-            <!--Fourth column-->
-            <div class="col-lg-2 col-md-6 ml-auto">
-                <h5 class="title font-bold mt-3 mb-4">Find us on</h5>
-                <ul>
-                    <li>
-                        <a href="#!">Facebook</a>
-                    </li>
-                    <li>
-                        <a href="#!">Youtube</a>
-                    </li>
-                    <li>
-                        <a href="#!">Instagram</a>
-                    </li>
-                    <li>
-                        <a href="#!">Pinterest</a>
-                    </li>
-                </ul>
-            </div>
-            <!--/.Fourth column-->
         </div>
-    </div>
-    <!--/.Footer links-->
+        <!--/.Footer links-->
     <hr>
 
 

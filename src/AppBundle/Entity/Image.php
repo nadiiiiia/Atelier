@@ -49,19 +49,7 @@ class Image
      */
     private $gallery;
 
-    /**
-     *
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="images", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $category;
 
-    /**
-     *
-     * @ORM\ManyToOne(targetEntity="Event", inversedBy="images", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $event;
     
     /**
      * Get id
@@ -169,51 +157,4 @@ class Image
         return $this->gallery;
     }
 
-    /**
-     * Set category
-     *
-     * @param \AppBundle\Entity\Category $category
-     *
-     * @return Image
-     */
-    public function setCategory(\AppBundle\Entity\Category $category)
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
-    /**
-     * Get category
-     *
-     * @return \AppBundle\Entity\Category
-     */
-    public function getCategory()
-    {
-        return $this->category;
-    }
-
-    /**
-     * Set event
-     *
-     * @param \AppBundle\Entity\Event $event
-     *
-     * @return Image
-     */
-    public function setEvent(\AppBundle\Entity\Event $event)
-    {
-        $this->event = $event;
-
-        return $this;
-    }
-
-    /**
-     * Get event
-     *
-     * @return \AppBundle\Entity\Event
-     */
-    public function getEvent()
-    {
-        return $this->event;
-    }
-}
+  }

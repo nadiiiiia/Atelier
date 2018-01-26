@@ -114,10 +114,12 @@ class Event
     private $credits;
     
     /**
-     * @ORM\OneToMany(targetEntity="Image", mappedBy="event", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=true)
+     * 
+     *
+     * @ORM\OneToOne(targetEntity="Image", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $images;
+    private $image;
     
     
      public function __construct()
@@ -125,7 +127,7 @@ class Event
        
         $this->dateCreation = new \DateTime("now");  // get current date and time
         $this->credits = new ArrayCollection();
-        $this->images = new ArrayCollection();
+      
        
     }
 
@@ -378,5 +380,111 @@ class Event
     public function getCategory()
     {
         return $this->category;
+    }
+
+    /**
+     * Set organisateur
+     *
+     * @param \AppBundle\Entity\Organisateur $organisateur
+     *
+     * @return Event
+     */
+    public function setOrganisateur(\AppBundle\Entity\Organisateur $organisateur = null)
+    {
+        $this->organisateur = $organisateur;
+
+        return $this;
+    }
+
+    /**
+     * Get organisateur
+     *
+     * @return \AppBundle\Entity\Organisateur
+     */
+    public function getOrganisateur()
+    {
+        return $this->organisateur;
+    }
+
+    /**
+     * Set utilisateur
+     *
+     * @param \AppBundle\Entity\User $utilisateur
+     *
+     * @return Event
+     */
+    public function setUtilisateur(\AppBundle\Entity\User $utilisateur = null)
+    {
+        $this->utilisateur = $utilisateur;
+
+        return $this;
+    }
+
+    /**
+     * Get utilisateur
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getUtilisateur()
+    {
+        return $this->utilisateur;
+    }
+
+    /**
+     * Add credit
+     *
+     * @param \AppBundle\Entity\Credit $credit
+     *
+     * @return Event
+     */
+    public function addCredit(\AppBundle\Entity\Credit $credit)
+    {
+        $this->credits[] = $credit;
+
+        return $this;
+    }
+
+    /**
+     * Remove credit
+     *
+     * @param \AppBundle\Entity\Credit $credit
+     */
+    public function removeCredit(\AppBundle\Entity\Credit $credit)
+    {
+        $this->credits->removeElement($credit);
+    }
+
+    /**
+     * Get credits
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCredits()
+    {
+        return $this->credits;
+    }
+
+    /**
+     * Set image
+     *
+     * @param \AppBundle\Entity\Image $image
+     *
+     * @return Events
+     */
+    public function setImage(\AppBundle\Entity\Image $image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \AppBundle\Entity\Image
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 }

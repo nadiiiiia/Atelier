@@ -114,10 +114,12 @@ class Event
     private $credits;
     
     /**
-     * @ORM\OneToMany(targetEntity="Image", mappedBy="event", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=true)
+     * 
+     *
+     * @ORM\OneToOne(targetEntity="Image", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $images;
+    private $image;
     
     
      public function __construct()
@@ -125,7 +127,7 @@ class Event
        
         $this->dateCreation = new \DateTime("now");  // get current date and time
         $this->credits = new ArrayCollection();
-        $this->images = new ArrayCollection();
+      
        
     }
 
@@ -463,36 +465,26 @@ class Event
     }
 
     /**
-     * Add image
+     * Set image
      *
      * @param \AppBundle\Entity\Image $image
      *
-     * @return Event
+     * @return Events
      */
-    public function addImage(\AppBundle\Entity\Image $image)
+    public function setImage(\AppBundle\Entity\Image $image)
     {
-        $this->images[] = $image;
+        $this->image = $image;
 
         return $this;
     }
 
     /**
-     * Remove image
+     * Get image
      *
-     * @param \AppBundle\Entity\Image $image
+     * @return \AppBundle\Entity\Image
      */
-    public function removeImage(\AppBundle\Entity\Image $image)
+    public function getImage()
     {
-        $this->images->removeElement($image);
-    }
-
-    /**
-     * Get images
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getImages()
-    {
-        return $this->images;
+        return $this->image;
     }
 }
