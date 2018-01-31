@@ -102,6 +102,7 @@
         <main>
             <!--Main layout-->
             <div class="container">
+                 {% block style %}{% endblock %}
             {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </div>
