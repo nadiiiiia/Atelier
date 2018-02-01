@@ -9,20 +9,21 @@
 
         <title>L'Atelier.com</title>
 
+        <!-- Fav icone -->
+        <link rel="icon" href="{{asset('bundles/app/img/logo_min.ico')}}">
+        
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <!-- Bootstrap core CSS -->
-        <link href="{{asset('bundles/atelier/css/bootstrap.min.css')}}" rel="stylesheet">
-        <link href="{{asset('bundles/atelier/css/style.css')}}" rel="stylesheet">
+        <link href="{{asset('bundles/app/css/bootstrap.min.css')}}" rel="stylesheet">
+        <link href="{{asset('bundles/app/css/style.css')}}" rel="stylesheet">
 
         <!-- Material Design Bootstrap -->
-        <link href="{{asset('bundles/atelier/css/mdb.min.css')}}" rel="stylesheet">
+        <link href="{{asset('bundles/app/css/mdb.min.css')}}" rel="stylesheet">
 
         <!-- Material Design Bootstrap -->
-        <link href="{{asset('bundles/atelier/css/compiled.min.css')}}" rel="stylesheet">
-
-
+        <link href="{{asset('bundles/app/css/compiled.min.css')}}" rel="stylesheet">
 
     </head>
     <body>
@@ -37,7 +38,7 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav mr-auto">
-                         
+
                             <li class="nav-item btn-group">
                                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Catégories
                                 </a>
@@ -48,7 +49,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Comment ça marche ?</a>
                             </li>
-                             <li class="nav-item">
+                            <li class="nav-item">
                                 <a class="nav-link" href="#">Tarifs</a>
                             </li>
                             <li class="nav-item">
@@ -68,7 +69,7 @@
                                 </li>
                                 <li class="nav-item" style="padding-right: .5rem; padding-left: .5rem;">
                                     <a href="{{ path('fos_user_profile_show') }}" title="Mon Profile" style="color:white;">{{ app.user.username}} |</a> 
-                                    </li>
+                                </li>
                                 <li class="nav-item" style="padding-right: .5rem; padding-left: .5rem;">
                                     <a href="{{ path('fos_user_security_logout') }}" title="Déconnexion" style="color:white;">
                                         <i class="fa fa-power-off"></i> 
@@ -102,89 +103,89 @@
         <main>
             <!--Main layout-->
             <div class="container">
-                 {% block style %}{% endblock %}
-            {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </div>
-    <!--/.Main layout-->
+            {% block style %}{% endblock %}
+        {% block body %}{% endblock %}
+    {% block javascripts %}{% endblock %}
+</div>
+<!--/.Main layout-->
 </main>
 </body>
 
 <!--Footer-->
 <footer class="page-footer center-on-small-only">
-        <!--Footer links-->
-        <div class="container">
-            <div class="row">
-                <!--First column-->
-                <div class="col-lg-3 col-md-6">
-                    <h5 class="title font-bold mt-3 mb-4">L'Atelier</h5>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu blandit tortor. Nam id ipsum ligula. 
-					Donec eu accumsan felis.</p>
-                </div>
-                <!--/.First column-->
-                <hr class="w-100 clearfix d-sm-none">
-                <!--Second column-->
-                <div class="col-lg-2 col-md-6 ml-auto">
-                    <h5 class="title font-bold mt-3 mb-4">Partnaires</h5>
-                    <ul>
-                        <li>
-                            <a href="#!">Lorem ipsum</a>
-                        </li>
-                        <li>
-                            <a href="#!">Lorem ipsum</a>
-                        </li>
-                        <li>
-                            <a href="#!">Lorem ipsum</a>
-                        </li>
-                        <li>
-                            <a href="#!">Lorem ipsum</a>
-                        </li>
-                    </ul>
-                </div>
-                <!--/.Second column-->
-                <hr class="w-100 clearfix d-sm-none">
-                <!--Third column-->
-                <div class="col-lg-2 col-md-6 ml-auto">
-                    <h5 class="title font-bold mt-3 mb-4">Projets</h5>
-                    <ul>
-                        <li>
-                            <a href="#!">Lorem ipsum</a>
-                        </li>
-                        <li>
-                            <a href="#!">Lorem ipsum</a>
-                        </li>
-                        <li>
-                            <a href="#!">Lorem ipsum</a>
-                        </li>
-                        <li>
-                            <a href="#!">Lorem ipsum</a>
-                        </li>
-                    </ul>
-                </div>
-                <!--/.Third column-->
-                <hr class="w-100 clearfix d-sm-none">
-                <!--Fourth column-->
-                <div class="col-lg-2 col-md-6 ml-auto">
-                    <h5 class="title font-bold mt-3 mb-4">Nos Réseaux</h5>
-                    <ul>
-                        <li>
-                            <a href="#!">Facebook</a>
-                        </li>
-                        <li>
-                            <a href="#!">Youtube</a>
-                        </li>
-                        <li>
-                            <a href="#!">Instagram</a>
-                        </li>
-                        <li>
-                            <a href="#!">Pinterest</a>
-                        </li>
-                    </ul>
-                </div>
-                <!--/.Fourth column-->
+    <!--Footer links-->
+    <div class="container">
+        <div class="row">
+            <!--First column-->
+            <div class="col-lg-3 col-md-6">
+                <h5 class="title font-bold mt-3 mb-4">L'Atelier</h5>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu blandit tortor. Nam id ipsum ligula. 
+                    Donec eu accumsan felis.</p>
             </div>
+            <!--/.First column-->
+            <hr class="w-100 clearfix d-sm-none">
+            <!--Second column-->
+            <div class="col-lg-2 col-md-6 ml-auto">
+                <h5 class="title font-bold mt-3 mb-4">Partnaires</h5>
+                <ul>
+                    <li>
+                        <a href="#!">Lorem ipsum</a>
+                    </li>
+                    <li>
+                        <a href="#!">Lorem ipsum</a>
+                    </li>
+                    <li>
+                        <a href="#!">Lorem ipsum</a>
+                    </li>
+                    <li>
+                        <a href="#!">Lorem ipsum</a>
+                    </li>
+                </ul>
+            </div>
+            <!--/.Second column-->
+            <hr class="w-100 clearfix d-sm-none">
+            <!--Third column-->
+            <div class="col-lg-2 col-md-6 ml-auto">
+                <h5 class="title font-bold mt-3 mb-4">Projets</h5>
+                <ul>
+                    <li>
+                        <a href="#!">Lorem ipsum</a>
+                    </li>
+                    <li>
+                        <a href="#!">Lorem ipsum</a>
+                    </li>
+                    <li>
+                        <a href="#!">Lorem ipsum</a>
+                    </li>
+                    <li>
+                        <a href="#!">Lorem ipsum</a>
+                    </li>
+                </ul>
+            </div>
+            <!--/.Third column-->
+            <hr class="w-100 clearfix d-sm-none">
+            <!--Fourth column-->
+            <div class="col-lg-2 col-md-6 ml-auto">
+                <h5 class="title font-bold mt-3 mb-4">Nos Réseaux</h5>
+                <ul>
+                    <li>
+                        <a href="#!">Facebook</a>
+                    </li>
+                    <li>
+                        <a href="#!">Youtube</a>
+                    </li>
+                    <li>
+                        <a href="#!">Instagram</a>
+                    </li>
+                    <li>
+                        <a href="#!">Pinterest</a>
+                    </li>
+                </ul>
+            </div>
+            <!--/.Fourth column-->
         </div>
-        <!--/.Footer links-->
+    </div>
+    <!--/.Footer links-->
     <hr>
 
 
@@ -201,16 +202,16 @@
 <!-- SCRIPTS -->
 
 <!-- JQuery -->
-<script type="text/javascript" src="{{asset('bundles/atelier/js/jquery-3.2.1.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/app/js/jquery-3.2.1.min.js')}}"></script>
 
 <!-- Bootstrap dropdown -->
-<script type="text/javascript" src="{{asset('bundles/atelier/js/popper.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/app/js/popper.min.js')}}"></script>
 
 <!-- Bootstrap core JavaScript -->
-<script type="text/javascript" src="{{asset('bundles/atelier/js/bootstrap.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/app/js/bootstrap.min.js')}}"></script>
 
 <!-- MDB core JavaScript -->
-<script type="text/javascript" src="{{asset('bundles/atelier/js/mdb.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/app/js/mdb.min.js')}}"></script>
 
 <script>
     new WOW().init();

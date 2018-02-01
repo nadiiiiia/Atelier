@@ -1,0 +1,100 @@
+/* YOUR CUSTOM STYLES */
+
+main {
+    margin-top: 3rem;
+}
+
+main .card {
+    margin-bottom: 2rem;
+}
+
+@media only screen and (max-width: 768px) {
+    .read-more {
+        text-align: center;
+    }
+}
+
+.navbar {
+    background-color: #730b42 !important;
+}
+
+.atelier-header-color{
+    background-color: #7b6b74 !important
+}
+footer.page-footer {
+    background-color: #730b42 !important;
+    margin-top: 2rem !important;
+}
+.navbar .btn-group .dropdown-menu a:hover {
+    color: #000 !important;
+}
+
+.navbar .btn-group .dropdown-menu a:active {
+    color: #fff !important;
+}
+.btn-primary-atelier{
+    background-color: #535466 !important;
+}
+.btn-primary-atelier:focus, .btn-primary-atelier:active, .btn-primary-atelier.active {
+    background-color: #730b42 !important;
+}
+
+.btn-primary-atelier:hover {
+    background-color: #730b42 !important;
+}
+
+.btn-primary-inverse{
+    background-color: #730b42 !important;
+}
+.btn-primary-inverse:focus, .btn-primary-inverse:active, .btn-primary-inverse.active {
+    background-color: #535466 !important;
+}
+
+.btn-primary-inverse:hover {
+    background-color: #535466 !important;
+}
+
+.card-title a {
+    color: #730b42 !important;
+}
+
+.card-title a:hover {
+    color: #535466 !important;
+}
+
+.pagination .active .page-link {
+    background-color: #fff !important;
+}
+
+
+
+.page-item.active .page-link {
+    z-index: 2;
+    color: #fff !important;
+    background-color: #730b42 !important;
+    border-color: #730b42 !important;
+}
+.page-link:hover {
+    color: #730b42 !important;
+}
+
+
+.page-link {
+
+    color: #730b42 !important;
+}
+
+.badge, .navbar.navbar-dark .breadcrumb .nav-item.active>.nav-link:hover, .navbar.navbar-dark .navbar-nav .nav-item.active>.nav-link:hover, .navbar.navbar-dark .navbar-toggler, .navbar.navbar-dark form .form-control, .pagination .active  .page-link:hover {
+    color: #fff !important;
+}
+
+.rose{
+    background-color: #ea727d !important;
+}
+
+.elegant-card .card-label {
+    margin-bottom: -27px;
+    margin-top: 0;
+    z-index: 10;
+    position: relative;
+}

@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Event;
 
@@ -39,6 +40,23 @@ class EventController extends Controller
             return $this->render('event/categorie.html.twig', 
                     array('categoryName'=> $categoryName,'events'=>$findEvents));
     }
+    
+    /**
+     * @Route("/event/{id}", name="presentation")
+     */
+        public function presentationAction($id)
+    {
+             
+         $em=$this->getDoctrine()->getManager();
+         $event=$em->getRepository('AppBundle:Event')->find($id);
+         //$arr = array('event'=>$event['data']);
+         //$test= new JsonResponse($arr);
+       //var_dump($test);
+         
+        
+       return $this->render('event/presentation.html.twig', array('event'=>$event));
+    }
+    
     
     
 }
