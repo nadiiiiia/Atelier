@@ -45,15 +45,23 @@
                                 <p class="card-text">Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates.
                                 </p>
 
-                               
-                                
-                               
 
+
+                                <div class=" progress " >
+                                    <div class="progress-bar bg-success progress-bar-striped" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+
+                                {#<div class="progress">
+                                    <div class="progress-bar progress-bar-success progress-bar-striped  " style="" role="progressbar"
+                                         aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;" >
+                                        40% Complete (success)
+                                    </div>
+                                </div>#}
                             </div>
                             <!--/.Card content-->
 
-                             <!--Card footer-->
-                                 <div class="card-data" style="background: #929FBA;">
+                            <!--Card footer-->
+                            <div class="card-data" style="background: #929FBA;">
                                 <ul class="list-unstyled">
                                     <li class="ml-0">{{event.prix}}</li>
                                     <li class="ml-5">
@@ -64,34 +72,34 @@
                         </div>
                         <!--/.Card-->
 
-{#                        <!--Card-->
-                        <div class="card view  hm-zoom">
-                            <!--Card image-->
-                            <img class="img-fluid" src="{{event.image.path}}" alt="{{event.image.alt}}">
-
-
-                            <!--Card content-->
-                            <div class="card-body">
-                                <!--Title-->
-                                <h4 class="card-title">{{event.titre}}</h4>
-                                <!--Text-->
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn btn-primary-atelier">Voir Plus</a>
-                            </div>
-                            <!--    <div class="my-2 progress col-lg-10" style="margin-left: 30px">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>-->
-                            <div class="card-data" style="background: #929FBA;">
-                                <ul class="list-unstyled">
-                                    <li class="ml-0">
-                                        <i class="fa fa-clock-o ml-0 pl-0"></i> 05/10/2018</li>
-                                    <li class="ml-5">
-                                        <i class="fa fa-clock-o ml-0 pl-0"></i> 05/11/2018</li>
-                                </ul>
-                            </div>
-                            <!--/.Card footer-->
-                        </div>
-                        <!--/.Card-->#}
+                        {#                        <!--Card-->
+                                                <div class="card view  hm-zoom">
+                                                    <!--Card image-->
+                                                    <img class="img-fluid" src="{{event.image.path}}" alt="{{event.image.alt}}">
+                        
+                        
+                                                    <!--Card content-->
+                                                    <div class="card-body">
+                                                        <!--Title-->
+                                                        <h4 class="card-title">{{event.titre}}</h4>
+                                                        <!--Text-->
+                                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                                        <a href="#" class="btn btn-primary-atelier">Voir Plus</a>
+                                                    </div>
+                                                    <!--    <div class="my-2 progress col-lg-10" style="margin-left: 30px">
+                                                <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>-->
+                                                    <div class="card-data" style="background: #929FBA;">
+                                                        <ul class="list-unstyled">
+                                                            <li class="ml-0">
+                                                                <i class="fa fa-clock-o ml-0 pl-0"></i> 05/10/2018</li>
+                                                            <li class="ml-5">
+                                                                <i class="fa fa-clock-o ml-0 pl-0"></i> 05/11/2018</li>
+                                                        </ul>
+                                                    </div>
+                                                    <!--/.Card footer-->
+                                                </div>
+                                                <!--/.Card-->#}
 
                     </div>
                 {% endfor %}

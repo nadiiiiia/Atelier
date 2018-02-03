@@ -5,16 +5,20 @@
         <group>
             <file>file:/C:/wamp/www/Atelier/src/AppBundle/Entity/Event.php</file>
             <file>file:/C:/wamp/www/Atelier/app/Resources/HWIOAuthBundle/views/Connect/login.html.twig</file>
+            <file>file:/C:/wamp/www/Atelier/app/Resources/FOSUserBundle/views/Security/login.html.twig</file>
+            <file>file:/C:/wamp/www/Atelier/app/Resources/views/event/presentation.html.twig</file>
             <file>file:/C:/wamp/www/Atelier/app/config/config.yml</file>
-            <file>file:/C:/wamp/www/Atelier/web/bundles/atelier/css/style.css</file>
             <file>file:/C:/wamp/www/Atelier/app/Resources/HWIOAuthBundle/views/Connect/connect_success.html.twig</file>
             <file>file:/C:/wamp/www/Atelier/src/AppBundle/Entity/User.php</file>
+            <file>file:/C:/wamp/www/Atelier/app/Resources/views/category/menu.html.twig</file>
             <file>file:/C:/wamp/www/Atelier/app/Resources/views/event/accueil.html.twig</file>
             <file>file:/C:/wamp/www/Atelier/app/Resources/views/event/categorie.html.twig</file>
             <file>file:/C:/wamp/www/Atelier/app/Resources/FOSUserBundle/views/layout.html.twig</file>
+            <file>file:/C:/wamp/www/Atelier/src/AppBundle/Repository/EventRepository.php</file>
             <file>file:/C:/wamp/www/Atelier/app/config/services.yml</file>
             <file>file:/C:/wamp/www/Atelier/app/Resources/views/base.html.twig</file>
             <file>file:/C:/wamp/www/Atelier/app/Resources/FOSUserBundle/views/Registration/register_content.html.twig</file>
+            <file>file:/C:/wamp/www/Atelier/src/AppBundle/Resources/public/css/style.css</file>
             <file>file:/C:/wamp/www/Atelier/app/config/security.yml</file>
         </group>
     </open-files>

@@ -39,6 +39,7 @@ class EventController extends Controller
            
             return $this->render('event/categorie.html.twig', 
                     array('categoryName'=> $categoryName,'events'=>$findEvents));
+            
     }
     
     /**
@@ -55,6 +56,8 @@ class EventController extends Controller
          
         
        return $this->render('event/presentation.html.twig', array('event'=>$event));
+       
+       
     }
     
     
