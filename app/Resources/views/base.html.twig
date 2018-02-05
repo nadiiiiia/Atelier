@@ -46,6 +46,20 @@
                                     {{ render(controller('AppBundle:Category:menu')) }}
                                 </div>
                             </li>
+                                                   <li class="nav-item btn-group">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Régions
+                                </a>
+                                <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+                                    {{ render(controller('AppBundle:Region:menu')) }}
+                                </div>
+                            </li>
+                                                   <li class="nav-item btn-group">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Départements
+                                </a>
+                                <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+                                    {{ render(controller('AppBundle:Departement:menu')) }}
+                                </div>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Comment ça marche ?</a>
                             </li>

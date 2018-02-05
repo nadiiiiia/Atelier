@@ -22,4 +22,30 @@ class EventRepository extends \Doctrine\ORM\EntityRepository
                        
           
     }
+    
+          public function byDepartement($departement)
+            
+    {
+        $qb=$this->createQueryBuilder('u')
+               -> select('u')
+               ->where('u.departement = :departement')
+               ->orderBy('u.id') 
+               ->setParameter('departement', $departement);
+        return $qb->getQuery()->getResult();
+                       
+          
+    }
+    
+              public function byRegion($region)
+            
+    {
+        $qb=$this->createQueryBuilder('u')
+               -> select('u')
+               ->where('u.region = :region')
+               ->orderBy('u.id') 
+               ->setParameter('region', $region);
+        return $qb->getQuery()->getResult();
+                       
+          
+    }
 }

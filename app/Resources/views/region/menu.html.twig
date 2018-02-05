@@ -1,0 +1,5 @@
+{% for region in regions %}
+        
+    <a class="dropdown-item" href="{{path('regionEvents',{ 'region' : region.id } )}}">{{ region.nom }}</a>
+   
+{% endfor %}

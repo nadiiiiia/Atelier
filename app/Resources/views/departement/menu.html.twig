@@ -1,0 +1,5 @@
+{% for departement in departements %}
+        
+    <a class="dropdown-item" href="{{path('departementEvents',{ 'departement' : departement.id } )}}">{{ departement.nom }}</a>
+   
+{% endfor %}

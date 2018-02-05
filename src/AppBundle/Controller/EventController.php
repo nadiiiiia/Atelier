@@ -41,6 +41,43 @@ class EventController extends Controller
                     array('categoryName'=> $categoryName,'events'=>$findEvents));
             
     }
+        /**
+     * @Route("/departements/{departement}", name="departementEvents")
+     */
+     public function departementAction($departement)
+                     
+     {                   
+         $em=$this->getDoctrine()->getManager();
+         $findEvents=$em->getRepository('AppBundle:Event')->byDepartement($departement);
+         
+             
+           $departement=$em->getRepository('AppBundle:Departement')->find($departement);
+           if(!$departement) throw $this->createNotFoundException ('La page n\'existe pas');
+           $departementName = $departement->getNom(); // pour extraire le nom de la categorie
+           
+            return $this->render('event/departement.html.twig', 
+                    array('departementName'=> $departementName,'events'=>$findEvents));
+            
+    }
+    
+            /**
+     * @Route("/regions/{region}", name="regionEvents")
+     */
+     public function regionAction($region)
+                     
+     {                   
+         $em=$this->getDoctrine()->getManager();
+         $findEvents=$em->getRepository('AppBundle:Event')->byRegion($region);
+         
+             
+           $region=$em->getRepository('AppBundle:Region')->find($region);
+           if(!$region) throw $this->createNotFoundException ('La page n\'existe pas');
+           $regionName = $region->getNom(); // pour extraire le nom de la categorie
+           
+            return $this->render('event/region.html.twig', 
+                    array('regionName'=> $regionName,'events'=>$findEvents));
+            
+    }
     
     /**
      * @Route("/event/{id}", name="presentation")

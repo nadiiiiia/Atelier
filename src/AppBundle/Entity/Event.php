@@ -113,6 +113,38 @@ class Event
      */
     private $credits;
     
+        /**
+     * @var string
+     *
+     * @ORM\Column(name="adresse", type="string", length=255, nullable=true)
+     */
+    private $adresse;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="codeP", type="string", length=10, nullable=true)
+     */
+    private $codeP;
+
+  /**
+   * @ORM\ManyToOne(targetEntity="Ville", inversedBy="events", cascade={"persist"})
+   * @ORM\JoinColumn(nullable=false)
+   */
+  private $ville;
+
+  /**
+   * @ORM\ManyToOne(targetEntity="Region", inversedBy="events", cascade={"persist"})
+   * @ORM\JoinColumn(nullable=false)
+   */
+  private $region;
+  
+  /**
+   * @ORM\ManyToOne(targetEntity="Departement", inversedBy="events", cascade={"persist"})
+   * @ORM\JoinColumn(nullable=true)
+   */
+  private $departement;
+    
     /**
      * 
      *
@@ -486,5 +518,125 @@ class Event
     public function getImage()
     {
         return $this->image;
+    }
+
+    /**
+     * Set adresse
+     *
+     * @param string $adresse
+     *
+     * @return Event
+     */
+    public function setAdresse($adresse)
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    /**
+     * Get adresse
+     *
+     * @return string
+     */
+    public function getAdresse()
+    {
+        return $this->adresse;
+    }
+
+    /**
+     * Set codeP
+     *
+     * @param string $codeP
+     *
+     * @return Event
+     */
+    public function setCodeP($codeP)
+    {
+        $this->codeP = $codeP;
+
+        return $this;
+    }
+
+    /**
+     * Get codeP
+     *
+     * @return string
+     */
+    public function getCodeP()
+    {
+        return $this->codeP;
+    }
+
+    /**
+     * Set ville
+     *
+     * @param \AppBundle\Entity\Ville $ville
+     *
+     * @return Event
+     */
+    public function setVille(\AppBundle\Entity\Ville $ville)
+    {
+        $this->ville = $ville;
+
+        return $this;
+    }
+
+    /**
+     * Get ville
+     *
+     * @return \AppBundle\Entity\Ville
+     */
+    public function getVille()
+    {
+        return $this->ville;
+    }
+
+    /**
+     * Set region
+     *
+     * @param \AppBundle\Entity\Region $region
+     *
+     * @return Event
+     */
+    public function setRegion(\AppBundle\Entity\Region $region)
+    {
+        $this->region = $region;
+
+        return $this;
+    }
+
+    /**
+     * Get region
+     *
+     * @return \AppBundle\Entity\Region
+     */
+    public function getRegion()
+    {
+        return $this->region;
+    }
+
+    /**
+     * Set departement
+     *
+     * @param \AppBundle\Entity\Departement $departement
+     *
+     * @return Event
+     */
+    public function setDepartement(\AppBundle\Entity\Departement $departement)
+    {
+        $this->departement = $departement;
+
+        return $this;
+    }
+
+    /**
+     * Get departement
+     *
+     * @return \AppBundle\Entity\Departement
+     */
+    public function getDepartement()
+    {
+        return $this->departement;
     }
 }
