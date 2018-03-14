@@ -1,5 +1,22 @@
 {% extends "@FOSUser/layout.html.twig" %}
 
 {% block fos_user_content %}
-{% include "@FOSUser/Profile/show_content.html.twig" %}
-{% endblock fos_user_content %}
+
+
+    
+                <h4>Mes informations</h4>
+
+
+                <hr>    
+                <div class="row">
+
+              
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-6">
+                  {% include "@FOSUser/Profile/show_content.html.twig" %}
+                    </div>
+                    <div class="col-lg-2"></div>
+                </div>
+
+        <br>
+        {% endblock fos_user_content %}

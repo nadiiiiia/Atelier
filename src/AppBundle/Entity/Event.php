@@ -21,6 +21,13 @@ class Event
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+	    
+    /**
+     *
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="events", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $category;
 
     /**
      * @var string
@@ -37,37 +44,37 @@ class Event
     private $description;
 
     /**
-     * @var \DateTime
+     * @var \string
      *
-     * @ORM\Column(name="date_creation", type="date", nullable=true)
+     * @ORM\Column(name="date_creation", type="text", nullable=true)
      */
     private $dateCreation;
 
     /**
-     * @var \DateTime
+     * @var \string
      *
-     * @ORM\Column(name="date_debut", type="date", nullable=true)
+     * @ORM\Column(name="date_debut", type="string", nullable=true)
      */
     private $dateDebut;
 
     /**
-     * @var \DateTime
+     * @var \string
      *
-     * @ORM\Column(name="date_fin", type="date", nullable=true)
+     * @ORM\Column(name="date_fin", type="string", nullable=true)
      */
     private $dateFin;
     
     /**
-     * @var \DateTime
+     * @var \string
      *
-     * @ORM\Column(name="heure_debut", type="time")
+     * @ORM\Column(name="heure_debut", type="string", nullable=true)
      */
     private $heureDeb;
 
     /**
-     * @var \DateTime
+     * @var \string
      *
-     * @ORM\Column(name="heure_fin", type="time")
+     * @ORM\Column(name="heure_fin", type="string", nullable=true)
      */
     private $heureFin;
 
@@ -84,13 +91,7 @@ class Event
      * @ORM\Column(name="nbr_max", type="integer")
      */
     private $nbrMax;
-    
-    /**
-     *
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="events", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $category;
+
     
     /**
      *
@@ -135,7 +136,7 @@ class Event
 
   /**
    * @ORM\ManyToOne(targetEntity="Region", inversedBy="events", cascade={"persist"})
-   * @ORM\JoinColumn(nullable=false)
+   * @ORM\JoinColumn(nullable=true)
    */
   private $region;
   
@@ -149,7 +150,7 @@ class Event
      * 
      *
      * @ORM\OneToOne(targetEntity="Image", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $image;
     
@@ -157,7 +158,7 @@ class Event
      public function __construct()
     {
        
-        $this->dateCreation = new \DateTime("now");  // get current date and time
+      //  $this->dateCreation = new \DateTime("now");  // get current date and time
         $this->credits = new ArrayCollection();
       
        
@@ -225,7 +226,7 @@ class Event
     /**
      * Set dateCreation
      *
-     * @param \DateTime $dateCreation
+     * @param \string $dateCreation
      *
      * @return Event
      */
@@ -239,7 +240,7 @@ class Event
     /**
      * Get dateCreation
      *
-     * @return \DateTime
+     * @return \string
      */
     public function getDateCreation()
     {
@@ -249,7 +250,7 @@ class Event
     /**
      * Set dateDebut
      *
-     * @param \DateTime $dateDebut
+     * @param \string $dateDebut
      *
      * @return Event
      */
@@ -263,7 +264,7 @@ class Event
     /**
      * Get dateDebut
      *
-     * @return \DateTime
+     * @return \string
      */
     public function getDateDebut()
     {
@@ -273,7 +274,7 @@ class Event
     /**
      * Set dateFin
      *
-     * @param \DateTime $dateFin
+     * @param \string $dateFin
      *
      * @return Event
      */
@@ -287,7 +288,7 @@ class Event
     /**
      * Get dateFin
      *
-     * @return \DateTime
+     * @return \string
      */
     public function getDateFin()
     {

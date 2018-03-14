@@ -136,4 +136,8 @@ class Departement
     {
         return $this->events;
     }
+	    
+    public function __toString() {
+        return $this->getNom();
+    }
 }

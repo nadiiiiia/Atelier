@@ -4,6 +4,7 @@ security:
         FOS\UserBundle\Model\UserInterface: bcrypt
 
     role_hierarchy:
+        ROLE_ORGANIZER:   ROLE_USER
         ROLE_ADMIN:       ROLE_USER
         ROLE_SUPER_ADMIN: ROLE_ADMIN
 
@@ -20,26 +21,12 @@ security:
 
             logout:       true
             anonymous:    true
-        secured_area:
-            anonymous: ~
-            oauth:
-                resource_owners:
-                    facebook:           "/login/check-facebook"
-                    google:             "/login/check-google"
-                    twitter:            "/login/check-twitter"
-               #     my_github:          "/login/check-github"
-                login_path:        /login
-                use_forward:       false
-                failure_path:      /login
 
-                oauth_user_provider:
-                    service: my.oauth_aware.user_provider.service
                     
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
-        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         
    
