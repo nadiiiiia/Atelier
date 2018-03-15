@@ -2,86 +2,135 @@
 
 namespace AppBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Event;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
 
-class EventController extends Controller {
-
+/**
+ * Event controller.
+ *
+ * @Route("event")
+ */
+class EventController extends Controller
+{
     /**
-     * @Route("/", name="homepage")
+     * Lists all event entities.
+     *
+     * @Route("/", name="event_index")
+     * @Method("GET")
      */
-    public function eventsAction() {
+    public function indexAction()
+    {
         $em = $this->getDoctrine()->getManager();
-        $findEvents = $em->getRepository('AppBundle:Event')->findAll();
 
-       return $this->render('event/accueil.html.twig', array('events' => $findEvents));
+        $events = $em->getRepository('AppBundle:Event')->findAll();
+
+        return $this->render('event/index.html.twig', array(
+            'events' => $events,
+        ));
     }
 
     /**
-     * @Route("/categories/{categorie}", name="categoryEvents")
+     * Creates a new event entity.
+     *
+     * @Route("/new", name="event_new")
+     * @Method({"GET", "POST"})
      */
-    public function categoryAction($categorie) {
-        $em = $this->getDoctrine()->getManager();
-        $findEvents = $em->getRepository('AppBundle:Event')->byCategorie($categorie);
+    public function newAction(Request $request)
+    {
+        $event = new Event();
+        $form = $this->createForm('AppBundle\Form\EventType', $event);
+        $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($event);
+            $em->flush();
 
-        $categorie = $em->getRepository('AppBundle:Category')->find($categorie);
-        if (!$categorie)
-            throw $this->createNotFoundException('La page n\'existe pas');
-        $categoryName = $categorie->getNom(); // pour extraire le nom de la categorie
+            return $this->redirectToRoute('homepage');
+        }
 
-        return $this->render('event/categorie.html.twig', array('categoryName' => $categoryName, 'events' => $findEvents));
+        return $this->render('event/new.html.twig', array(
+            'event' => $event,
+            'form' => $form->createView(),
+        ));
     }
 
     /**
-     * @Route("/departements/{departement}", name="departementEvents")
+     * Finds and displays a event entity.
+     *
+     * @Route("/{id}", name="event_show")
+     * @Method("GET")
      */
-    public function departementAction($departement) {
-        $em = $this->getDoctrine()->getManager();
-        $findEvents = $em->getRepository('AppBundle:Event')->byDepartement($departement);
+    public function showAction(Event $event)
+    {
+        $deleteForm = $this->createDeleteForm($event);
 
-
-        $departement = $em->getRepository('AppBundle:Departement')->find($departement);
-        if (!$departement)
-            throw $this->createNotFoundException('La page n\'existe pas');
-        $departementName = $departement->getNom(); // pour extraire le nom de la categorie
-
-        return $this->render('event/departement.html.twig', array('departementName' => $departementName, 'events' => $findEvents));
+        return $this->render('event/show.html.twig', array(
+            'event' => $event,
+            'delete_form' => $deleteForm->createView(),
+        ));
     }
 
     /**
-     * @Route("/regions/{region}", name="regionEvents")
+     * Displays a form to edit an existing event entity.
+     *
+     * @Route("/{id}/edit", name="event_edit")
+     * @Method({"GET", "POST"})
      */
-    public function regionAction($region) {
-        $em = $this->getDoctrine()->getManager();
-        $findEvents = $em->getRepository('AppBundle:Event')->byRegion($region);
+    public function editAction(Request $request, Event $event)
+    {
+        $deleteForm = $this->createDeleteForm($event);
+        $editForm = $this->createForm('AppBundle\Form\EventType', $event);
+        $editForm->handleRequest($request);
 
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
 
-        $region = $em->getRepository('AppBundle:Region')->find($region);
-        if (!$region)
-            throw $this->createNotFoundException('La page n\'existe pas');
-        $regionName = $region->getNom(); // pour extraire le nom de la categorie
+            return $this->redirectToRoute('event_edit', array('id' => $event->getId()));
+        }
 
-        return $this->render('event/region.html.twig', array('regionName' => $regionName, 'events' => $findEvents));
+        return $this->render('event/edit.html.twig', array(
+            'event' => $event,
+            'edit_form' => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        ));
     }
 
     /**
-     * @Route("/event/{id}", name="presentation")
+     * Deletes a event entity.
+     *
+     * @Route("/{id}", name="event_delete")
+     * @Method("DELETE")
      */
-    public function presentationAction($id) {
+    public function deleteAction(Request $request, Event $event)
+    {
+        $form = $this->createDeleteForm($event);
+        $form->handleRequest($request);
 
-        $em = $this->getDoctrine()->getManager();
-        $event = $em->getRepository('AppBundle:Event')->find($id);
-        //$arr = array('event'=>$event['data']);
-        //$test= new JsonResponse($arr);
-        //var_dump($test);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($event);
+            $em->flush();
+        }
 
-
-        return $this->render('event/presentation.html.twig', array('event' => $event));
+        return $this->redirectToRoute('event_index');
     }
 
+    /**
+     * Creates a form to delete a event entity.
+     *
+     * @param Event $event The event entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createDeleteForm(Event $event)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('event_delete', array('id' => $event->getId())))
+            ->setMethod('DELETE')
+            ->getForm()
+        ;
+    }
 }

@@ -156,5 +156,9 @@ class Image
     {
         return $this->gallery;
     }
+	    
+    public function __toString() {
+        return $this->getTitre();
+    }
 
   }

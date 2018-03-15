@@ -105,4 +105,8 @@ class Region
     {
         return $this->events;
     }
+	    
+    public function __toString() {
+        return $this->getNom();
+    }
 }

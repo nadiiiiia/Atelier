@@ -3,5 +3,39 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block fos_user_content %}
-    <p>{{ 'registration.check_email'|trans({'%email%': user.email}) }}</p>
-{% endblock fos_user_content %}
+ 
+    <div class="row" >
+        <div class="col-md-2"></div>
+        <div class="col-md-8 mb-r pb-5">
+
+            <div class="card">
+                <div class="card-body z-depth-4">
+
+                    <!--Header
+                    <div class="form-header cyan-darken-4-color">
+                        <h3>
+                           Accueil</h3>
+                    </div>-->
+
+                    <!--Body-->
+                    <br>
+                    <br>
+                    <p>{{ 'registration.check_email'|trans({'%email%': user.email}) }}</p>
+                    
+                        <br>
+                        <br>
+
+
+
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-2"></div>
+        </div>
+
+        {% endblock fos_user_content %}

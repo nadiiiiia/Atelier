@@ -45,9 +45,3 @@ services:
               max_redirects: 1
               ignore_errors: false
               proxy: "example.com:8080"
-              
-    my.oauth_aware.user_provider.service:
-            class: HWI\Bundle\OAuthBundle\Security\Core\User\FOSUBUserProvider
-            arguments:
-                - '@fos_user.user_manager'
-                - ['pass properties as array'] 

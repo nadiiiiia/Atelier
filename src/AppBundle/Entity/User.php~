@@ -21,19 +21,11 @@ class User extends BaseUser
     protected $id;
     
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="boolean", nullable=true)
      */
-    protected $facebookID;
+    protected $organizer;
     
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    protected $googleID;
-    
-    /**
-     * @ORM\Column(type="string",nullable=true)
-     */
-    protected $twitterID;
+
     
     /**
      *
