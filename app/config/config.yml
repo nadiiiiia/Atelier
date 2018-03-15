@@ -76,7 +76,10 @@ fos_user:
     from_email:
         address: no-reply@atelier.com
         sender_name: "atelier.com"
-    registration:
+    registration:  
+        form:
+            name: app_user_registration
+    
         confirmation:
             enabled:    true
             template:   '@FOSUser/Registration/email.txt.twig'

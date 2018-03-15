@@ -21,7 +21,7 @@ class User extends BaseUser
     protected $id;
     
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $organizer;
     
@@ -82,7 +82,7 @@ class User extends BaseUser
     /**
      * Set organizer
      *
-     * @param boolean $organizer
+     * @param string $organizer
      *
      * @return User
      */
@@ -96,7 +96,7 @@ class User extends BaseUser
     /**
      * Get organizer
      *
-     * @return boolean
+     * @return string
      */
     public function getOrganizer()
     {
