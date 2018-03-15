@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Doctrine\ORM\EntityRepository;
 use AppBundle\Entity\Event;
@@ -68,12 +68,7 @@ class EventType extends AbstractType
                     'attr' => ['class' => 'mdb-select select-dropdown']
                 ))
               
-                      ->add('image', EntityType::class, array(
-                    'class' => 'AppBundle:Image',
-                    'placeholder' => 'Choisir une image',
-                    'choice_label' => 'titre',
-                    'attr' => ['class' => 'mdb-select select-dropdown', 'required' => 'false']
-                )) ;
+                      ->add('image', FileType::class,array('label'=>'Insérez une image') ) ;
     }
 	
 	/**

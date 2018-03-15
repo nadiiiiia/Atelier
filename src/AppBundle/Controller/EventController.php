@@ -44,6 +44,16 @@ class EventController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+			//ajouter la partie d'ajouter une image
+			/**
+			 * @var UploadeFile $file
+			 */
+			 $file=$post->getImage();
+			 $fileName=md5(uniqid()).'.'.$file->guessExtension();
+			 $file->move($this->getParameter('image_directory'),$fileName);
+			 $post->setImage($fileName);			
+			// fin ajout image
+			
             $em = $this->getDoctrine()->getManager();
             $em->persist($event);
             $em->flush();
