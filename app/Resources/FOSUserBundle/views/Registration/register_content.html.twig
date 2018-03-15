@@ -48,10 +48,6 @@
                 <div class=" alert-danger">   {{ form_errors(form.plainPassword.second) }}</div>
 
             </div>
-									
-                            <input type="checkbox" id="organizer" name="_organizer" value="1" />
-                            <label for="organizer">Je suis un organisateur d'événements</label>
-
                 
                 {{ form_widget(form) }}
             <div class="text-center">
@@ -66,15 +62,15 @@
                 <h5>Se connecter avec:</h5>
                 <span>
                     <!--Facebook-->
-                    <a type="button" class="btn-floating btn-fb waves-effect waves-light">
+                    <a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook' }) }}" type="button" class="btn-floating btn-fb waves-effect waves-light">
                         <i class="fa fa-facebook"></i>
                     </a>
                     <!--Twitter-->
-                    <a type="button" class="btn-floating btn-tw waves-effect waves-light">
+                    {#<a href="{{ path('hwi_oauth_service_redirect', {'service': 'twitter' }) }}" type="button" class="btn-floating btn-tw waves-effect waves-light">
                         <i class="fa fa-twitter"></i>
-                    </a>
+                    </a>#}
                     <!--Google +-->
-                    <a type="button" class="btn-floating btn-gplus waves-effect waves-light">
+                    <a href="{{ path('hwi_oauth_service_redirect', {'service': 'google' }) }}" type="button" class="btn-floating btn-gplus waves-effect waves-light">
                         <i class="fa fa-google-plus"></i>
                     </a>
 
