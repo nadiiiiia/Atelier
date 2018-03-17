@@ -149,8 +149,6 @@ class Event
     
     /**
      * @var string
-     * @Assert\NotBlank(message="Insérez une image")
-     * @Assert\Image()
      * @ORM\Column(name="image", type="string", length=255)
      */
     private $image;
@@ -498,29 +496,8 @@ class Event
         return $this->credits;
     }
 
-    /**
-     * Set image
-     *
-     * @param \AppBundle\Entity\Image $image
-     *
-     * @return Events
-     */
-    public function setImage(\AppBundle\Entity\Image $image)
-    {
-        $this->image = $image;
+    
 
-        return $this;
-    }
-
-    /**
-     * Get image
-     *
-     * @return \AppBundle\Entity\Image
-     */
-    public function getImage()
-    {
-        return $this->image;
-    }
 
     /**
      * Set adresse
@@ -640,5 +617,29 @@ class Event
     public function getDepartement()
     {
         return $this->departement;
+    }
+
+    /**
+     * Set image
+     *
+     * @param string $image
+     *
+     * @return Event
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 }

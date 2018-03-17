@@ -48,10 +48,10 @@ class EventController extends Controller
 			/**
 			 * @var UploadeFile $file
 			 */
-			 $file=$post->getImage();
+			 $file=$event->getImage();
 			 $fileName=md5(uniqid()).'.'.$file->guessExtension();
 			 $file->move($this->getParameter('image_directory'),$fileName);
-			 $post->setImage($fileName);			
+			 $event->setImage($fileName);			
 			// fin ajout image
 			
             $em = $this->getDoctrine()->getManager();

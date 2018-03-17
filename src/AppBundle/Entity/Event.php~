@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Asserts;
 
 /**
  * Event
@@ -21,6 +22,13 @@ class Event
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+	    
+    /**
+     *
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="events", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $category;
 
     /**
      * @var string
@@ -37,37 +45,37 @@ class Event
     private $description;
 
     /**
-     * @var \DateTime
+     * @var \string
      *
-     * @ORM\Column(name="date_creation", type="date", nullable=true)
+     * @ORM\Column(name="date_creation", type="text", nullable=true)
      */
     private $dateCreation;
 
     /**
-     * @var \DateTime
+     * @var \string
      *
-     * @ORM\Column(name="date_debut", type="date", nullable=true)
+     * @ORM\Column(name="date_debut", type="string", nullable=true)
      */
     private $dateDebut;
 
     /**
-     * @var \DateTime
+     * @var \string
      *
-     * @ORM\Column(name="date_fin", type="date", nullable=true)
+     * @ORM\Column(name="date_fin", type="string", nullable=true)
      */
     private $dateFin;
     
     /**
-     * @var \DateTime
+     * @var \string
      *
-     * @ORM\Column(name="heure_debut", type="time")
+     * @ORM\Column(name="heure_debut", type="string", nullable=true)
      */
     private $heureDeb;
 
     /**
-     * @var \DateTime
+     * @var \string
      *
-     * @ORM\Column(name="heure_fin", type="time")
+     * @ORM\Column(name="heure_fin", type="string", nullable=true)
      */
     private $heureFin;
 
@@ -84,13 +92,7 @@ class Event
      * @ORM\Column(name="nbr_max", type="integer")
      */
     private $nbrMax;
-    
-    /**
-     *
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="events", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $category;
+
     
     /**
      *
@@ -116,7 +118,7 @@ class Event
         /**
      * @var string
      *
-     * @ORM\Column(name="adresse", type="string", length=255)
+     * @ORM\Column(name="adresse", type="string", length=255, nullable=true)
      */
     private $adresse;
 
@@ -127,29 +129,27 @@ class Event
      */
     private $codeP;
 
-//  /**
-//   * @ORM\ManyToOne(targetEntity="Ville", inversedBy="events", cascade={"persist"})
-//   * @ORM\JoinColumn(nullable=false)
-//   */
-//  private $ville;
+  /**
+   * @ORM\ManyToOne(targetEntity="Ville", inversedBy="events", cascade={"persist"})
+   * @ORM\JoinColumn(nullable=false)
+   */
+  private $ville;
 
   /**
    * @ORM\ManyToOne(targetEntity="Region", inversedBy="events", cascade={"persist"})
-   * @ORM\JoinColumn(nullable=false)
+   * @ORM\JoinColumn(nullable=true)
    */
   private $region;
   
   /**
    * @ORM\ManyToOne(targetEntity="Departement", inversedBy="events", cascade={"persist"})
-   * @ORM\JoinColumn(nullable=false)
+   * @ORM\JoinColumn(nullable=true)
    */
   private $departement;
     
     /**
-     * 
-     *
-     * @ORM\OneToOne(targetEntity="Image", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @var string
+     * @ORM\Column(name="image", type="string", length=255)
      */
     private $image;
     
@@ -157,7 +157,7 @@ class Event
      public function __construct()
     {
        
-        $this->dateCreation = new \DateTime("now");  // get current date and time
+      //  $this->dateCreation = new \DateTime("now");  // get current date and time
         $this->credits = new ArrayCollection();
       
        
@@ -225,7 +225,7 @@ class Event
     /**
      * Set dateCreation
      *
-     * @param \DateTime $dateCreation
+     * @param \string $dateCreation
      *
      * @return Event
      */
@@ -239,7 +239,7 @@ class Event
     /**
      * Get dateCreation
      *
-     * @return \DateTime
+     * @return \string
      */
     public function getDateCreation()
     {
@@ -249,7 +249,7 @@ class Event
     /**
      * Set dateDebut
      *
-     * @param \DateTime $dateDebut
+     * @param \string $dateDebut
      *
      * @return Event
      */
@@ -263,7 +263,7 @@ class Event
     /**
      * Get dateDebut
      *
-     * @return \DateTime
+     * @return \string
      */
     public function getDateDebut()
     {
@@ -273,7 +273,7 @@ class Event
     /**
      * Set dateFin
      *
-     * @param \DateTime $dateFin
+     * @param \string $dateFin
      *
      * @return Event
      */
@@ -287,7 +287,7 @@ class Event
     /**
      * Get dateFin
      *
-     * @return \DateTime
+     * @return \string
      */
     public function getDateFin()
     {
@@ -496,29 +496,8 @@ class Event
         return $this->credits;
     }
 
-    /**
-     * Set image
-     *
-     * @param \AppBundle\Entity\Image $image
-     *
-     * @return Events
-     */
-    public function setImage(\AppBundle\Entity\Image $image)
-    {
-        $this->image = $image;
+    
 
-        return $this;
-    }
-
-    /**
-     * Get image
-     *
-     * @return \AppBundle\Entity\Image
-     */
-    public function getImage()
-    {
-        return $this->image;
-    }
 
     /**
      * Set adresse
@@ -614,5 +593,29 @@ class Event
     public function getRegion()
     {
         return $this->region;
+    }
+
+    /**
+     * Set departement
+     *
+     * @param \AppBundle\Entity\Departement $departement
+     *
+     * @return Event
+     */
+    public function setDepartement(\AppBundle\Entity\Departement $departement)
+    {
+        $this->departement = $departement;
+
+        return $this;
+    }
+
+    /**
+     * Get departement
+     *
+     * @return \AppBundle\Entity\Departement
+     */
+    public function getDepartement()
+    {
+        return $this->departement;
     }
 }
