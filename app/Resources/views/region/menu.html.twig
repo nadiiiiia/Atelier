@@ -1,5 +1,5 @@
 {% for region in regions %}
         
-    <a class="dropdown-item" href="{{path('regionEvents',{ 'region' : region.id } )}}">{{ region.nom }}</a>
+     <a class="dropdown-item" href="{{path('triEvents',{ 'type': 'region','value' : region.id } )}}">{{ region.nom }}</a>
    
 {% endfor %}

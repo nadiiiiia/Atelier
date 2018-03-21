@@ -76,16 +76,14 @@ fos_user:
     from_email:
         address: no-reply@atelier.com
         sender_name: "atelier.com"
-
-    registration:  
-        form:
-            name: app_user_registration
+    registration:
         confirmation:
             enabled:    true
             template:   '@FOSUser/Registration/email.txt.twig'
-            
+        form:
+            type: AppBundle\Form\RegistrationType            
     service:                               
-        mailer: fos_user.mailer.twig_swift 
+        mailer: fos_user.mailer.twig_swift  
 
 
 knp_paginator:

@@ -27,85 +27,49 @@ class EventUserController extends Controller {
         $request->query->getInt('page', 1)/*page number*/,
         6 /*limit per page*/
     );
+	
+    //$test = $this->get('jms_serializer')->serialize($pagination, 'json');
+	//dump($test); die;
 
        return $this->render('event/accueil.html.twig', array('events' => $pagination));
     }
-
-    /**
-     * @Route("/categories/{categorie}", name="categoryEvents")
+	
+	/**
+     * @Route("tri/{type}/{value}", name="triEvents")
 	 * @param Request $request
 	 * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function categoryAction($categorie, Request $request) {
+    public function triAction($type, $value, Request $request) {
+        //dump($type,$value);die;
         $em = $this->getDoctrine()->getManager();
-        $findEvents = $em->getRepository('AppBundle:Event')->byCategorie($categorie);
-		 
-		 $paginator  = $this->get('knp_paginator');
-    $pagination = $paginator->paginate(
-        $findEvents, 
-        $request->query->getInt('page', 1)/*page number*/,
-        6 /*limit per page*/
-    );
-
-
-        $categorie = $em->getRepository('AppBundle:Category')->find($categorie);
-        if (!$categorie)
-            throw $this->createNotFoundException('La page n\'existe pas');
-        $categoryName = $categorie->getNom(); // pour extraire le nom de la categorie
-
-        return $this->render('event/categorie.html.twig', array('categoryName' => $categoryName, 'events' => $pagination));
-    }
-
-    /**
-     * @Route("/departements/{departement}", name="departementEvents")
-	 * @param Request $request
-	 * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function departementAction($departement, Request $request) {
-        $em = $this->getDoctrine()->getManager();
-        $findEvents = $em->getRepository('AppBundle:Event')->byDepartement($departement);
-
-		 $paginator  = $this->get('knp_paginator');
+        $findEvents = $em->getRepository('AppBundle:Event')->findBy([$type => $value]);
+     
+	 		 $paginator  = $this->get('knp_paginator');
     $pagination = $paginator->paginate(
         $findEvents, 
         $request->query->getInt('page', 1)/*page number*/,
         6 /*limit per page*/
     );
 	
-        $departement = $em->getRepository('AppBundle:Departement')->find($departement);
-        if (!$departement)
-            throw $this->createNotFoundException('La page n\'existe pas');
-        $departementName = $departement->getNom(); // pour extraire le nom de la categorie
-
-        return $this->render('event/departement.html.twig', array('departementName' => $departementName, 'events' => $pagination));
+        switch ($type) {
+            case "region":
+                return $this->render('event/region.html.twig', array('events' => $pagination));
+                break;
+            case "departement":
+                return $this->render('event/departement.html.twig', array('events' => $pagination));
+                break;
+            case "category":
+                return $this->render('event/categorie.html.twig', array('events' => $pagination));
+                break;
+        }
     }
 
-    /**
-     * @Route("/regions/{region}", name="regionEvents")
-	 * @param Request $request
-	 * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function regionAction($region, Request $request) {
-        $em = $this->getDoctrine()->getManager();
-        $findEvents = $em->getRepository('AppBundle:Event')->byRegion($region);
 
-				 $paginator  = $this->get('knp_paginator');
-    $pagination = $paginator->paginate(
-        $findEvents, 
-        $request->query->getInt('page', 1)/*page number*/,
-        6 /*limit per page*/
-    );
 
-        $region = $em->getRepository('AppBundle:Region')->find($region);
-        if (!$region)
-            throw $this->createNotFoundException('La page n\'existe pas');
-        $regionName = $region->getNom(); // pour extraire le nom de la categorie
 
-        return $this->render('event/region.html.twig', array('regionName' => $regionName, 'events' => $pagination));
-    }
 
     /**
-     * @Route("/event/{id}", name="presentation")
+     * @Route("/event_show/{id}", name="presentation")
      */
     public function presentationAction($id) {
 

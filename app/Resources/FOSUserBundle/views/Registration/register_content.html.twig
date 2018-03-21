@@ -16,7 +16,7 @@
             <div class="avatar text-center"><img src="{{asset('bundles/app/img/login-avatar.jpg')}}" class="img-circle img-responsive"  height="100" width="100">
             </div>
             <br>
-            {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+            {{ form_start(form) }}
 
 
 
@@ -49,11 +49,8 @@
 
             </div>
 			 <div class="md-form">
-			<select class="mdb-select initialized" name="_organizer">
-                        <option value="" disabled="" selected="">Choisissze votre type</option>
-                        <option value="0">Simple utilisateur</option>
-                        <option value="1">Organisateur</option>
-                    </select>
+		{{form_widget(form.organizer) }}
+                        <div class="  alert-danger"> {{ form_errors(form.organizer) }}</div>
 					</div>
                 
 

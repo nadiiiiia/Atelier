@@ -50,6 +50,7 @@ class RegistrationController extends Controller
         $dispatcher = $this->get('event_dispatcher');
 
         $user = $userManager->createUser();
+
         $user->setEnabled(true);
 
         $event = new GetResponseUserEvent($user, $request);
@@ -67,9 +68,15 @@ class RegistrationController extends Controller
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $event = new FormEvent($form, $request);
+				
+				
                 $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
+//$form_data = $event->getForm();
+//$is_organizer = $form_data['organizer']->getData();
 
+Test des applications et déploiement
                 $userManager->updateUser($user);
+		
 
                 if (null === $response = $event->getResponse()) {
                     $url = $this->generateUrl('fos_user_registration_confirmed');

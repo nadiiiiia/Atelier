@@ -38,10 +38,9 @@ class User extends BaseUser
     {
         parent::__construct();
         $this->events = new ArrayCollection();
-		if($this->organizer == 1 )
-		{
-			$this->addRole("ROLE_ORGANIZER");
-		}
+	
+		
+		
     }
 
     /**

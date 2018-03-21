@@ -1,5 +1,5 @@
 {% for categorie in categories %}
         
-    <a class="dropdown-item" href="{{path('categoryEvents',{ 'categorie' : categorie.id } )}}">{{ categorie.nom }}</a>
+     <a class="dropdown-item" href="{{path('triEvents',{ 'type': 'category','value'  : categorie.id } )}}">{{ categorie.nom }}</a>
    
 {% endfor %}

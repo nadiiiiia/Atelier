@@ -19,6 +19,7 @@
         "doctrine/orm": "^2.5",
         "friendsofsymfony/user-bundle": "~2.0",
         "incenteev/composer-parameter-handler": "^2.0",
+        "jms/serializer-bundle": "^2.3",
         "knplabs/knp-paginator-bundle": "^2.7",
         "php-http/guzzle6-adapter": "^1.1",
         "php-http/httplug-bundle": "^1.8",
