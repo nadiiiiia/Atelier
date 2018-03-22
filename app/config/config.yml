@@ -81,7 +81,7 @@ fos_user:
             enabled:    true
             template:   '@FOSUser/Registration/email.txt.twig'
         form:
-            type: AppBundle\Form\RegistrationType            
+            type: AppBundle\Form\RegistrationType         
     service:                               
         mailer: fos_user.mailer.twig_swift  
 

@@ -24,7 +24,7 @@ class User extends BaseUser
      * @ORM\Column(type="boolean", nullable=true)
      */
     protected $organizer;
-    
+	
 
     
     /**
@@ -33,11 +33,19 @@ class User extends BaseUser
      * @ORM\JoinColumn(nullable=false)
      */
     private $events;
+	
+    /**
+     * @var array
+     */
+    protected $roles;
 
     public function __construct()
     {
         parent::__construct();
         $this->events = new ArrayCollection();
+		  $this->roles = array();
+		
+		
     }
 
     /**
@@ -74,75 +82,52 @@ class User extends BaseUser
         return $this->events;
     }
 
+
     /**
-     * Set facebookID
-     *
-     * @param string $facebookID
+     * Set organizer
+	 *
+     * @param string $organizer
      *
      * @return User
      */
-    public function setFacebookID($facebookID)
+    public function setOrganizer($organizer)
     {
-        $this->facebookID = $facebookID;
+        $this->organizer = $organizer;
 
         return $this;
     }
 
     /**
-     * Get facebookID
+     * Get organizer
      *
-     * @return string
+     * @return boolean
      */
-    public function getFacebookID()
+    public function getOrganizer()
     {
-        return $this->facebookID;
+        return $this->organizer;
     }
 
     /**
-     * Set googleID
+     * Set role
      *
-     * @param string $googleID
+     * @param string $role
      *
      * @return User
      */
-    public function setGoogleID($googleID)
+    public function setRole($role)
     {
-        $this->googleID = $googleID;
+        $this->role = $role;
 
         return $this;
     }
 
     /**
-     * Get googleID
+     * Get role
      *
      * @return string
      */
-    public function getGoogleID()
+    public function getRole()
     {
-        return $this->googleID;
-    }
-
-    /**
-     * Set twitterID
-     *
-     * @param string $twitterID
-     *
-     * @return User
-     */
-    public function setTwitterID($twitterID)
-    {
-        $this->twitterID = $twitterID;
-
-        return $this;
-    }
-
-    /**
-     * Get twitterID
-     *
-     * @return string
-     */
-    public function getTwitterID()
-    {
-        return $this->twitterID;
+        return $this->role;
     }
 }

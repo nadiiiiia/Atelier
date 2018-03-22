@@ -19,12 +19,6 @@ class User extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-    
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    protected $organizer;
-    
 
     
     /**
@@ -33,13 +27,13 @@ class User extends BaseUser
      * @ORM\JoinColumn(nullable=false)
      */
     private $events;
+	
+ 
 
     public function __construct()
     {
         parent::__construct();
         $this->events = new ArrayCollection();
-	
-		
 		
     }
 
@@ -78,27 +72,6 @@ class User extends BaseUser
     }
 
 
-    /**
-     * Set organizer
-	 *
-     * @param string $organizer
-     *
-     * @return User
-     */
-    public function setOrganizer($organizer)
-    {
-        $this->organizer = $organizer;
 
-        return $this;
-    }
 
-    /**
-     * Get organizer
-     *
-     * @return boolean
-     */
-    public function getOrganizer()
-    {
-        return $this->organizer;
-    }
 }

@@ -73,7 +73,7 @@
 
                 {% if is_granted('ROLE_ORGANIZER') %}
                     <li class="nav-item">
-                                <a class="nav-link" href="#">Nouveau Atelier</a>
+                                <a class="nav-link" href="{{ path('event_new') }}">Nouveau Atelier</a>
                             </li> 
 
                 {% endif %}
