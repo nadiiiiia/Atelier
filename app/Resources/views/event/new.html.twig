@@ -46,14 +46,7 @@
                         {{ form_label(form.dateFin) }}
                         {{form_widget(form.dateFin) }}
                     </div>
-                    <div class="md-form ">
-                        {{ form_label(form.heureDeb) }}
-                        {{form_widget(form.heureDeb) }}
-                    </div>
-                    <div class="md-form">
-                        {{ form_label(form.heureFin) }}
-                        {{form_widget(form.heureFin) }}
-                    </div>
+                   
                     <div class="md-form">
                         {{ form_label(form.prix) }}
                         {{form_widget(form.prix) }}
@@ -125,11 +118,9 @@
 
 
 
-    <ul>
-        <li>
-            <a href="{{ path('event_index') }}">Back to the list</a>
-        </li>
-    </ul>
+
+        
+        
 
 {% endblock %}
 

@@ -8,6 +8,8 @@
 
 <!--Grid column-->
 <div class="col-md-6 mb-r pb-5">
+    
+    
 
     <div class="card">
         <div class="card-body z-depth-3">
@@ -16,10 +18,11 @@
             <div class="avatar text-center"><img src="{{asset('bundles/app/img/login-avatar.jpg')}}" class="img-circle img-responsive"  height="100" width="100">
             </div>
             <br>
+              {% trans_default_domain 'FOSUserBundle' %}
+
+            <h3 class="text-center">{{ 'layout.register'|trans({}, 'FOSUserBundle') }}</h3>
+            <br>
             {{ form_start(form) }}
-
-
-
             <div class="md-form">
                 <i class="fa fa-envelope prefix grey-text"></i>
                 <label for="email">E-mail</label>
@@ -49,7 +52,7 @@
 
             </div>
                 <div class="md-form">
-                      <i class="fa fa-users prefix grey-text"></i>
+                      <i class="fa fa-key prefix grey-text"></i>
                              <label for="password">Choisissez votre type</label>
                              <br>
                 </div>

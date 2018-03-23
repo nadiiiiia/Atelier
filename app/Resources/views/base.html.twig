@@ -11,7 +11,7 @@
 
         <!-- Fav icone -->
         <link rel="icon" href="{{asset('bundles/app/img/logo_min.ico')}}">
-        
+
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -25,11 +25,17 @@
         <!-- Material Design Bootstrap -->
         <link href="{{asset('bundles/app/css/compiled.min.css')}}" rel="stylesheet">
 
+        <link href="{{asset('bundles/app/css/bootstrap-material-datetimepicker.css')}}" rel="stylesheet">
+
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,500' rel='stylesheet' type='text/css'>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
     </head>
     <body>
 
         <header>
-		
+
             <!--Navbar-->
             <nav class="navbar navbar-expand-lg navbar-inverse navbar-dark">
                 <div class="container">
@@ -47,14 +53,14 @@
                                     {{ render(controller('AppBundle:Category:menu')) }}
                                 </div>
                             </li>
-                                                   <li class="nav-item btn-group">
+                            <li class="nav-item btn-group">
                                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Régions
                                 </a>
                                 <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
                                     {{ render(controller('AppBundle:Region:menu')) }}
                                 </div>
                             </li>
-                                                   <li class="nav-item btn-group">
+                            <li class="nav-item btn-group">
                                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Départements
                                 </a>
                                 <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
@@ -71,12 +77,12 @@
                                 <a class="nav-link" href="#">Contacts</a>
                             </li>
 
-                {% if is_granted('ROLE_ORGANIZER') %}
-                    <li class="nav-item">
-                                <a class="nav-link" href="{{ path('event_new') }}">Nouveau Atelier</a>
-                            </li> 
+                            {% if is_granted('ROLE_ORGANIZER') %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ path('event_new') }}">Nouveau Atelier</a>
+                                </li> 
 
-                {% endif %}
+                            {% endif %}
 
 
                         </ul>
@@ -235,15 +241,41 @@
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="{{asset('bundles/app/js/mdb.min.js')}}"></script>
 
- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="http://momentjs.com/downloads/moment-with-locales.min.js"></script>
+<script type="text/javascript" src="{{asset('bundles/app/js/bootstrap-material-datetimepicker.js')}}"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+<script type="text/javascript" src="http://momentjs.com/downloads/moment-with-locales.min.js"></script>
 
 <script>
     new WOW().init();
 </script>
-        <script>
+<script>
     $(document).ready(function () {
         $('.mdb-select ').material_select();
     });
+</script>
+
+
+<script type="text/javascript">
+    $(document).ready(function ()
+    {
+
+        $('.date-fr').bootstrapMaterialDatePicker
+                ({
+                    format: 'DD/MM/YYYY HH:mm',
+                    lang: 'fr',
+                    weekStart: 1,
+                    cancelText: 'ANNULER',
+                    nowButton: false,
+                    switchOnClick: false
+                });
+
+        $.material.init()
+    });
+
 </script>
 
 </body>

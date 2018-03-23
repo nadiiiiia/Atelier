@@ -25,7 +25,7 @@ class EventUserController extends Controller {
     $pagination = $paginator->paginate(
         $findEvents, 
         $request->query->getInt('page', 1)/*page number*/,
-        6 /*limit per page*/
+        3 /*limit per page*/
     );
 	
     //$test = $this->get('jms_serializer')->serialize($pagination, 'json');
@@ -48,7 +48,7 @@ class EventUserController extends Controller {
     $pagination = $paginator->paginate(
         $findEvents, 
         $request->query->getInt('page', 1)/*page number*/,
-        6 /*limit per page*/
+        3 /*limit per page*/
     );
 	
         switch ($type) {

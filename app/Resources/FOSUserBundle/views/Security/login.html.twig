@@ -20,11 +20,15 @@
                     {% if error %}
                         <div class="error-msg bg-danger">{{ error.messageKey|trans(error.messageData, 'security') }}    </div>
                     {% endif %}
+
+
                     <br>
                     <div class="avatar text-center"><img src="{{asset('bundles/app/img/login-avatar.jpg')}}" class="img-circle img-responsive"  height="100" width="100">
                     </div>
                     <br>
-
+                    {% trans_default_domain 'FOSUserBundle' %}
+                    <h3 class="text-center">{{ 'security.login.submit'|trans }}</h3>
+                    <br>
                     <!--Body-->
                     <form action="{{ path("fos_user_security_check") }}" method="post" >
 
@@ -41,7 +45,7 @@
                             <input type="password" id="password" name="_password" required="required" />
                             <label for="password">Mot de passe</label>
                         </div>
-						
+
 
                         <div class="text-center">
                             <input type="submit" id="_submit" name="_submit" value="Connexion" class="btn btn-primary-inverse btn-md waves-effect waves-light" />

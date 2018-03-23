@@ -36,13 +36,10 @@ class EventType extends AbstractType
                     'attr' => array('class' => 'form-control md-textarea')))
                //     ->add('dateCreation')
                 ->add('dateDebut', TextType::class, array(
-                    'attr' => array('placeholder' => 'jj/mm/aaaa', 'required' => 'false')))
+                    'attr' => array( 'class' => 'form-control date-fr floating-label')))
                 ->add('dateFin', TextType::class, array(
-                    'attr' => array('placeholder' => 'jj/mm/aaaa', 'required' => 'false')))
-                ->add('heureDeb', TextType::class, array(
-                    'attr' => array('placeholder' => 'hh:mm', 'required' => 'false')))
-                ->add('heureFin', TextType::class, array(
-                    'attr' => array('placeholder' => 'hh:mm', 'required' => 'false')))
+                    'attr' => array('class' => 'form-control date-fr floating-label')))
+
                 ->add('prix')
                 ->add('nbrMax')
                 ->add('adresse')

@@ -98,4 +98,17 @@ footer.page-footer {
     z-index: 10;
     position: relative;
 }
+/*datePicker style */
+.dtp > .dtp-content > .dtp-date-view > header.dtp-header { 
+    background: #5C0935 !important;
+}
 
+.dtp div.dtp-date, .dtp div.dtp-time {
+    background: #730B42 !important;
+}
+.dtp table.dtp-picker-days tr > td > a.selected {
+    background: #730B42 !important;
+}
+.dtp .p10 > a {
+    color: #ffff !important;
+}

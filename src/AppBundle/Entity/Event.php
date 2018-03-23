@@ -45,9 +45,9 @@ class Event
     private $description;
 
     /**
-     * @var \string
+     * @var \datetime
      *
-     * @ORM\Column(name="date_creation", type="text", nullable=true)
+     * @ORM\Column(name="date_creation", type="datetime", nullable=true)
      */
     private $dateCreation;
 
@@ -64,20 +64,7 @@ class Event
      * @ORM\Column(name="date_fin", type="string", nullable=true)
      */
     private $dateFin;
-    
-    /**
-     * @var \string
-     *
-     * @ORM\Column(name="heure_debut", type="string", nullable=true)
-     */
-    private $heureDeb;
 
-    /**
-     * @var \string
-     *
-     * @ORM\Column(name="heure_fin", type="string", nullable=true)
-     */
-    private $heureFin;
 
     /**
      * @var string
@@ -157,7 +144,7 @@ class Event
      public function __construct()
     {
        
-      //  $this->dateCreation = new \DateTime("now");  // get current date and time
+       // $this->dateCreation = new \DateTime("now");  // get current date and time
         $this->credits = new ArrayCollection();
       
        
@@ -225,7 +212,7 @@ class Event
     /**
      * Set dateCreation
      *
-     * @param \string $dateCreation
+     * @param \datetime $dateCreation
      *
      * @return Event
      */
@@ -239,7 +226,7 @@ class Event
     /**
      * Get dateCreation
      *
-     * @return \string
+     * @return \datetime
      */
     public function getDateCreation()
     {
@@ -342,53 +329,8 @@ class Event
         return $this->nbrMax;
     }
 
-    /**
-     * Set heureDeb
-     *
-     * @param \DateTime $heureDeb
-     *
-     * @return Event
-     */
-    public function setHeureDeb($heureDeb)
-    {
-        $this->heureDeb = $heureDeb;
 
-        return $this;
-    }
 
-    /**
-     * Get heureDeb
-     *
-     * @return \DateTime
-     */
-    public function getHeureDeb()
-    {
-        return $this->heureDeb;
-    }
-
-    /**
-     * Set heureFin
-     *
-     * @param \DateTime $heureFin
-     *
-     * @return Event
-     */
-    public function setHeureFin($heureFin)
-    {
-        $this->heureFin = $heureFin;
-
-        return $this;
-    }
-
-    /**
-     * Get heureFin
-     *
-     * @return \DateTime
-     */
-    public function getHeureFin()
-    {
-        return $this->heureFin;
-    }
 
     /**
      * Set category
