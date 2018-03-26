@@ -42,7 +42,8 @@ class EventType extends AbstractType
 
                 ->add('prix')
                 ->add('nbrMax')
-                ->add('adresse')
+                ->add('adresse', TextType::class, array(
+                    'attr' => array( 'class' => 'form-control autoComplete')))
                 ->add('codeP')
 
                 // ->add('organisateur', EntityType::class, array('class' => 'AppBundle:Organisateur'))
