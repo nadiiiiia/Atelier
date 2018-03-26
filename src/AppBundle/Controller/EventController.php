@@ -40,9 +40,11 @@ class EventController extends Controller
      */
     public function newAction(Request $request)
     {
+       $user = $this->get('security.token_storage')->getToken()->getUser();
         $event = new Event();
         $form = $this->createForm('AppBundle\Form\EventType', $event);
         $form->handleRequest($request);
+        $event->setUtilisateur($user);
 
         if ($form->isSubmitted() && $form->isValid()) {
 			//ajouter la partie d'ajouter une image
