@@ -81,20 +81,15 @@ class Event
     private $nbrMax;
 
     
-    /**
-     *
-     * @ORM\ManyToOne(targetEntity="Organisateur",inversedBy="events", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $organisateur;
+
     
       
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="events")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="events",  cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
      */
     
-    private $utilisateur;
+    private $organisateur;
     
     /**
      * @ORM\OneToMany(targetEntity="Credit", mappedBy="event", cascade={"persist", "remove"})
@@ -359,11 +354,11 @@ class Event
     /**
      * Set organisateur
      *
-     * @param \AppBundle\Entity\Organisateur $organisateur
+     * @param \AppBundle\Entity\User $organisateur
      *
      * @return Event
      */
-    public function setOrganisateur(\AppBundle\Entity\Organisateur $organisateur = null)
+    public function setOrganisateur(\AppBundle\Entity\User $organisateur = null)
     {
         $this->organisateur = $organisateur;
 
@@ -373,36 +368,13 @@ class Event
     /**
      * Get organisateur
      *
-     * @return \AppBundle\Entity\Organisateur
+     * @return \AppBundle\Entity\User
      */
     public function getOrganisateur()
     {
         return $this->organisateur;
     }
 
-    /**
-     * Set utilisateur
-     *
-     * @param \AppBundle\Entity\User $utilisateur
-     *
-     * @return Event
-     */
-    public function setUtilisateur(\AppBundle\Entity\User $utilisateur = null)
-    {
-        $this->utilisateur = $utilisateur;
-
-        return $this;
-    }
-
-    /**
-     * Get utilisateur
-     *
-     * @return \AppBundle\Entity\User
-     */
-    public function getUtilisateur()
-    {
-        return $this->utilisateur;
-    }
 
     /**
      * Add credit

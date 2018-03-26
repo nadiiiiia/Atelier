@@ -44,7 +44,7 @@ class EventController extends Controller
         $event = new Event();
         $form = $this->createForm('AppBundle\Form\EventType', $event);
         $form->handleRequest($request);
-        $event->setUtilisateur($user);
+        $event->setOrganisateur($user);
 
         if ($form->isSubmitted() && $form->isValid()) {
 			//ajouter la partie d'ajouter une image
