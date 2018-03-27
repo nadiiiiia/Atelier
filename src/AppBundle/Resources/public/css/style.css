@@ -113,3 +113,10 @@ footer.page-footer {
     color: #ffff !important;
 }
 
+#appbundle_event_adresse::-webkit-input-placeholder {
+    color: #FFFFFF;
+}
+ 
+#appbundle_event_adresse::-moz-placeholder {
+    color: #FFFFFF;
+}
