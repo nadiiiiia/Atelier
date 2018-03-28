@@ -13,25 +13,24 @@ class EventUserController extends Controller {
 
     /**
      * @Route("/", name="homepage")
-	 * @param Request $request
-	 * @return \Symfony\Component\HttpFoundation\Response
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function eventsAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $findEvents = $em->getRepository('AppBundle:Event')->findAll();
 		
 		
-		  $paginator  = $this->get('knp_paginator');
-    $pagination = $paginator->paginate(
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
         $findEvents, 
         $request->query->getInt('page', 1)/*page number*/,
         3 /*limit per page*/
     );
 	
-    //$test = $this->get('jms_serializer')->serialize($pagination, 'json');
-	//dump($test); die;
+        $events_json = $this->get('jms_serializer')->serialize($findEvents, 'json');
 
-       return $this->render('event/accueil.html.twig', array('events' => $pagination));
+       return $this->render('event/accueil.html.twig', array('events' => $pagination, 'events_json'=>$events_json));
     }
 	
 	/**

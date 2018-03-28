@@ -42,15 +42,15 @@ class Category {
      */
     private $events;
     
-    /**
-     * @ORM\OneToMany(targetEntity="Image", mappedBy="category", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $images;
+//    /**
+//     * @ORM\OneToMany(targetEntity="Image", mappedBy="category", cascade={"persist"})
+//     * @ORM\JoinColumn(nullable=true)
+//     */
+//    private $images;
 
     public function __construct() {
         $this->events = new ArrayCollection();
-        $this->images = new ArrayCollection();
+        //$this->images = new ArrayCollection();
     }
 
     /**
@@ -105,7 +105,7 @@ class Category {
     public function getDescription() {
         return $this->description;
     }
-
+	
 
     /**
      * Add event
@@ -116,7 +116,7 @@ class Category {
      */
     public function addEvent(\AppBundle\Entity\Event $event)
     {
-        $this->event[] = $event;
+        $this->events[] = $event;
 
         return $this;
     }
@@ -128,17 +128,7 @@ class Category {
      */
     public function removeEvent(\AppBundle\Entity\Event $event)
     {
-        $this->event->removeElement($event);
-    }
-
-    /**
-     * Get event
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getEvent()
-    {
-        return $this->event;
+        $this->events->removeElement($event);
     }
 
     /**
@@ -150,43 +140,9 @@ class Category {
     {
         return $this->events;
     }
-
-    /**
-     * Add image
-     *
-     * @param \AppBundle\Entity\Image $image
-     *
-     * @return Category
-     */
-    public function addImage(\AppBundle\Entity\Image $image)
-    {
-        $this->images[] = $image;
-
-        return $this;
-    }
-
-    /**
-     * Remove image
-     *
-     * @param \AppBundle\Entity\Image $image
-     */
-    public function removeImage(\AppBundle\Entity\Image $image)
-    {
-        $this->images->removeElement($image);
-    }
-
-    /**
-     * Get images
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getImages()
-    {
-        return $this->images;
-    }
-	    
+    
+    	    
     public function __toString() {
         return $this->getNom();
     }
-	
 }

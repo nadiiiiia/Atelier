@@ -10,9 +10,9 @@
             <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Resources/public/css/style.css</file>
             <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Entity/User.php</file>
             <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Controller/EventController.php</file>
-            <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Controller/EventUserController.php</file>
             <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Form/RegistrationType.php</file>
-            <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Resources/public/js/bootstrap-material-datetimepicker.js</file>
+            <file>file:/C:/xampp/htdocs/Atelier__/app/Resources/views/event/presentation.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Atelier__/app/Resources/views/event/accueil.html.twig</file>
         </group>
     </open-files>
 </project-private>

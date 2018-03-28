@@ -89,7 +89,7 @@ class Event
      * @ORM\JoinColumn(nullable=true)
      */
     
-    private $organisateur;
+    private $utilisateur;
     
     /**
      * @ORM\OneToMany(targetEntity="Credit", mappedBy="event", cascade={"persist", "remove"})
@@ -351,29 +351,6 @@ class Event
         return $this->category;
     }
 
-    /**
-     * Set organisateur
-     *
-     * @param \AppBundle\Entity\User $organisateur
-     *
-     * @return Event
-     */
-    public function setOrganisateur(\AppBundle\Entity\User $organisateur = null)
-    {
-        $this->organisateur = $organisateur;
-
-        return $this;
-    }
-
-    /**
-     * Get organisateur
-     *
-     * @return \AppBundle\Entity\User
-     */
-    public function getOrganisateur()
-    {
-        return $this->organisateur;
-    }
 
 
     /**
@@ -555,5 +532,29 @@ class Event
     public function getImage()
     {
         return $this->image;
+    }
+
+    /**
+     * Set utilisateur
+     *
+     * @param \AppBundle\Entity\User $utilisateur
+     *
+     * @return Event
+     */
+    public function setUtilisateur(\AppBundle\Entity\User $utilisateur = null)
+    {
+        $this->utilisateur = $utilisateur;
+
+        return $this;
+    }
+
+    /**
+     * Get utilisateur
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getUtilisateur()
+    {
+        return $this->utilisateur;
     }
 }
