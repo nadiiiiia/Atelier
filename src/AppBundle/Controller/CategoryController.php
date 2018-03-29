@@ -14,9 +14,11 @@ class CategoryController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $categories = $em->getRepository('AppBundle:Category')->findAll();
+        $categories_json = $this->get('jms_serializer')->serialize($categories, 'json');
 
         return $this->render('category/menu.html.twig', array(
             'categories' => $categories,
+             'categories_json' => $categories_json
         ));
     }
     

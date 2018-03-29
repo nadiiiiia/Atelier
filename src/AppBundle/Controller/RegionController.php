@@ -14,9 +14,11 @@ class RegionController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $regions = $em->getRepository('AppBundle:Region')->findAll();
+        $regions_json = $this->get('jms_serializer')->serialize($regions, 'json');
 
         return $this->render('region/menu.html.twig', array(
             'regions' => $regions,
+            'regions_json' => $regions_json
         ));
     }
 }

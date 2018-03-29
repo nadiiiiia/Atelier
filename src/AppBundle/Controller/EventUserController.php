@@ -43,22 +43,24 @@ class EventUserController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $findEvents = $em->getRepository('AppBundle:Event')->findBy([$type => $value]);
      
-	 		 $paginator  = $this->get('knp_paginator');
+     $paginator  = $this->get('knp_paginator');
     $pagination = $paginator->paginate(
         $findEvents, 
         $request->query->getInt('page', 1)/*page number*/,
         3 /*limit per page*/
     );
+    
+    $events_json = $this->get('jms_serializer')->serialize($findEvents, 'json');
 	
         switch ($type) {
             case "region":
-                return $this->render('event/region.html.twig', array('events' => $pagination));
+                return $this->render('event/region.html.twig', array('events' => $pagination, 'events_json'=>$events_json));
                 break;
             case "departement":
-                return $this->render('event/departement.html.twig', array('events' => $pagination));
+                return $this->render('event/departement.html.twig', array('events' => $pagination, 'events_json'=>$events_json));
                 break;
             case "category":
-                return $this->render('event/categorie.html.twig', array('events' => $pagination));
+                return $this->render('event/categorie.html.twig', array('events' => $pagination, 'events_json'=>$events_json));
                 break;
         }
     }
@@ -74,12 +76,10 @@ class EventUserController extends Controller {
 
         $em = $this->getDoctrine()->getManager();
         $event = $em->getRepository('AppBundle:Event')->find($id);
-        //$arr = array('event'=>$event['data']);
-        //$test= new JsonResponse($arr);
-        //var_dump($test);
+        
+        $event_json = $this->get('jms_serializer')->serialize($event, 'json');
 
-
-        return $this->render('event/presentation.html.twig', array('event' => $event));
+        return $this->render('event/presentation.html.twig', array('event' => $event, 'event_json'=>$event_json));
     }
 
 }
