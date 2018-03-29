@@ -120,3 +120,26 @@ footer.page-footer {
 #appbundle_event_adresse::-moz-placeholder {
     color: #FFFFFF;
 }
+
+.navbar.navbar-dark form input[type=text]:focus:not([readonly]){
+    border-color: #b6babd !important;
+}
+input[type=date]:focus:not([readonly]), input[type=datetime-local]:focus:not([readonly]), input[type=email]:focus:not([readonly]), input[type=number]:focus:not([readonly]), input[type=password]:focus:not([readonly]), input[type=search-md]:focus:not([readonly]), input[type=search]:focus:not([readonly]), input[type=tel]:focus:not([readonly]), input[type=text]:focus:not([readonly]), input[type=time]:focus:not([readonly]), input[type=url]:focus:not([readonly]), textarea.md-textarea:focus:not([readonly]) {
+    border-bottom: 1px solid #b6babd !important;
+    -webkit-box-shadow: 0 1px 0 0 #b6babd !important;
+    box-shadow: 0 1px 0 0 #b6babd !important;
+}
+
+.modal-dialog.modal-notify.modal-success .badge, .modal-dialog.modal-notify.modal-success .btn-primary-modal, .modal-dialog.modal-notify.modal-success .modal-header {
+    background-color: #730B42 !important;
+}
+
+.modal-dialog.modal-notify.modal-success .badge, .modal-dialog.modal-notify.modal-success .btn-primary-modal, .modal-dialog.modal-notify.modal-success .modal-header {
+    background-color: #730B42 !important;
+}
+
+/*.modal-header {
+    padding: 10px !important;
+    border-top-left-radius: .0rem !important;
+    border-top-right-radius: .0rem !important;
+}*/

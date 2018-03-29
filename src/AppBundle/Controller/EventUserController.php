@@ -81,5 +81,30 @@ class EventUserController extends Controller {
 
         return $this->render('event/presentation.html.twig', array('event' => $event, 'event_json'=>$event_json));
     }
+    
+
+
+    /**
+     * @Route("/recherche", name="event_recherche")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function rechercheAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $motcle=$request->get('motcle');
+        $findEvents = $em->getRepository('AppBundle:Event')->findEventByTitle($motcle);
+		
+		
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+        $findEvents, 
+        $request->query->getInt('page', 1)/*page number*/,
+        3 /*limit per page*/
+    );
+	
+        $findEvents_json = $this->get('jms_serializer')->serialize($findEvents, 'json');
+
+       return $this->render('event/accueil.html.twig', array('events' => $pagination, 'findEvents_json' => $findEvents_json));
+    }
 
 }
