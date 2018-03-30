@@ -22,6 +22,7 @@
                     <!--Body-->
 
                     <div class="md-form">
+                         
                         {{form_widget(form.category) }}
                         <div class="  alert-danger"> {{ form_errors(form.category) }}</div>
                     </div>
@@ -29,7 +30,7 @@
                     <div class="md-form">
                         {{ form_label(form.titre) }}
                         {{form_widget(form.titre) }}
-                        <div class="  alert-danger"> {{ form_errors(form.titre) }}</div>
+                <div class="  alert-danger"> {{ form_errors(form.titre) }}</div>
                     </div>
 
                     <div class="md-form">
@@ -118,18 +119,15 @@
             
                 <!-- Google Map -->	
     <script src="http://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places&key=AIzaSyBdI6hYrzRf5QMgKGj8RQsEeLE9bS-1vOQ"></script>
-<script type="text/javascript">
-    $(document).ready(function ()
-    {	
-$('#appbundle_event_adresse').prop('placeholder').empty();
-    });
 
-</script>
+
 <script type="text/javascript">
-    
+
+     document.querySelector('#category').required = true;
+  document.querySelector('#description').required = false;
     google.maps.event.addDomListener(window, 'load', intilize);
     function intilize() {
-        var autocomplete = new google.maps.places.Autocomplete(document.getElementById("appbundle_event_adresse"));
+        var autocomplete = new google.maps.places.Autocomplete(document.getElementById("adresse"));
 
         google.maps.event.addListener(autocomplete, 'place_changed', function () {
 
@@ -148,6 +146,9 @@ $('#appbundle_event_adresse').prop('placeholder').empty();
     
     <!-- Formulaires de devis -->
      <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
+     <script type="text/javascript" src="{{asset('bundles/app/js/validateEventForm.js')}}"></script>
+
+
 
 {% endblock %}
 

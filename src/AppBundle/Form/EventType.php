@@ -25,7 +25,8 @@ class EventType extends AbstractType
                     'class' => 'AppBundle:Category',
                     'placeholder' => 'Choisir une Catégorie',
                     'choice_label' => 'nom',
-                    'attr' => ['class' => 'mdb-select select-dropdown']
+                    'attr' => ['class' => 'mdb-select select-dropdown',
+                                'id' => 'categoty']
                         // used to render a select box, check boxes or radios
                         // 'multiple' => true,
                         // 'expanded' => true,
@@ -67,7 +68,7 @@ class EventType extends AbstractType
                 ))
               
                       ->add('image', FileType::class, array(
-                    'attr' => ['class' => '']
+                          'multiple' => true,
                 )) ;
     }
 	
@@ -86,7 +87,7 @@ class EventType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_event';
+        return null;
     }
 
 
