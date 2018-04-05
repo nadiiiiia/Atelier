@@ -131,7 +131,7 @@ class Event
     
     /**
      * @var string
-     * @ORM\Column(name="image", type="array")
+     * @ORM\Column(name="image")
      */
     private $image;
     

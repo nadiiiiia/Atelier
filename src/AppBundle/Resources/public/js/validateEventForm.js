@@ -1,32 +1,52 @@
 /*
-Please consider that the JS part isn't production ready at all, I just code it to show the concept of merging filters and titles together !
-*/
-$(document).ready(function(){
-	                $.validator.setDefaults({
-        errorClass:'help-block',
-        highlight: function(element){
+ Please consider that the JS part isn't production ready at all, I just code it to show the concept of merging filters and titles together !
+ */
+$(document).ready(function () {
+
+    $.validator.setDefaults({
+        errorClass: 'error',
+        highlight: function (element) {
             $(element)
-                .closest('.md-form')
-                .addClass('alert-danger')
+                    .closest('.form-control')
+                    .addClass('error')
         },
-        unhighlight: function(element){
+        unhighlight: function (element) {
             $(element)
-                .closest('.form-control')
-                .removeClass('alert-danger')
-        }
+                    .closest('.form-control')
+                    .removeClass('error')
+        },
+        debug: true,
 
     });
+    $("#eventForm").validate({
+        rules: {
+            category: "required",
+            titre: "required",
+            dateDebut: "required",
+            dateFin: "required",
+            prix: "required",
+            nbrMax: "required",
+            adresse: "required",
+            codeP: "required",
+            ville: "required",
+            region: "required",
+            departement: "required",
+            image: "required",
 
-$("#eventForm").validate({
-      rules: {
-    
-	 titre:"required",
-
-		  },
-   messages: {
-     titre: "Veuillez tapper votre nom",
-
-	 
-   }
-});
+        },
+        messages: {
+            category: "Veuillez choisir une catégorie",
+            titre: "Veuillez saisir un titre",
+            dateDebut: "Veuillez choisir la date de début",
+            dateFin: "Veuillez choisir la date de fin",
+            prix: "Veuillez tapper le prix",
+            nbrMax: "Veuillez saisir le nombre max des participants",
+            adresse: "Veuillez saisir l'adresse",
+            codeP: "Veuillez saisir le code postale",
+            ville: "Veuillez saisir une ville",
+            region: "Veuillez saisir une région",
+            departement: "Veuillez saisir un département",
+            image: "Veuillez insérer une image",
+        }
+    });
 });

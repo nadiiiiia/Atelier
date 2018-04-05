@@ -23,7 +23,7 @@ class EventType extends AbstractType
                 ->add('category', EntityType::class, array(
                     // looks for choices from this entity
                     'class' => 'AppBundle:Category',
-                    'placeholder' => 'Choisir une Catégorie',
+                   // 'placeholder' => 'Choisir une Catégorie',
                     'choice_label' => 'nom',
                     'attr' => ['class' => 'mdb-select select-dropdown',
                                 'id' => 'categoty']
@@ -31,10 +31,11 @@ class EventType extends AbstractType
                         // 'multiple' => true,
                         // 'expanded' => true,
                 ))
-                ->add('titre')
+                ->add('titre', TextType::class, array(
+                    'attr' => array( 'class' => 'form-control','placeholder'=>'Titre')))
                 // ->add('description')
                 ->add('description', TextareaType::class, array(
-                    'attr' => array('class' => 'form-control md-textarea')))
+                    'attr' => array('class' => 'form-control md-textarea','placeholder' => 'Description',)))
                //     ->add('dateCreation')
                 ->add('dateDebut', TextType::class, array(
                     'attr' => array( 'class' => 'form-control date-fr floating-label')))
