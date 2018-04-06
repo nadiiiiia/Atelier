@@ -11,7 +11,7 @@
 
         <!--Grid column-->
         <div class="col-md-10 mb-r pb-5">
-            <h2>Nouveau Evénémént</h2>
+            <h2>Nouveau Événement</h2>
             <br>
 
             <div class="card">
@@ -22,72 +22,72 @@
                     <!--Body-->
 
                     <div class="md-form">
-                         
+
                         {{form_widget(form.category) }}
-                        <div class="error-msg"></div>
+                        <span class="error-msg"></span>
                     </div>
 
                     <div class="md-form">
-                    
+                         {{ form_label(form.titre) }}
                         {{form_widget(form.titre) }}
-               <div class="error-msg"></div>
+                        <span class="error-msg"></span>
                     </div>
 
                     <div class="md-form">
-                        
+                        {{ form_label(form.description) }}
                         {{form_widget(form.description) }}
-                       <div class="error-msg"></div>
+                        <span class="error-msg"></span>
                     </div>
 
                     <div class="md-form ">
-                        {{ form_label(form.dateDebut) }}
+                         {{ form_label(form.dateDebut) }}
                         {{form_widget(form.dateDebut) }}
-                        <div class="error-msg"></div>
+                        <span class="error-msg"></span>
                     </div>
                     <div class="md-form">
-                        {{ form_label(form.dateFin) }}
+                          {{ form_label(form.dateFin) }}
                         {{form_widget(form.dateFin) }}
-                        <div class="error-msg"></div>
+                        <span class="error-msg"></span>
                     </div>
 
                     <div class="md-form">
-                        {{ form_label(form.prix) }}
+                         {{ form_label(form.prix) }}
                         {{form_widget(form.prix) }}
-                      <div class="error-msg"></div>
+                        <span class="error-msg"></span>
                     </div>
                     <div class="md-form">
                         {{ form_label(form.nbrMax) }}
                         {{form_widget(form.nbrMax) }}
-                    <div class="error-msg"></div>
+                        <span class="error-msg"></span>
                     </div>
 
                     <div class="md-form"> 
                         {{ form_label(form.adresse) }}
                         {{form_widget(form.adresse) }}
-                        <div class="error-msg"></div>
+                        <span class="error-msg"></span>
                     </div>
 
                     <div class="md-form"> 
-                        {{ form_label(form.codeP) }}
+                         {{ form_label(form.codeP) }}
                         {{form_widget(form.codeP) }}
-                        <div class="error-msg"></div>
+                        <span class="error-msg"></span>
                     </div>
                     <div class="md-form"> 
                         {{form_widget(form.ville) }}
-                        <div class="error-msg"></div>
+                        <span class="error-msg"></span>
                     </div>
                     <div class="md-form"> 
                         {{form_widget(form.region) }}
-                        <div class="error-msg"></div>
+                        <span class="error-msg"></span>
                     </div>
                     <div class="md-form"> 
                         {{form_widget(form.departement) }}
-                       <div class="error-msg"></div>
+                        <span class="error-msg"></span>
                     </div>
                     <div class="md-form"> 
 
                         {{form_widget(form.image) }}
-                        <div class="error-msg"></div>
+                        <span class="error-msg"></span>
                     </div>
 
 
@@ -116,34 +116,35 @@
         <!--Grid column-->
 
     </div>
-            
-                <!-- Google Map -->	
+
+    <!-- Google Map -->	
     <script src="http://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places&key=AIzaSyBdI6hYrzRf5QMgKGj8RQsEeLE9bS-1vOQ"></script>
 
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
-     document.querySelector('#category').required = true;
-  document.querySelector('#description').required = false;
-    google.maps.event.addDomListener(window, 'load', intilize);
-    function intilize() {
-        var autocomplete = new google.maps.places.Autocomplete(document.getElementById("adresse"));
+        //   document.querySelector('#category').required = true;
+        document.querySelector('#description').required = false;
+        google.maps.event.addDomListener(window, 'load', intilize);
+        function intilize() {
+            var autocomplete = new google.maps.places.Autocomplete(document.getElementById("adresse"));
 
-        google.maps.event.addListener(autocomplete, 'place_changed', function () {
+            google.maps.event.addListener(autocomplete, 'place_changed', function () {
 
-        var place = autocomplete.getPlace();
-      
-        var location = "Address: " + place.formatted_address + "<br/>";
-            location += "Latitude: " + place.geometry.location.lat() + "<br/>";
-            location += "Longitude: " + place.geometry.location.lng();
-              
-        document.getElementById('lblresult').innerHTML = location
-        });
+                var place = autocomplete.getPlace();
 
-    };
+                var location = "Address: " + place.formatted_address + "<br/>";
+                location += "Latitude: " + place.geometry.location.lat() + "<br/>";
+                location += "Longitude: " + place.geometry.location.lng();
+
+        {#        document.getElementById('lblresult').innerHTML = location#}
+            });
+
+        }
+        ;
 
     </script>
-    
+
 {% endblock %}
 
 

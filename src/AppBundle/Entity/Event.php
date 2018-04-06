@@ -67,9 +67,9 @@ class Event
 
 
     /**
-     * @var string
+     * @var float
      *
-     * @ORM\Column(name="prix", type="string", length=45)
+     * @ORM\Column(name="prix", type="float", length=45)
      */
     private $prix;
 
@@ -279,7 +279,7 @@ class Event
     /**
      * Set prix
      *
-     * @param string $prix
+     * @param float $prix
      *
      * @return Event
      */
@@ -293,7 +293,7 @@ class Event
     /**
      * Get prix
      *
-     * @return string
+     * @return float
      */
     public function getPrix()
     {

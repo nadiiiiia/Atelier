@@ -67,9 +67,9 @@ class Event
 
 
     /**
-     * @var string
+     * @var float
      *
-     * @ORM\Column(name="prix", type="string", length=45)
+     * @ORM\Column(name="prix", type="float", length=45)
      */
     private $prix;
 
@@ -131,7 +131,7 @@ class Event
     
     /**
      * @var string
-     * @ORM\Column(name="image", type="string", length=255)
+     * @ORM\Column(name="image")
      */
     private $image;
     
@@ -279,7 +279,7 @@ class Event
     /**
      * Set prix
      *
-     * @param string $prix
+     * @param float $prix
      *
      * @return Event
      */
@@ -293,7 +293,7 @@ class Event
     /**
      * Get prix
      *
-     * @return string
+     * @return float
      */
     public function getPrix()
     {
@@ -532,5 +532,29 @@ class Event
     public function getImage()
     {
         return $this->image;
+    }
+
+    /**
+     * Set utilisateur
+     *
+     * @param \AppBundle\Entity\User $utilisateur
+     *
+     * @return Event
+     */
+    public function setUtilisateur(\AppBundle\Entity\User $utilisateur = null)
+    {
+        $this->utilisateur = $utilisateur;
+
+        return $this;
+    }
+
+    /**
+     * Get utilisateur
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getUtilisateur()
+    {
+        return $this->utilisateur;
     }
 }

@@ -4,7 +4,7 @@
 $(document).ready(function () {
 
     $.validator.setDefaults({
-        errorClass: 'error',
+
         highlight: function (element) {
             $(element)
                     .closest('.form-control')
@@ -15,10 +15,12 @@ $(document).ready(function () {
                     .closest('.form-control')
                     .removeClass('error')
         },
-        debug: true,
+        debug: false,
 
     });
     $("#eventForm").validate({
+                errorElement: 'span',
+        errorClass: 'error',
         rules: {
             category: "required",
             titre: "required",

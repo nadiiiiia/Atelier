@@ -148,8 +148,8 @@ input[type=date]:focus:not([readonly]), input[type=datetime-local]:focus:not([re
 
 /*validation form*/
 
-.md-form #category-error #titre-error #dateDebut-error #dateFin-error prix-error #nbrMax-error
-#adresse-error  #codeP-error #ville-error #region-error #departement-error #image-error{
+.error{
+        font-size: 13px;
       color: #f44336;
       opacity: 1; 
    }
