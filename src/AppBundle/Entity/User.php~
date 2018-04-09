@@ -20,12 +20,17 @@ class User extends BaseUser
      */
     protected $id;
     
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    protected $organizer;
+    /** @ORM\Column(name="facebookId", type="string", length=255, nullable=true) */
+    protected $facebookID;
 	
-
+    /** @ORM\Column(name="facebook_access_token", type="string", length=255, nullable=true) */
+    protected $facebook_access_token;
+	
+    /** @ORM\Column(name="googleId", type="string", length=255, nullable=true) */
+    protected $googleID;
+	
+    /** @ORM\Column(name="google_access_token", type="string", length=255, nullable=true) */
+    protected $google_access_token;
     
     /**
      *
@@ -34,17 +39,12 @@ class User extends BaseUser
      */
     private $events;
 	
-    /**
-     * @var array
-     */
-    protected $roles;
+ 
 
     public function __construct()
     {
         parent::__construct();
         $this->events = new ArrayCollection();
-		  $this->roles = array();
-		
 		
     }
 
@@ -83,51 +83,6 @@ class User extends BaseUser
     }
 
 
-    /**
-     * Set organizer
-	 *
-     * @param string $organizer
-     *
-     * @return User
-     */
-    public function setOrganizer($organizer)
-    {
-        $this->organizer = $organizer;
 
-        return $this;
-    }
 
-    /**
-     * Get organizer
-     *
-     * @return boolean
-     */
-    public function getOrganizer()
-    {
-        return $this->organizer;
-    }
-
-    /**
-     * Set role
-     *
-     * @param string $role
-     *
-     * @return User
-     */
-    public function setRole($role)
-    {
-        $this->role = $role;
-
-        return $this;
-    }
-
-    /**
-     * Get role
-     *
-     * @return string
-     */
-    public function getRole()
-    {
-        return $this->role;
-    }
 }
