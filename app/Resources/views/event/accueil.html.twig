@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
- {#  {{ dump(events_json)}}#}
+    {#  {{ dump(events_json)}}#}
     <main>
         <!--Main layout-->
         <div class="container">
@@ -42,7 +42,12 @@
                                 <h4 class="card-title"><strong><a href="{{ path('presentation',{'id': event.id})}}" class="">{{event.titre}}</a></strong></h4>
 
                                 <!--Description-->
-                                <p class="card-text">{{event.description|raw}}
+                                <p class="card-text">{#{{event.description|slice(0, 30) ~ '...' }}#}
+                                    {%if event.description | length < 35 %}
+                                        {{event.description|raw }}
+                                    {% else %}
+                                        {{ event.description|slice(0, 35) }} <a href="{{ path('presentation',{'id': event.id})}}" class=""> ... </a>
+                                    {% endif %}
                                 </p>
 
 
@@ -105,15 +110,15 @@
 
 
             <hr>
-			 <!--Pagination-->
-			  <nav class="row flex-center wow fadeIn" data-wow-delay="0.2s">
-<div class="navigation">
-    {{ knp_pagination_render(events) }}
-</div>
-</nav>
-  <!--/.Pagination-->
+            <!--Pagination-->
+            <nav class="row flex-center wow fadeIn" data-wow-delay="0.2s">
+                <div class="navigation">
+                    {{ knp_pagination_render(events) }}
+                </div>
+            </nav>
+            <!--/.Pagination-->
 
-        
+
         </div>
         <!--/.Main layout-->
     </main>
@@ -122,65 +127,65 @@
 
 {% block javascripts %}
 
-   {# <script type="text/javascript">
-      function initMap() {
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 16,
-          
+    {# <script type="text/javascript">
+       function initMap() {
+         var map = new google.maps.Map(document.getElementById('map'), {
+           zoom: 16,
+           
+         });
+         var geocoder = new google.maps.Geocoder();
+           geocodeAddress(geocoder, map);
+       }
+ 
+       function geocodeAddress(geocoder, resultsMap) {
+         var address = '{{event.adresse}},  '+'{{event.ville}}';
+         var title= '{{event.titre}}';
+         geocoder.geocode({'address': address}, function(results, status) {
+           if (status === 'OK') {
+             resultsMap.setCenter(results[0].geometry.location);
+             var marker = new google.maps.Marker({
+               map: resultsMap,
+               position: results[0].geometry.location,
+               title: '{{event.titre}}',
+               animation: google.maps.Animation.DROP,    
+               address: '{{event.adresse}}',           
+             })
+           infoWindow(marker, map, title, address);
+           } else {
+             alert('Geocode was not successful for the following reason: ' + status);
+           }
+         });
+       }
+      var iw; 
+       function infoWindow(marker, map, title, address) {
+     google.maps.event.addListener(marker, 'click', function () {
+         var html = "<div><h3>" + title + "</h3><p>" + address + "<br></div> ";
+         iw = new google.maps.InfoWindow({
+             content: html,
+             maxWidth: 350
+         });
+         iw.open(map, marker);
+     });
+         google.maps.event.addListener(marker, 'click', function () {
+     
+        // iw.close();
+     });
+ 
+ }
+ 
+     </script>#}
+    <script type="text/javascript">
+        $(document).ready(function ()
+        {
+
+
+
+
         });
-        var geocoder = new google.maps.Geocoder();
-          geocodeAddress(geocoder, map);
-      }
 
-      function geocodeAddress(geocoder, resultsMap) {
-        var address = '{{event.adresse}},  '+'{{event.ville}}';
-        var title= '{{event.titre}}';
-        geocoder.geocode({'address': address}, function(results, status) {
-          if (status === 'OK') {
-            resultsMap.setCenter(results[0].geometry.location);
-            var marker = new google.maps.Marker({
-              map: resultsMap,
-              position: results[0].geometry.location,
-              title: '{{event.titre}}',
-              animation: google.maps.Animation.DROP,    
-              address: '{{event.adresse}}',           
-            })
-          infoWindow(marker, map, title, address);
-          } else {
-            alert('Geocode was not successful for the following reason: ' + status);
-          }
-        });
-      }
-     var iw; 
-      function infoWindow(marker, map, title, address) {
-    google.maps.event.addListener(marker, 'click', function () {
-        var html = "<div><h3>" + title + "</h3><p>" + address + "<br></div> ";
-        iw = new google.maps.InfoWindow({
-            content: html,
-            maxWidth: 350
-        });
-        iw.open(map, marker);
-    });
-        google.maps.event.addListener(marker, 'click', function () {
-    
-       // iw.close();
-    });
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdI6hYrzRf5QMgKGj8RQsEeLE9bS-1vOQ&callback=initMap">
 
-}
-
-    </script>#}
-   <script type="text/javascript">
-    $(document).ready(function ()
-    {
-
-
-
-   
-    });
-
-</script>
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdI6hYrzRf5QMgKGj8RQsEeLE9bS-1vOQ&callback=initMap">
-       
     </script>
 {% endblock %}
 
