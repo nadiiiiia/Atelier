@@ -14,7 +14,15 @@ class RegistrationType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
 
-        $builder->add('roles', CollectionType::class, array(
+        $builder->add('first_name', TextType::class, array(
+                    'attr' => array('class' => 'form-control'), 
+                    'label' => 'Prénom'
+                    ))
+                ->add('last_name', TextType::class, array(
+                    'attr' => array('class' => 'form-control'), 
+                    'label' => 'Nom'
+                    ))
+                ->add('roles', CollectionType::class, array(
                     'entry_type' => ChoiceType::class,
                     'entry_options' => array(
                         'attr' => array('class' => 'mdb-select select-dropdown'),

@@ -1,4 +1,5 @@
 <?php
+
 // src/AppBundle/Entity/User.php
 
 namespace AppBundle\Entity;
@@ -11,41 +12,47 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Entity
  * @ORM\Table(name="atl_user")
  */
-class User extends BaseUser
-{
+class User extends BaseUser {
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-    
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $first_name;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $last_name;
+
     /** @ORM\Column(name="facebookId", type="string", length=255, nullable=true) */
     protected $facebookID;
-	
+
     /** @ORM\Column(name="facebook_access_token", type="string", length=255, nullable=true) */
     protected $facebook_access_token;
-	
+
     /** @ORM\Column(name="googleId", type="string", length=255, nullable=true) */
     protected $googleID;
-	
+
     /** @ORM\Column(name="google_access_token", type="string", length=255, nullable=true) */
     protected $google_access_token;
-    
+
     /**
      *
      * @ORM\OneToMany(targetEntity="Event",mappedBy="utilisateur", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $events;
-	
- 
 
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
         $this->events = new ArrayCollection();
-		
     }
 
     /**
@@ -55,8 +62,7 @@ class User extends BaseUser
      *
      * @return User
      */
-    public function addEvent(\AppBundle\Entity\Event $event)
-    {
+    public function addEvent(\AppBundle\Entity\Event $event) {
         $this->events[] = $event;
 
         return $this;
@@ -67,8 +73,7 @@ class User extends BaseUser
      *
      * @param \AppBundle\Entity\Event $event
      */
-    public function removeEvent(\AppBundle\Entity\Event $event)
-    {
+    public function removeEvent(\AppBundle\Entity\Event $event) {
         $this->events->removeElement($event);
     }
 
@@ -77,14 +82,9 @@ class User extends BaseUser
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getEvents()
-    {
+    public function getEvents() {
         return $this->events;
     }
-
-
-
-
 
     /**
      * Set facebookID
@@ -93,8 +93,7 @@ class User extends BaseUser
      *
      * @return User
      */
-    public function setFacebookID($facebookID)
-    {
+    public function setFacebookID($facebookID) {
         $this->facebookID = $facebookID;
 
         return $this;
@@ -105,8 +104,7 @@ class User extends BaseUser
      *
      * @return string
      */
-    public function getFacebookID()
-    {
+    public function getFacebookID() {
         return $this->facebookID;
     }
 
@@ -117,8 +115,7 @@ class User extends BaseUser
      *
      * @return User
      */
-    public function setFacebookAccessToken($facebookAccessToken)
-    {
+    public function setFacebookAccessToken($facebookAccessToken) {
         $this->facebook_access_token = $facebookAccessToken;
 
         return $this;
@@ -129,8 +126,7 @@ class User extends BaseUser
      *
      * @return string
      */
-    public function getFacebookAccessToken()
-    {
+    public function getFacebookAccessToken() {
         return $this->facebook_access_token;
     }
 
@@ -141,8 +137,7 @@ class User extends BaseUser
      *
      * @return User
      */
-    public function setGoogleID($googleID)
-    {
+    public function setGoogleID($googleID) {
         $this->googleID = $googleID;
 
         return $this;
@@ -153,8 +148,7 @@ class User extends BaseUser
      *
      * @return string
      */
-    public function getGoogleID()
-    {
+    public function getGoogleID() {
         return $this->googleID;
     }
 
@@ -165,8 +159,7 @@ class User extends BaseUser
      *
      * @return User
      */
-    public function setGoogleAccessToken($googleAccessToken)
-    {
+    public function setGoogleAccessToken($googleAccessToken) {
         $this->google_access_token = $googleAccessToken;
 
         return $this;
@@ -177,8 +170,56 @@ class User extends BaseUser
      *
      * @return string
      */
-    public function getGoogleAccessToken()
-    {
+    public function getGoogleAccessToken() {
         return $this->google_access_token;
+    }
+
+
+    /**
+     * Set firstName
+     *
+     * @param string $firstName
+     *
+     * @return User
+     */
+    public function setFirstName($firstName)
+    {
+        $this->first_name = $firstName;
+
+        return $this;
+    }
+
+    /**
+     * Get firstName
+     *
+     * @return string
+     */
+    public function getFirstName()
+    {
+        return $this->first_name;
+    }
+
+    /**
+     * Set lastName
+     *
+     * @param string $lastName
+     *
+     * @return User
+     */
+    public function setLastName($lastName)
+    {
+        $this->last_name = $lastName;
+
+        return $this;
+    }
+
+    /**
+     * Get lastName
+     *
+     * @return string
+     */
+    public function getLastName()
+    {
+        return $this->last_name;
     }
 }
