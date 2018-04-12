@@ -17,15 +17,18 @@ security:
             pattern: ^/
             
             oauth:
-                failure_path: /connect
-                login_path: /login$
-                check_path: /connect_check
-                provider: fos_userbundle
                 resource_owners:
-                    facebook: "/login/check-facebook"
-                    google: "/login/check-google"
+                    facebook:           "/secured/login_facebook"
+                    google:           "/secured/login_google"
+                login_path:        fos_user_security_login
+                failure_path:      fos_user_security_login
+
                 oauth_user_provider:
-                    service: app.provider.oauth
+                    service: my.oauth_aware.user_provider.service
+            anonymous:    true  
+            logout:       true            
+           
+                    
                                 
             form_login:
                 provider: fos_userbundle

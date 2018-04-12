@@ -16,7 +16,7 @@ hwi_oauth_login:
     prefix:   /connect
     
 facebook_login:
-    path: /login/check-facebook
+    path: /secured/login_facebook
 
 google_login:
-    path: /login/check-google
+    path: /secured/login_google
