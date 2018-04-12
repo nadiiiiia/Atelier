@@ -55,5 +55,5 @@ services:
         class: AppBundle\Security\Provider\MyFOSUBProvider
         arguments:
             - '@fos_user.user_manager'
-            - { facebook: facebookId, google: googleId }
+            - { facebook: facebookId, google: googleId, twitter: twitterId }
             - '@doctrine'

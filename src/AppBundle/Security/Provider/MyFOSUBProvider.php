@@ -46,13 +46,17 @@ class MyFOSUBProvider extends FOSUBUserProvider
             if ($property == "googleId") {
                 $existing->setGoogleId($username);
             }
+            // in case of Twitter login, update the Twitter_id
+            if ($property == "twitterId") {
+                $existing->setTwitterId($username);
+            }
             $this->userManager->updateUser($existing);
 
             return $existing;
         }
 
         // if we don't know the user, create it
-        if (null === $user || null === $username) {
+        if (null === $user || null === $username ) {
             /** @var User $user */
             $user = $this->userManager->createUser();
             $nick = $username;
@@ -71,6 +75,9 @@ class MyFOSUBProvider extends FOSUBUserProvider
             }
             if ($property == "googleId") {
                 $user->setGoogleId($username);
+            }
+            if ($property == "twitterId") {
+                $user->setTwitterId($username);
             }
         }
 

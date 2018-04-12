@@ -40,6 +40,11 @@ class User extends BaseUser {
      * @ORM\Column(type="string", name="google_id", nullable=true)
      */
     protected $googleId;
+    
+    /**
+     * @ORM\Column(type="string", name="twitter_id", nullable=true)
+     */
+    protected $twitterId;
 
 
     /**
@@ -166,5 +171,21 @@ class User extends BaseUser {
     public function setGoogleId($googleId)
     {
         $this->googleId = $googleId;
+    }
+    
+    /**
+     * @return mixed
+     */
+    public function getTwitterId()
+    {
+        return $this->twitterId;
+    }
+
+    /**
+     * @param mixed $twitterId
+     */
+    public function setTwitterId($twitterId)
+    {
+        $this->twitterId = $twitterId;
     }
 }
