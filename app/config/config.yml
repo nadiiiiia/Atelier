@@ -122,14 +122,19 @@ hwi_oauth:
             client_id:           "%google_client_id%"
             client_secret:       "%google_client_secret%"
             scope:               "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
+            options:
+                csrf: true
         twitter:
             type:                twitter
             client_id:           %twitter_client_id% 
             client_secret:       %twitter_client_secret%
             infos_url:           "https://api.twitter.com/1.1/account/verify_credentials.json?include_email=true"
             scope:               "email"
+            options:
+                csrf: true
             paths:
                 profilepicture: profile_image_url_https
                 firstname: name
+                lastname: name
                 email: email
                 username: screen_name

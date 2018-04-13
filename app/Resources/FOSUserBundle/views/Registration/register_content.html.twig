@@ -87,21 +87,22 @@
                     <h4>Ou</h4>
 
                     <h5>Se connecter avec:</h5>
-                    <span>
-                        <!--Facebook-->
-                        <a href="#" type="button" class="btn-floating btn-fb waves-effect waves-light">
-                            <i class="fa fa-facebook"></i>
-                        </a>
-                        <!--Twitter-->
-                        {#<a href="#" type="button" class="btn-floating btn-tw waves-effect waves-light">
-                            <i class="fa fa-twitter"></i>
-                        </a>#}
-                        <!--Google +-->
-                        <a href="#" type="button" class="btn-floating btn-gplus waves-effect waves-light">
-                            <i class="fa fa-google-plus"></i>
-                        </a>
+                          <span>
+                            <!--Facebook-->
+                            <a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook' }) }}" type="button" class="btn-floating btn-fb waves-effect waves-light">
+                                <i class="fa fa-facebook"></i>
+                            </a>
+                            <!--Google +-->
+                            <a href="{{ path('hwi_oauth_service_redirect', {'service': 'google' }) }}" type="button" class="btn-floating btn-gplus waves-effect waves-light">
+                                <i class="fa fa-google-plus"></i>
+                            </a>
+                            <!--Twitter-->
+                            <a href="{{ path('hwi_oauth_service_redirect', {'service': 'twitter' }) }}" type="button" class="btn-floating btn-tw waves-effect waves-light">
+                                <i class="fa fa-twitter"></i>
+                            </a>
 
-                    </span>
+
+                        </span>
                 </div>
                 <div class="options text-right">
                     <hr>
