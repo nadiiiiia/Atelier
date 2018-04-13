@@ -33,6 +33,7 @@
         "symfony/swiftmailer-bundle": "^2.6.4",
         "symfony/symfony": "3.4.*",
         "symfony/templating": "^3.4",
+        "symfony/validator": "^3.4",
         "twig/twig": "^1.0||^2.0"
     },
     "require-dev": {
@@ -69,7 +70,8 @@
         "symfony-tests-dir": "tests",
         "symfony-assets-install": "relative",
         "incenteev-parameters": {
-            "file": "app/config/parameters.yml"
+            "file": "app/config/parameters.yml",
+            "keep-outdated": true
         },
         "branch-alias": {
             "dev-master": "3.4-dev"
