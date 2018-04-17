@@ -50,6 +50,7 @@ class EventUserController extends Controller {
         3 /*limit per page*/
     );
     
+    
     $events_json = $this->get('jms_serializer')->serialize($findEvents, 'json');
 	
         switch ($type) {
@@ -66,9 +67,65 @@ class EventUserController extends Controller {
     }
 
 
+    /**
+     * @Route("/price_min", name="sortMin")
+     * @param Request $request
+     */
+    public function sortMinAction(Request $request) {
+        //dump($type,$value);die;
+        $em = $this->getDoctrine()->getManager();
+        $findEvents = $em->getRepository('AppBundle:Event')->sortByMinPrice();
+     
+     $paginator  = $this->get('knp_paginator');
+    $pagination = $paginator->paginate(
+        $findEvents, 
+        $request->query->getInt('page', 1)/*page number*/,
+        3 /*limit per page*/
+    );
+    
+     $events_json = $this->get('jms_serializer')->serialize($findEvents, 'json');
+     return $this->render('event/categorie.html.twig', array('events' => $pagination, 'events_json'=>$events_json));
+    }
 
+        /**
+     * @Route("/price_max", name="sortMax")
+     * @param Request $request
+     */
+    public function sortMaxAction(Request $request) {
+        //dump($type,$value);die;
+        $em = $this->getDoctrine()->getManager();
+        $findEvents = $em->getRepository('AppBundle:Event')->sortByMaxPrice();
+     
+     $paginator  = $this->get('knp_paginator');
+    $pagination = $paginator->paginate(
+        $findEvents, 
+        $request->query->getInt('page', 1)/*page number*/,
+        3 /*limit per page*/
+    );
+    
+     $events_json = $this->get('jms_serializer')->serialize($findEvents, 'json');
+     return $this->render('event/categorie.html.twig', array('events' => $pagination, 'events_json'=>$events_json));
+    }
 
-
+        /**
+     * @Route("/max_participants", name="sortMaxParticipants")
+     * @param Request $request
+     */
+    public function sortMaxParticipants(Request $request) {
+        //dump($type,$value);die;
+        $em = $this->getDoctrine()->getManager();
+        $findEvents = $em->getRepository('AppBundle:Event')->sortByParticipants();
+     
+     $paginator  = $this->get('knp_paginator');
+    $pagination = $paginator->paginate(
+        $findEvents, 
+        $request->query->getInt('page', 1)/*page number*/,
+        3 /*limit per page*/
+    );
+    
+     $events_json = $this->get('jms_serializer')->serialize($findEvents, 'json');
+     return $this->render('event/categorie.html.twig', array('events' => $pagination, 'events_json'=>$events_json));
+    }
     /**
      * @Route("/event_show/{id}", name="presentation")
      */

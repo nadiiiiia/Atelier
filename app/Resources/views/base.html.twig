@@ -67,6 +67,7 @@
                                     {{ render(controller('AppBundle:Departement:menu')) }}
                                 </div>
                             </li>
+       
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Comment ça marche ?</a>
                             </li>
@@ -132,6 +133,20 @@
         </header>
 
         <main>
+            <div class="dropdown show">
+
+                        <!--Trigger-->
+                        <button class="btn btn-sm btn-mdb-color dropdown-toggle waves-effect waves-light" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Trier par </button>
+
+                        <!--Menu-->
+                        <div class="dropdown-menu dropdown-mdb-color" x-placement="top-start" style="position: absolute; transform: translate3d(69px, -163px, 0px); top: 0px; left: 0px; will-change: transform;">
+                            <a class="dropdown-item" href="{{ path('sortMin') }}">Prix (Moins cher)</a>
+                            <a class="dropdown-item" href="{{ path('sortMax') }}">Prix ( Plus cher)</a>
+                            <a class="dropdown-item" href="#">Plus Proche</a>
+                            <a class="dropdown-item" href="{{ path('sortMaxParticipants') }}">Plus avancé</a>
+                        </div>
+
+                    </div>
             <!--Main layout-->
             <div class="container">
                 {%  include 'modals/searchModal.html.twig' %}

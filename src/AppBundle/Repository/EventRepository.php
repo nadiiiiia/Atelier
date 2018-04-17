@@ -24,5 +24,41 @@ class EventRepository extends \Doctrine\ORM\EntityRepository
                        
           
     }
+         public function sortByMinPrice()
+            
+    {
+        $query = $this->createQueryBuilder('u')
+               -> select('u')
+               ->orderBy('u.prix', 'ASC') 
+               ->getQuery();
+        
+         return $query->getResult();
+                       
+          
+    }
+    
+             public function sortByMaxPrice()
+            
+    {
+        $query = $this->createQueryBuilder('u')
+               -> select('u')
+               ->orderBy('u.prix', 'DESC') 
+               ->getQuery();
+        
+         return $query->getResult();
+                 
+    }
+    
+                 public function sortByParticipants()
+            
+    {
+        $query = $this->createQueryBuilder('u')
+               -> select('u')
+               ->orderBy('u.nbrParticipants', 'DESC') 
+               ->getQuery();
+        
+         return $query->getResult();
+                 
+    }
 
 }

@@ -4,7 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Validator\Constraints as Asserts;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Event
@@ -24,7 +24,7 @@ class Event
     private $id;
 	    
     /**
-     *
+     * @Assert\NotNull()
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="events", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
@@ -79,7 +79,13 @@ class Event
      * @ORM\Column(name="nbr_max", type="integer")
      */
     private $nbrMax;
-
+    
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="nbr_participants", type="integer")
+     */
+    private $nbrParticipants;
     
 
     
@@ -141,6 +147,7 @@ class Event
        
        // $this->dateCreation = new \DateTime("now");  // get current date and time
         $this->credits = new ArrayCollection();
+        $this->nbrParticipants = 0 ;
       
        
     }

@@ -79,7 +79,13 @@ class Event
      * @ORM\Column(name="nbr_max", type="integer")
      */
     private $nbrMax;
-
+    
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="nbr_participants", type="integer")
+     */
+    private $nbrParticipants;
     
 
     
@@ -141,6 +147,7 @@ class Event
        
        // $this->dateCreation = new \DateTime("now");  // get current date and time
         $this->credits = new ArrayCollection();
+        $this->nbrParticipants = 0 ;
       
        
     }
@@ -556,5 +563,29 @@ class Event
     public function getUtilisateur()
     {
         return $this->utilisateur;
+    }
+
+    /**
+     * Set nbrParticipants
+     *
+     * @param integer $nbrParticipants
+     *
+     * @return Event
+     */
+    public function setNbrParticipants($nbrParticipants)
+    {
+        $this->nbrParticipants = $nbrParticipants;
+
+        return $this;
+    }
+
+    /**
+     * Get nbrParticipants
+     *
+     * @return integer
+     */
+    public function getNbrParticipants()
+    {
+        return $this->nbrParticipants;
     }
 }
