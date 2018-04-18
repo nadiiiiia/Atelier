@@ -46,6 +46,15 @@ class User extends BaseUser {
      */
     protected $twitterId;
 
+    /**
+     * @ORM\Column(type="float", name="lng", nullable=true)
+     */
+    protected $lng;
+    
+     /**
+     * @ORM\Column(type="float", name="lat", nullable=true)
+     */
+    protected $lat;
 
     /**
      *
@@ -187,5 +196,53 @@ class User extends BaseUser {
     public function setTwitterId($twitterId)
     {
         $this->twitterId = $twitterId;
+    }
+
+    /**
+     * Set lng
+     *
+     * @param float $lng
+     *
+     * @return User
+     */
+    public function setLng($lng)
+    {
+        $this->lng = $lng;
+
+        return $this;
+    }
+
+    /**
+     * Get lng
+     *
+     * @return float
+     */
+    public function getLng()
+    {
+        return $this->lng;
+    }
+
+    /**
+     * Set lat
+     *
+     * @param float $lat
+     *
+     * @return User
+     */
+    public function setLat($lat)
+    {
+        $this->lat = $lat;
+
+        return $this;
+    }
+
+    /**
+     * Get lat
+     *
+     * @return float
+     */
+    public function getLat()
+    {
+        return $this->lat;
     }
 }

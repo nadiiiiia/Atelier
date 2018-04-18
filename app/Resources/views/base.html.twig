@@ -67,7 +67,7 @@
                                     {{ render(controller('AppBundle:Departement:menu')) }}
                                 </div>
                             </li>
-       
+
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Comment ça marche ?</a>
                             </li>
@@ -94,7 +94,7 @@
                                     <i class="fa fa-search"></i> 
                                 </a> 
                             </li>
-                              
+
                             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                                 <li class="nav-item"  style="padding-left: .5rem; padding-top: .5rem;">
                                     <span style="color:white;"> Bienvenu  </span>
@@ -135,24 +135,31 @@
         <main>
             <div class="dropdown show">
 
-                        <!--Trigger-->
-                        <button class="btn btn-sm btn-mdb-color dropdown-toggle waves-effect waves-light" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Trier par </button>
+                <!--Trigger-->
+                <button class="btn btn-sm btn-mdb-color dropdown-toggle waves-effect waves-light" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Trier par </button>
 
-                        <!--Menu-->
-                        <div class="dropdown-menu dropdown-mdb-color" x-placement="top-start" style="position: absolute; transform: translate3d(69px, -163px, 0px); top: 0px; left: 0px; will-change: transform;">
-                            <a class="dropdown-item" href="{{ path('sortMin') }}">Prix (Moins cher)</a>
-                            <a class="dropdown-item" href="{{ path('sortMax') }}">Prix ( Plus cher)</a>
-                            <a class="dropdown-item" href="#">Plus Proche</a>
-                            <a class="dropdown-item" href="{{ path('sortMaxParticipants') }}">Plus avancé</a>
-                        </div>
+                <!--Menu-->
+                <div class="dropdown-menu dropdown-mdb-color" x-placement="top-start" style="position: absolute; transform: translate3d(69px, -163px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item" href="{{ path('sortMin') }}">Prix (Moins cher)</a>
+                    <a class="dropdown-item" href="{{ path('sortMax') }}">Prix ( Plus cher)</a>
+                    <a class="dropdown-item" href="#">Plus Proche</a>
+                    <a class="dropdown-item" href="{{ path('sortMaxParticipants') }}">Plus avancé</a>
+                </div>
 
-                    </div>
-            <!--Main layout-->
-            <div class="container">
-                {%  include 'modals/searchModal.html.twig' %}
-            {% block style %}{% endblock %}
-        {% block body %}{% endblock %}
-    {% block javascripts %}{% endblock %}
+            </div>
+
+            <button id="location-btn" > Click me </button>
+            <p>Address: <div id="address"></div></p>
+        <p>longitude: <div id="longitude"></div></p>
+    <p>latitude: <div id="latitude"></div></p>
+        
+
+<!--Main layout-->
+<div class="container">
+    {%  include 'modals/searchModal.html.twig' %}
+{% block style %}{% endblock %}
+{% block body %}{% endblock %}
+{% block javascripts %}{% endblock %}
 </div>
 <!--/.Main layout-->
 </main>
@@ -295,6 +302,70 @@
                 });
 
 
+    });
+
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdI6hYrzRf5QMgKGj8RQsEeLE9bS-1vOQ&callback=initMap">
+</script>
+<script type="text/javascript" charset="utf-8">
+
+    $("#location-btn").click(function () {
+        var currgeocoder;
+        var user_lng;
+        var user_lat;
+
+        //Set geo location lat and long
+
+        navigator.geolocation.getCurrentPosition(function (position, html5Error) {
+
+            geo_loc = processGeolocationResult(position);
+            currLatLong = geo_loc.split(",");
+            initializeCurrent(currLatLong[0], currLatLong[1]);
+
+        });
+
+        //Get geo location result
+
+        function processGeolocationResult(position) {
+            html5Lat = position.coords.latitude; //Get latitude
+            html5Lon = position.coords.longitude; //Get longitude
+            html5TimeStamp = position.timestamp; //Get timestamp
+            html5Accuracy = position.coords.accuracy; //Get accuracy in meters
+            return (html5Lat).toFixed(8) + ", " + (html5Lon).toFixed(8);
+        }
+
+        //Check value is present or not & call google api function
+
+        function initializeCurrent(latcurr, longcurr) {
+            currgeocoder = new google.maps.Geocoder();
+            console.log(latcurr + "-- ######## --" + longcurr);
+
+            if (latcurr != '' && longcurr != '') {
+                var myLatlng = new google.maps.LatLng(latcurr, longcurr);
+                return getCurrentAddress(myLatlng);
+            }
+        }
+
+        //Get current address
+
+        function getCurrentAddress(location) {
+            currgeocoder.geocode({
+                'location': location
+
+            }, function (results, status) {
+
+                if (status == google.maps.GeocoderStatus.OK) {
+                    console.log(results[0]);
+                    $("#address").html(results[0].formatted_address);
+                    $("#longitude").html(results[0].geometry.location.lng);
+                    $("#latitude").html(results[0].geometry.location.lat);
+
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
+            });
+        }
     });
 
 </script>

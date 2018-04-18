@@ -31,17 +31,30 @@ class User extends BaseUser {
      */
     protected $last_name;
 
-    /** @ORM\Column(name="facebookId", type="string", length=255, nullable=true) */
-    protected $facebookID;
+    /**
+     * @ORM\Column(type="string", name="facebook_id", nullable=true)
+     */
+    protected $facebookId;
 
-    /** @ORM\Column(name="facebook_access_token", type="string", length=255, nullable=true) */
-    protected $facebook_access_token;
+    /**
+     * @ORM\Column(type="string", name="google_id", nullable=true)
+     */
+    protected $googleId;
+    
+    /**
+     * @ORM\Column(type="string", name="twitter_id", nullable=true)
+     */
+    protected $twitterId;
 
-    /** @ORM\Column(name="googleId", type="string", length=255, nullable=true) */
-    protected $googleID;
-
-    /** @ORM\Column(name="google_access_token", type="string", length=255, nullable=true) */
-    protected $google_access_token;
+    /**
+     * @ORM\Column(type="float", name="lng", nullable=true)
+     */
+    protected $lng;
+    
+     /**
+     * @ORM\Column(type="float", name="lat", nullable=true)
+     */
+    protected $lat;
 
     /**
      *
@@ -86,92 +99,150 @@ class User extends BaseUser {
         return $this->events;
     }
 
+
+
     /**
-     * Set facebookID
+     * Set firstName
      *
-     * @param string $facebookID
+     * @param string $firstName
      *
      * @return User
      */
-    public function setFacebookID($facebookID) {
-        $this->facebookID = $facebookID;
+    public function setFirstName($firstName)
+    {
+        $this->first_name = $firstName;
 
         return $this;
     }
 
     /**
-     * Get facebookID
+     * Get firstName
      *
      * @return string
      */
-    public function getFacebookID() {
-        return $this->facebookID;
+    public function getFirstName()
+    {
+        return $this->first_name;
     }
 
     /**
-     * Set facebookAccessToken
+     * Set lastName
      *
-     * @param string $facebookAccessToken
+     * @param string $lastName
      *
      * @return User
      */
-    public function setFacebookAccessToken($facebookAccessToken) {
-        $this->facebook_access_token = $facebookAccessToken;
+    public function setLastName($lastName)
+    {
+        $this->last_name = $lastName;
 
         return $this;
     }
 
     /**
-     * Get facebookAccessToken
+     * Get lastName
      *
      * @return string
      */
-    public function getFacebookAccessToken() {
-        return $this->facebook_access_token;
+    public function getLastName()
+    {
+        return $this->last_name;
+    }
+    
+    
+    /**
+     * @return mixed
+     */
+    public function getFacebookId()
+    {
+        return $this->facebookId;
     }
 
     /**
-     * Set googleID
+     * @param mixed $facebookId
+     */
+    public function setFacebookId($facebookId)
+    {
+        $this->facebookId = $facebookId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGoogleId()
+    {
+        return $this->googleId;
+    }
+
+    /**
+     * @param mixed $googleId
+     */
+    public function setGoogleId($googleId)
+    {
+        $this->googleId = $googleId;
+    }
+    
+    /**
+     * @return mixed
+     */
+    public function getTwitterId()
+    {
+        return $this->twitterId;
+    }
+
+    /**
+     * @param mixed $twitterId
+     */
+    public function setTwitterId($twitterId)
+    {
+        $this->twitterId = $twitterId;
+    }
+
+    /**
+     * Set lng
      *
-     * @param string $googleID
+     * @param float $lng
      *
      * @return User
      */
-    public function setGoogleID($googleID) {
-        $this->googleID = $googleID;
+    public function setLng($lng)
+    {
+        $this->lng = $lng;
 
         return $this;
     }
 
     /**
-     * Get googleID
+     * Get lng
      *
-     * @return string
+     * @return float
      */
-    public function getGoogleID() {
-        return $this->googleID;
+    public function getLng()
+    {
+        return $this->lng;
     }
 
     /**
-     * Set googleAccessToken
+     * Set lat
      *
-     * @param string $googleAccessToken
+     * @param float $lat
      *
      * @return User
      */
-    public function setGoogleAccessToken($googleAccessToken) {
-        $this->google_access_token = $googleAccessToken;
+    public function setLat($lat)
+    {
+        $this->lat = $lat;
 
         return $this;
     }
 
     /**
-     * Get googleAccessToken
+     * Get lat
      *
-     * @return string
+     * @return float
      */
-    public function getGoogleAccessToken() {
-        return $this->google_access_token;
+    public function getLat()
+    {
+        return $this->lat;
     }
-
 }

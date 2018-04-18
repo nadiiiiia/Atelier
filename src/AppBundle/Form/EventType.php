@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Doctrine\ORM\EntityRepository;
 use AppBundle\Entity\Event;
 
@@ -34,39 +35,43 @@ class EventType extends AbstractType {
                         // 'expanded' => true,
                 ))
                 ->add('titre', TextType::class, array(
-                    'attr' => array('class' => 'form-control'), 
+                    'attr' => array('class' => 'form-control'),
                     'label' => 'Titre'
-                    ))
+                ))
                 // ->add('description')
                 ->add('description', TextareaType::class, array(
-                    'attr' => array('class' => 'form-control md-textarea',), 
+                    'attr' => array('class' => 'form-control md-textarea',),
                     'label' => 'Description'
-                    ))
+                ))
                 //     ->add('dateCreation')
                 ->add('dateDebut', TextType::class, array(
-                    'attr' => array('class' => 'form-control date-fr floating-label'), 
+                    'attr' => array('class' => 'form-control date-fr floating-label'),
                     'label' => 'Date de début'
-                    ))
+                ))
                 ->add('dateFin', TextType::class, array(
-                    'attr' => array('class' => 'form-control date-fr floating-label'), 
+                    'attr' => array('class' => 'form-control date-fr floating-label'),
                     'label' => 'Date de fin'
-                    ))
+                ))
                 ->add('prix', NumberType::class, array(
-                    'attr' => array('class' => 'form-control'), 
+                    'attr' => array('class' => 'form-control'),
                     'label' => 'Prix par utilisateur'
-                    ))
+                ))
                 ->add('nbrMax', NumberType::class, array(
-                    'attr' => array('class' => 'form-control'), 
+                    'attr' => array('class' => 'form-control'),
                     'label' => 'Nombre max des participants'
-                    ))
+                ))
                 ->add('adresse', TextType::class, array(
-                    'attr' => array('class' => 'form-control'), 
+                    'attr' => array('class' => 'form-control'),
                     'label' => 'Adresse'
-                    ))
+                ))
+                ->add('lng', HiddenType::class)
+                
+                ->add('lat', HiddenType::class)
+                
                 ->add('codeP', TextType::class, array(
                     'attr' => array('class' => 'form-control'),
                     'label' => 'Code Postal'
-                    ))
+                ))
 
                 // ->add('organisateur', EntityType::class, array('class' => 'AppBundle:Organisateur'))
                 ->add('ville', EntityType::class, array(
@@ -87,9 +92,9 @@ class EventType extends AbstractType {
                     'choice_label' => 'nom',
                     'attr' => ['class' => 'mdb-select select-dropdown']
                 ))
-                ->add('image', FileType::class, array( 
+                ->add('image', FileType::class, array(
 //                         'multiple' => true,
-                ));
+        ));
     }
 
     /**

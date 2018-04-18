@@ -87,7 +87,19 @@ class Event
      */
     private $nbrParticipants;
     
-
+        /**
+     * @var float
+     *
+     * @ORM\Column(name="lng", type="float", length=45)
+     */
+    private $lng;
+    
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="lat", type="float", length=45)
+     */
+    private $lat;
     
       
     /**
@@ -587,5 +599,53 @@ class Event
     public function getNbrParticipants()
     {
         return $this->nbrParticipants;
+    }
+
+    /**
+     * Set lng
+     *
+     * @param float $lng
+     *
+     * @return Event
+     */
+    public function setLng($lng)
+    {
+        $this->lng = $lng;
+
+        return $this;
+    }
+
+    /**
+     * Get lng
+     *
+     * @return float
+     */
+    public function getLng()
+    {
+        return $this->lng;
+    }
+
+    /**
+     * Set lat
+     *
+     * @param float $lat
+     *
+     * @return Event
+     */
+    public function setLat($lat)
+    {
+        $this->lat = $lat;
+
+        return $this;
+    }
+
+    /**
+     * Get lat
+     *
+     * @return float
+     */
+    public function getLat()
+    {
+        return $this->lat;
     }
 }
