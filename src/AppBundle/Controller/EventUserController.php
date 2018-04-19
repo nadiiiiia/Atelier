@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Event;
+use Doctrine\ORM\EntityManager;
 
 class EventUserController extends Controller {
 
@@ -117,29 +118,20 @@ class EventUserController extends Controller {
     }
 
     /**
-     * @Route("/near_me", name="near_me")
+     * @Route("/near_me", options={"expose"=true}, name="near_me")
      * @param Request $request
      */
-    public function eventsNearMe(Request $request) {
+    public function eventsNearMe($lat, $lng, Request $request) {
 //        $lng = $request->request->get('lng');
-//        $lat= $request->request->get('lat');
-        $lng = 2.408875899999998;
-        $lat = 48.76254099999999;
-        //dump($type,$value);die;
+//        $lat = $request->request->get('lat');
+//        $lng = 2.408875899999998;
+//        $lat = 48.76254099999999;
         $em = $this->getDoctrine()->getManager();
-        $query = $em->createQuery(
-                  'SELECT id, titre'
-               // . ', ( 3959 * acos( cos( radians('.$lat.') ) * cos( radians( lat ) ) * cos( radians( lng ) - '
-              //  . 'radians('.$lng.') ) + sin( radians('.$lat.') ) * sin( radians( lat ) ) ) ) AS distance '
-                . 'FROM atl_event '
-              //  . 'HAVING distance < 25 ORDER BY distance LIMIT 0 , 20'
-      
-                );
 
-        $findEvents = $query->getResult();
-        var_dump($findEvents); die;
-       
-       // $findEvents = $em->getRepository('AppBundle:Event')->sortByNearest($lng, $lat);
+
+        $findEvents = $em->getRepository('AppBundle:Event')->sortByNearest();
+        //  var_dump($findEvents); die;
+        //  $findEvents = $em->getRepository('AppBundle:Event')->sortByNearest($lng, $lat);
 
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
@@ -147,7 +139,7 @@ class EventUserController extends Controller {
         );
 
         $events_json = $this->get('jms_serializer')->serialize($findEvents, 'json');
-        return $this->render('event/categorie.html.twig', array('events' => $pagination, 'events_json' => $events_json));
+        return $this->render('event/recherche.html.twig', array('events' => $pagination, 'events_json' => $events_json));
     }
 
     /**

@@ -16,3 +16,6 @@ _main:
 _console:
     resource: '@CoreSphereConsoleBundle/Resources/config/routing.yml'
     prefix: /_console
+    
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

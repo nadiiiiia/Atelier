@@ -136,30 +136,32 @@
             <div class="dropdown show">
 
                 <!--Trigger-->
-                <button class="btn btn-sm btn-mdb-color dropdown-toggle waves-effect waves-light" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Trier par </button>
+                <button class=" btn btn-primary-atelier btn-md pull-right waves-effect waves-light" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Trier par </button>
 
                 <!--Menu-->
                 <div class="dropdown-menu dropdown-mdb-color" x-placement="top-start" style="position: absolute; transform: translate3d(69px, -163px, 0px); top: 0px; left: 0px; will-change: transform;">
                     <a class="dropdown-item" href="{{ path('sortMin') }}">Prix (Moins cher)</a>
                     <a class="dropdown-item" href="{{ path('sortMax') }}">Prix ( Plus cher)</a>
-                    <a class="dropdown-item" href="#">Plus Proche</a>
+                    <a class="dropdown-item" id="plus_proche" href="#">Plus Proche</a>
                     <a class="dropdown-item" href="{{ path('sortMaxParticipants') }}">Plus avancé</a>
                 </div>
 
             </div>
 
-            <button id="location-btn" > Click me </button>
-            <p>Address: <div id="address"></div></p>
-        <p>longitude: <div id="longitude"></div></p>
-    <p>latitude: <div id="latitude"></div></p>
-        
+            {#  test user geolocation#}
 
-<!--Main layout-->
-<div class="container">
-    {%  include 'modals/searchModal.html.twig' %}
-{% block style %}{% endblock %}
-{% block body %}{% endblock %}
-{% block javascripts %}{% endblock %}
+            {#            <button id="location-btn" > Click me </button>
+                        <p>Address: <div id="address"></div></p>
+                    <p>longitude: <div id="longitude"></div></p>
+                <p>latitude: <div id="latitude"></div></p>
+                    #}
+
+            <!--Main layout-->
+            <div class="container">
+                {%  include 'modals/searchModal.html.twig' %}
+            {% block style %}{% endblock %}
+        {% block body %}{% endblock %}
+    {% block javascripts %}{% endblock %}
 </div>
 <!--/.Main layout-->
 </main>
@@ -256,6 +258,8 @@
 <!-- SCRIPTS -->
 
 <!-- JQuery -->
+
+
 <script type="text/javascript" src="{{asset('bundles/app/js/jquery-3.2.1.min.js')}}"></script>
 
 <!-- Bootstrap dropdown -->
@@ -306,14 +310,19 @@
 
 </script>
 
+<script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+<script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdI6hYrzRf5QMgKGj8RQsEeLE9bS-1vOQ&callback=initMap">
 </script>
 <script type="text/javascript" charset="utf-8">
 
-    $("#location-btn").click(function () {
+   $(document).ready( function () {
         var currgeocoder;
         var user_lng;
         var user_lat;
+        var url;
+        var a = document.getElementById("plus_proche");
 
         //Set geo location lat and long
 
@@ -358,14 +367,18 @@
                 if (status == google.maps.GeocoderStatus.OK) {
                     console.log(results[0]);
                     $("#address").html(results[0].formatted_address);
-                    $("#longitude").html(results[0].geometry.location.lng);
-                    $("#latitude").html(results[0].geometry.location.lat);
+                   user_lng = results[0].geometry.location.lng;
+                   user_lat = results[0].geometry.location.lat;
 
                 } else {
                     alert('Geocode was not successful for the following reason: ' + status);
                 }
             });
         }
+      //  alert(user_lng.value);
+        url = Routing.generate('near_me', {lat: user_lat, lng: user_lng});
+        a.setAttribute("href", url);
+
     });
 
 </script>
