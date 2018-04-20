@@ -118,20 +118,13 @@ class EventUserController extends Controller {
     }
 
     /**
-     * @Route("/near_me", options={"expose"=true}, name="near_me")
+     * @Route("/near_me_{lat}_{lng}", options={"expose"=true}, name="near_me")
      * @param Request $request
      */
     public function eventsNearMe($lat, $lng, Request $request) {
-//        $lng = $request->request->get('lng');
-//        $lat = $request->request->get('lat');
-//        $lng = 2.408875899999998;
-//        $lat = 48.76254099999999;
+        
         $em = $this->getDoctrine()->getManager();
-
-
-        $findEvents = $em->getRepository('AppBundle:Event')->sortByNearest();
-        //  var_dump($findEvents); die;
-        //  $findEvents = $em->getRepository('AppBundle:Event')->sortByNearest($lng, $lat);
+        $findEvents = $em->getRepository('AppBundle:Event')->sortByNearest($lat, $lng);
 
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(

@@ -279,6 +279,8 @@
 
 <script type="text/javascript" src="http://momentjs.com/downloads/moment-with-locales.min.js"></script>
 
+<script type="text/javascript" src="{{asset('bundles/app/js/cookies.js')}}"></script>
+
 <script>
     new WOW().init();
 </script>
@@ -313,77 +315,17 @@
 <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
 <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdI6hYrzRf5QMgKGj8RQsEeLE9bS-1vOQ&callback=initMap">
-</script>
-<script type="text/javascript" charset="utf-8">
 
-   $(document).ready( function () {
-        var currgeocoder;
-        var user_lng;
-        var user_lat;
-        var url;
-        var a = document.getElementById("plus_proche");
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdI6hYrzRf5QMgKGj8RQsEeLE9bS-1vOQ&callback=initMap"></script>
+<script type="text/javascript" src="{{asset('bundles/app/js/geocoder.js')}}"></script>
 
-        //Set geo location lat and long
-
-        navigator.geolocation.getCurrentPosition(function (position, html5Error) {
-
-            geo_loc = processGeolocationResult(position);
-            currLatLong = geo_loc.split(",");
-            initializeCurrent(currLatLong[0], currLatLong[1]);
-
-        });
-
-        //Get geo location result
-
-        function processGeolocationResult(position) {
-            html5Lat = position.coords.latitude; //Get latitude
-            html5Lon = position.coords.longitude; //Get longitude
-            html5TimeStamp = position.timestamp; //Get timestamp
-            html5Accuracy = position.coords.accuracy; //Get accuracy in meters
-            return (html5Lat).toFixed(8) + ", " + (html5Lon).toFixed(8);
-        }
-
-        //Check value is present or not & call google api function
-
-        function initializeCurrent(latcurr, longcurr) {
-            currgeocoder = new google.maps.Geocoder();
-            console.log(latcurr + "-- ######## --" + longcurr);
-
-            if (latcurr != '' && longcurr != '') {
-                var myLatlng = new google.maps.LatLng(latcurr, longcurr);
-                return getCurrentAddress(myLatlng);
-            }
-        }
-
-        //Get current address
-
-        function getCurrentAddress(location) {
-            currgeocoder.geocode({
-                'location': location
-
-            }, function (results, status) {
-
-                if (status == google.maps.GeocoderStatus.OK) {
-                    console.log(results[0]);
-                    $("#address").html(results[0].formatted_address);
-                   user_lng = results[0].geometry.location.lng;
-                   user_lat = results[0].geometry.location.lat;
-
-                } else {
-                    alert('Geocode was not successful for the following reason: ' + status);
-                }
-            });
-        }
-      //  alert(user_lng.value);
-        url = Routing.generate('near_me', {lat: user_lat, lng: user_lng});
-        a.setAttribute("href", url);
-
-    });
-
-</script>
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
 <script type="text/javascript" src="{{asset('bundles/app/js/validateEventForm.js')}}"></script>
+
+{#<script type="text/javascript" src="{{asset('bundles/app/js/progressBar.js')}}"></script>#}
+<script type="text/javascript">
+    
+</script>
 
 
 

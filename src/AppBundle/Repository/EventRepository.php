@@ -48,23 +48,23 @@ class EventRepository extends \Doctrine\ORM\EntityRepository {
         return $query->getResult();
     }
 
-    public function sortByNearest() {
+    public function sortByNearest($lat, $lng) {
 //        SELECT id, titre, ( 3959 * acos( cos( radians(48.76254099999999) ) * cos( radians( lat ) ) * cos( radians( lng ) -
 //        radians(2.408875899999998) ) + sin( radians(48.76254099999999) ) * sin( radians( lat ) ) ) ) AS distance FROM atl_event
 //        HAVING distance < 25 ORDER BY distance LIMIT 0, 20
 
-        $lng = 2.408875899999998;
-        $lat = 48.76254099999999;
+//        $lng = 2.408875899999998;
+//        $lat = 48.76254099999999;
 
         $query = $this
                 ->createQueryBuilder('u')
                 ->select('u.id, u.titre, u.description, u.dateDebut, u.prix, u.nbrMax, u.nbrParticipants, u.image')
                 ->addSelect(
-                        '( 3959 * acos(cos(radians(' . $lat . '))' .
+                        '( 3959 * acos(cos(radians(' . floatval ($lat) . '))' .
                         '* cos( radians( u.lat ) )' .
                         '* cos( radians( u.lng )' .
-                        '- radians(' . $lng . ') )' .
-                        '+ sin( radians(' . $lat . ') )' .
+                        '- radians(' . floatval($lng) . ') )' .
+                        '+ sin( radians(' . floatval ($lat) . ') )' .
                         '* sin( radians( u.lat ) ) ) ) as distance'
                 )
                 ->orderBy('distance', 'ASC')
