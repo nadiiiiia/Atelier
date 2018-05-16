@@ -27,7 +27,7 @@ class EventUserController extends Controller {
                 $findEvents, $request->query->getInt('page', 1)/* page number */, 3 /* limit per page */
         );
 
-        $events_json = $this->get('jms_serializer')->serialize($findEvents, 'json');
+        $events_json = 0;//$this->get('jms_serializer')->serialize($findEvents, 'json');
 
         return $this->render('event/accueil.html.twig', array('events' => $pagination, 'events_json' => $events_json));
     }
@@ -48,7 +48,7 @@ class EventUserController extends Controller {
         );
 
 
-        $events_json = $this->get('jms_serializer')->serialize($findEvents, 'json');
+        $events_json = 0; //$this->get('jms_serializer')->serialize($findEvents, 'json');
 
         switch ($type) {
             case "region":
@@ -77,7 +77,7 @@ class EventUserController extends Controller {
                 $findEvents, $request->query->getInt('page', 1)/* page number */, 3 /* limit per page */
         );
 
-        $events_json = $this->get('jms_serializer')->serialize($findEvents, 'json');
+        $events_json = 0; //$this->get('jms_serializer')->serialize($findEvents, 'json');
         return $this->render('event/categorie.html.twig', array('events' => $pagination, 'events_json' => $events_json));
     }
 
@@ -95,7 +95,7 @@ class EventUserController extends Controller {
                 $findEvents, $request->query->getInt('page', 1)/* page number */, 3 /* limit per page */
         );
 
-        $events_json = $this->get('jms_serializer')->serialize($findEvents, 'json');
+        $events_json = 0; //$this->get('jms_serializer')->serialize($findEvents, 'json');
         return $this->render('event/categorie.html.twig', array('events' => $pagination, 'events_json' => $events_json));
     }
 
@@ -113,7 +113,7 @@ class EventUserController extends Controller {
                 $findEvents, $request->query->getInt('page', 1)/* page number */, 3 /* limit per page */
         );
 
-        $events_json = $this->get('jms_serializer')->serialize($findEvents, 'json');
+        $events_json = 0; //$this->get('jms_serializer')->serialize($findEvents, 'json');
         return $this->render('event/categorie.html.twig', array('events' => $pagination, 'events_json' => $events_json));
     }
 
@@ -131,7 +131,7 @@ class EventUserController extends Controller {
                 $findEvents, $request->query->getInt('page', 1)/* page number */, 3 /* limit per page */
         );
 
-        $events_json = $this->get('jms_serializer')->serialize($findEvents, 'json');
+        $events_json = 0; //$this->get('jms_serializer')->serialize($findEvents, 'json');
         return $this->render('event/recherche.html.twig', array('events' => $pagination, 'events_json' => $events_json));
     }
 
@@ -143,7 +143,7 @@ class EventUserController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $event = $em->getRepository('AppBundle:Event')->find($id);
 
-        $event_json = $this->get('jms_serializer')->serialize($event, 'json');
+        $event_json = 0;//$this->get('jms_serializer')->serialize($event, 'json');
 
         return $this->render('event/presentation.html.twig', array('event' => $event, 'event_json' => $event_json));
     }
@@ -164,7 +164,7 @@ class EventUserController extends Controller {
                 $findEvents, $request->query->getInt('page', 1)/* page number */, 3 /* limit per page */
         );
 
-        $findEvents_json = $this->get('jms_serializer')->serialize($findEvents, 'json');
+        $findEvents_json = 0;//$this->get('jms_serializer')->serialize($findEvents, 'json');
 
         return $this->render('event/accueil.html.twig', array('events' => $pagination, 'findEvents_json' => $findEvents_json));
     }

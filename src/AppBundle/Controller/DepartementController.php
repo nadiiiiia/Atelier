@@ -14,7 +14,7 @@ class DepartementController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $departements = $em->getRepository('AppBundle:Departement')->findAll();
-        $departements_json = $this->get('jms_serializer')->serialize($departements, 'json');
+        $departements_json = 0; //$this->get('jms_serializer')->serialize($departements, 'json');
 
         return $this->render('departement/menu.html.twig', array(
             'departements' => $departements,

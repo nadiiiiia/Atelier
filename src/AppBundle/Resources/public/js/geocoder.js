@@ -48,7 +48,7 @@
 
                 if (status == google.maps.GeocoderStatus.OK) {
                     console.log(results[0]);
-                    $("#address").html(results[0].formatted_address);
+                   // $("#address").html(results[0].formatted_address);
                     user_lng = results[0].geometry.location.lng();
                     user_lat = results[0].geometry.location.lat();
                     

@@ -90,14 +90,16 @@ class Event
         /**
      * @var float
      *
-     * @ORM\Column(name="lng", type="float", length=45)
+     * @ORM\Column(name="lng", type="float", length=45, options={"default" : 0})
+     *
      */
     private $lng;
     
     /**
      * @var float
      *
-     * @ORM\Column(name="lat", type="float", length=45)
+     * @ORM\Column(name="lat", type="float", length=45, options={"default" : 0})
+     * 
      */
     private $lat;
     
