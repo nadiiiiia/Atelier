@@ -317,10 +317,9 @@
 
 
 {#<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdI6hYrzRf5QMgKGj8RQsEeLE9bS-1vOQ&callback=initMap"></script>
-#}<script type="text/javascript" src="{{asset('bundles/app/js/geocoder.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/app/js/geocoder.js')}}"></script>
+#}
 
-
-{#<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdI6hYrzRf5QMgKGj8RQsEeLE9bS-1vOQ&callback=initMap">
 </script>
 <script type="text/javascript" charset="utf-8">
 
@@ -372,22 +371,27 @@
 
                 if (status == google.maps.GeocoderStatus.OK) {
                     console.log(results[0]);
-                    $("#address").html(results[0].formatted_address);
+                   // $("#address").html(results[0].formatted_address);
                    user_lng = results[0].geometry.location.lng;
                    user_lat = results[0].geometry.location.lat;
+                   
+                     setCookie("user_lat", user_lat, 365);
+                    setCookie("user_lng", user_lng, 365);
 
                 } else {
                     alert('Geocode was not successful for the following reason: ' + status);
                 }
             });
         }
+                var user_lat = getCookie("user_lat");
+        var user_lng = getCookie("user_lng");
       // alert(user_lng.value);
-        url = Routing.generate('near_me', {lat: user_lat, lng: user_lng});
+        url = Routing.generate('near_me', {lat: 0, lng: 0});
         a.setAttribute("href", url);
 
     });
 
-</script>#}
+</script>
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
 <script type="text/javascript" src="{{asset('bundles/app/js/validateEventForm.js')}}"></script>
 
