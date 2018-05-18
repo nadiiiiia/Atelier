@@ -24,7 +24,7 @@ class EventUserController extends Controller {
 
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-                $findEvents, $request->query->getInt('page', 1)/* page number */, 3 /* limit per page */
+                $findEvents, $request->query->getInt('page', 1)/* page number */, 6 /* limit per page */
         );
 
         $events_json = 0;//$this->get('jms_serializer')->serialize($findEvents, 'json');
@@ -44,7 +44,7 @@ class EventUserController extends Controller {
 
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-                $findEvents, $request->query->getInt('page', 1)/* page number */, 3 /* limit per page */
+                $findEvents, $request->query->getInt('page', 1)/* page number */, 6 /* limit per page */
         );
 
 
@@ -92,7 +92,7 @@ class EventUserController extends Controller {
 
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-                $findEvents, $request->query->getInt('page', 1)/* page number */, 3 /* limit per page */
+                $findEvents, $request->query->getInt('page', 1)/* page number */, 6 /* limit per page */
         );
 
         $events_json = 0; //$this->get('jms_serializer')->serialize($findEvents, 'json');
@@ -110,7 +110,7 @@ class EventUserController extends Controller {
 
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-                $findEvents, $request->query->getInt('page', 1)/* page number */, 3 /* limit per page */
+                $findEvents, $request->query->getInt('page', 1)/* page number */, 6 /* limit per page */
         );
 
         $events_json = 0; //$this->get('jms_serializer')->serialize($findEvents, 'json');
@@ -128,7 +128,7 @@ class EventUserController extends Controller {
 
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-                $findEvents, $request->query->getInt('page', 1)/* page number */, 3 /* limit per page */
+                $findEvents, $request->query->getInt('page', 1)/* page number */, 6 /* limit per page */
         );
 
         $events_json = 0; //$this->get('jms_serializer')->serialize($findEvents, 'json');
@@ -161,7 +161,7 @@ class EventUserController extends Controller {
 
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-                $findEvents, $request->query->getInt('page', 1)/* page number */, 3 /* limit per page */
+                $findEvents, $request->query->getInt('page', 1)/* page number */, 6 /* limit per page */
         );
 
         $findEvents_json = 0;//$this->get('jms_serializer')->serialize($findEvents, 'json');

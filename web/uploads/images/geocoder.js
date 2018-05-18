@@ -52,8 +52,8 @@
                     user_lng = results[0].geometry.location.lng();
                     user_lat = results[0].geometry.location.lat();
                     
-                    setCookie("user_lat", user_lat, 365);
-                    setCookie("user_lng", user_lng, 365);
+                    setCookie("user_lat", lat, 365);
+                    setCookie("user_lng", lng, 365);
 
                 } else {
                     alert('Geocode was not successful for the following reason: ' + status);
@@ -63,7 +63,7 @@
         var lat = getCookie("user_lat");
         var lng = getCookie("user_lng");
 
-alert(lat.value);
+//alert(lat.value);
 
         url = Routing.generate('near_me', {lat: lat, lng: lng});
         a.setAttribute("href", url);

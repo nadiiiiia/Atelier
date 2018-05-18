@@ -186,3 +186,8 @@ input[type=date]:focus:not([readonly]), input[type=datetime-local]:focus:not([re
 
 /*validation form*/
 
+ .carte_img{
+     width:500px;
+     height:600px;
+ }
+
