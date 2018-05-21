@@ -159,7 +159,7 @@ class Event
      public function __construct()
     {
        
-       // $this->dateCreation = new \DateTime("now");  // get current date and time
+        $this->dateCreation = new \DateTime("now");  // get current date and time
         $this->credits = new ArrayCollection();
         $this->nbrParticipants = 0 ;
       

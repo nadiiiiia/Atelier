@@ -9,6 +9,19 @@ namespace AppBundle\Repository;
  * repository methods below.
  */
 class EventRepository extends \Doctrine\ORM\EntityRepository {
+   
+        public function findAllCurrent() {
+             $currentDate = new \DateTime("now");
+             $stringDate = date_format($currentDate,"d/m/Y H:i");
+        $query = $this->createQueryBuilder('u')
+                ->select('u')
+                ->where('u.dateDebut >= :currentDate')
+                ->setParameter('currentDate', $stringDate)
+                ->orderBy('u.dateCreation', 'DESC')
+                ->getQuery();
+
+        return $query->getResult();
+    }
 
     public function findEventByTitle($motcle) {
         $query = $this->createQueryBuilder('u')

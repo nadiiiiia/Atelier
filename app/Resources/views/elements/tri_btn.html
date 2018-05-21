@@ -1,0 +1,14 @@
+<div class="dropdown show">
+
+    <!--Trigger-->
+    <button class=" btn btn-primary-atelier btn-md pull-right waves-effect waves-light" type="button" id="tri_btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Trier par </button>
+
+    <!--Menu-->
+    <div class="dropdown-menu dropdown-mdb-color" x-placement="top-start" style="position: absolute; transform: translate3d(69px, -163px, 0px); top: 0px; left: 0px; will-change: transform;">
+        <a class="dropdown-item" href="{{ path('sortMin') }}">Prix (Moins cher)</a>
+        <a class="dropdown-item" href="{{ path('sortMax') }}">Prix ( Plus cher)</a>
+        <a class="dropdown-item" id="plus_proche" href="#">Plus Proche</a>
+        <a class="dropdown-item" href="{{ path('sortMaxParticipants') }}">Plus avancé</a>
+    </div>
+
+</div>

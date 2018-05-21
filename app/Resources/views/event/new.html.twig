@@ -93,7 +93,7 @@
 
                     <div class="text-right">
                         <br><br>
-                        <input class="btn btn-primary-inverse btn-md waves-effect waves-light" type="submit" value="Créer" />
+                        <input class="btn btn-primary-inverse btn-md waves-effect waves-light" id="submit_event" type="submit" value="Créer" />
                         <br><br>
                     </div>
                     <br>
@@ -140,7 +140,28 @@
                 
         });
     }
+      {# document.getElementById("tri_btn").style.display = 'none';#}
         
+{#      //   $("#submit_event").click(function () {
+        var date_debut = document.getElementById("dateDebut").value;
+         alert(date_debut);
+        var date_fin = format_date($("#dateFin").val());
+        if (!validateDate(date_debut, date_fin)) {
+            alert('error !!')
+            $("#dateDebut").addClass("has-error").after($(".error-msg").css('display', 'block'));
+            return;
+        } else {
+            $("#dateDebut").removeClass("has-error").after($(".error-msg").css('display', 'none'));
+        }
+     //    });
+         
+             function validateDate(dateDebut, dateFin) {
+        if (dateDebut > dateFin) {
+            return false;
+        } else {
+            return true;
+        }
+    }#}
 
     </script>
 

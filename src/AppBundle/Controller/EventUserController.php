@@ -19,7 +19,7 @@ class EventUserController extends Controller {
      */
     public function eventsAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
-        $findEvents = $em->getRepository('AppBundle:Event')->findAll();
+        $findEvents = $em->getRepository('AppBundle:Event')->findAllCurrent();
 
 
         $paginator = $this->get('knp_paginator');
@@ -27,7 +27,7 @@ class EventUserController extends Controller {
                 $findEvents, $request->query->getInt('page', 1)/* page number */, 6 /* limit per page */
         );
 
-        $events_json = 0;//$this->get('jms_serializer')->serialize($findEvents, 'json');
+        $events_json = 0; //$this->get('jms_serializer')->serialize($findEvents, 'json');
 
         return $this->render('event/accueil.html.twig', array('events' => $pagination, 'events_json' => $events_json));
     }
@@ -50,15 +50,19 @@ class EventUserController extends Controller {
 
         $events_json = 0; //$this->get('jms_serializer')->serialize($findEvents, 'json');
 
+
         switch ($type) {
             case "region":
-                return $this->render('event/region.html.twig', array('events' => $pagination, 'events_json' => $events_json));
+                $filter_name = $findEvents[0]->getRegion();
+                return $this->render('event/recherche.html.twig', array('events' => $pagination, 'filter_name' => $filter_name, 'events_json' => $events_json));
                 break;
             case "departement":
-                return $this->render('event/departement.html.twig', array('events' => $pagination, 'events_json' => $events_json));
+                $filter_name = $findEvents[0]->getDepartement();
+                return $this->render('event/recherche.html.twig', array('events' => $pagination, 'filter_name' => $filter_name, 'events_json' => $events_json));
                 break;
             case "category":
-                return $this->render('event/categorie.html.twig', array('events' => $pagination, 'events_json' => $events_json));
+                $filter_name = $findEvents[0]->getCategory();
+                return $this->render('event/recherche.html.twig', array('events' => $pagination, 'filter_name' => $filter_name, 'events_json' => $events_json));
                 break;
         }
     }
@@ -78,7 +82,8 @@ class EventUserController extends Controller {
         );
 
         $events_json = 0; //$this->get('jms_serializer')->serialize($findEvents, 'json');
-        return $this->render('event/categorie.html.twig', array('events' => $pagination, 'events_json' => $events_json));
+        $filter_name = 'Tri par Moins cher';
+        return $this->render('event/recherche.html.twig', array('events' => $pagination, 'filter_name' => $filter_name, 'events_json' => $events_json));
     }
 
     /**
@@ -96,7 +101,8 @@ class EventUserController extends Controller {
         );
 
         $events_json = 0; //$this->get('jms_serializer')->serialize($findEvents, 'json');
-        return $this->render('event/categorie.html.twig', array('events' => $pagination, 'events_json' => $events_json));
+        $filter_name = 'Tri par plus cher';
+        return $this->render('event/recherche.html.twig', array('events' => $pagination, 'filter_name' => $filter_name, 'events_json' => $events_json));
     }
 
     /**
@@ -114,7 +120,8 @@ class EventUserController extends Controller {
         );
 
         $events_json = 0; //$this->get('jms_serializer')->serialize($findEvents, 'json');
-        return $this->render('event/categorie.html.twig', array('events' => $pagination, 'events_json' => $events_json));
+        $filter_name = 'Tri par plus avancés';
+        return $this->render('event/recherche.html.twig', array('events' => $pagination, 'filter_name' => $filter_name, 'events_json' => $events_json));
     }
 
     /**
@@ -122,7 +129,7 @@ class EventUserController extends Controller {
      * @param Request $request
      */
     public function eventsNearMe($lat, $lng, Request $request) {
-        
+
         $em = $this->getDoctrine()->getManager();
         $findEvents = $em->getRepository('AppBundle:Event')->sortByNearest($lat, $lng);
 
@@ -132,7 +139,8 @@ class EventUserController extends Controller {
         );
 
         $events_json = 0; //$this->get('jms_serializer')->serialize($findEvents, 'json');
-        return $this->render('event/recherche.html.twig', array('events' => $pagination, 'events_json' => $events_json));
+        $filter_name = 'Tri par plus proches';
+        return $this->render('event/recherche.html.twig', array('events' => $pagination, 'filter_name' => $filter_name, 'events_json' => $events_json));
     }
 
     /**
@@ -143,7 +151,7 @@ class EventUserController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $event = $em->getRepository('AppBundle:Event')->find($id);
 
-        $event_json = 0;//$this->get('jms_serializer')->serialize($event, 'json');
+        $event_json = 0; //$this->get('jms_serializer')->serialize($event, 'json');
 
         return $this->render('event/presentation.html.twig', array('event' => $event, 'event_json' => $event_json));
     }
@@ -164,9 +172,9 @@ class EventUserController extends Controller {
                 $findEvents, $request->query->getInt('page', 1)/* page number */, 6 /* limit per page */
         );
 
-        $findEvents_json = 0;//$this->get('jms_serializer')->serialize($findEvents, 'json');
-
-        return $this->render('event/accueil.html.twig', array('events' => $pagination, 'findEvents_json' => $findEvents_json));
+        $findEvents_json = 0; //$this->get('jms_serializer')->serialize($findEvents, 'json');
+        $filter_name = 'Résultat de recherche .. "' . $motcle . '"';
+        return $this->render('event/recherche.html.twig', array('events' => $pagination, 'filter_name' => $filter_name));
     }
 
 }
