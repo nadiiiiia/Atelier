@@ -90,16 +90,16 @@ class Event
         /**
      * @var float
      *
-     * @ORM\Column(name="lng", type="float", length=45)
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\Column(name="lng", type="float", length=45, options={"default" : 0})
+     *
      */
     private $lng;
     
     /**
      * @var float
      *
-     * @ORM\Column(name="lat", type="float", length=45)
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\Column(name="lat", type="float", length=45, options={"default" : 0})
+     * 
      */
     private $lat;
     
@@ -150,16 +150,18 @@ class Event
   private $departement;
     
     /**
-     * @var string
-     * @ORM\Column(name="image")
+     * @var array
+     *
+     * @ORM\Column(name="images", type="array", nullable=true)
      */
-    private $image;
+    private $images;
     
     
      public function __construct()
     {
        
-       // $this->dateCreation = new \DateTime("now");  // get current date and time
+        $this->dateCreation = new \DateTime("now");  // get current date and time
+        $this->$images = new ArrayCollection();
         $this->credits = new ArrayCollection();
         $this->nbrParticipants = 0 ;
       
@@ -531,29 +533,6 @@ class Event
         return $this->departement;
     }
 
-    /**
-     * Set image
-     *
-     * @param string $image
-     *
-     * @return Event
-     */
-    public function setImage($image)
-    {
-        $this->image = $image;
-
-        return $this;
-    }
-
-    /**
-     * Get image
-     *
-     * @return string
-     */
-    public function getImage()
-    {
-        return $this->image;
-    }
 
     /**
      * Set utilisateur

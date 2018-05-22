@@ -57,3 +57,7 @@ services:
             - '@fos_user.user_manager'
             - { facebook: facebookId, google: googleId, twitter: twitterId }
             - '@doctrine'
+            
+    AppBundle.fileuploader:
+        class: AppBundle\Services\FileUploader
+        arguments: [ '@doctrine.orm.entity_manager', '@request_stack', '@validator', '@kernel' ]

@@ -92,8 +92,11 @@ class EventType extends AbstractType {
                     'choice_label' => 'nom',
                     'attr' => ['class' => 'mdb-select select-dropdown']
                 ))
-                ->add('image', FileType::class, array(
-//                         'multiple' => true,
+
+                ->add('images', FileType::class, array('attr' => array(
+                    'accept' => 'image/*' // pour n'accepter que les images
+                    ),
+                    'multiple' => true,
         ));
     }
 

@@ -150,10 +150,11 @@ class Event
   private $departement;
     
     /**
-     * @var string
-     * @ORM\Column(name="image")
+     * @var array
+     *
+     * @ORM\Column(name="images", type="array", nullable=true)
      */
-    private $image;
+    private $images;
     
     
      public function __construct()
@@ -531,29 +532,6 @@ class Event
         return $this->departement;
     }
 
-    /**
-     * Set image
-     *
-     * @param string $image
-     *
-     * @return Event
-     */
-    public function setImage($image)
-    {
-        $this->image = $image;
-
-        return $this;
-    }
-
-    /**
-     * Get image
-     *
-     * @return string
-     */
-    public function getImage()
-    {
-        return $this->image;
-    }
 
     /**
      * Set utilisateur
@@ -649,5 +627,29 @@ class Event
     public function getLat()
     {
         return $this->lat;
+    }
+
+    /**
+     * Set images
+     *
+     * @param array $images
+     *
+     * @return Event
+     */
+    public function setImages($images)
+    {
+        $this->images = $images;
+
+        return $this;
+    }
+
+    /**
+     * Get images
+     *
+     * @return array
+     */
+    public function getImages()
+    {
+        return $this->images;
     }
 }
