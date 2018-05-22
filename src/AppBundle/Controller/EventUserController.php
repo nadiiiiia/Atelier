@@ -19,7 +19,7 @@ class EventUserController extends Controller {
      */
     public function eventsAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
-        $findEvents = $em->getRepository('AppBundle:Event')->findAllCurrent();
+        $findEvents = $em->getRepository('AppBundle:Event')->findAll();
 
 
         $paginator = $this->get('knp_paginator');
