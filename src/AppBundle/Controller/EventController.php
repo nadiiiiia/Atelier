@@ -55,17 +55,6 @@ class EventController extends Controller {
             }
             $event->setImages($img);
 
-//             
-//                 var_dump($files); die;
-//			//ajouter la partie d'ajouter une image
-//
-//			 $files=$event->getImage();
-//                     
-//			 $fileName=md5(uniqid()).'.'.$file->guessExtension();
-//			 $file->move($this->getParameter('image_directory'),$fileName);
-//			 $event->setImage($fileName);			
-//			// fin ajout image
-//			
             $em = $this->getDoctrine()->getManager();
             $em->persist($event);
             $em->flush();
@@ -107,9 +96,22 @@ class EventController extends Controller {
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            
+            $files = $event->getImages();
+            $img = array();
+            foreach ($files as $file) {
+                $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+                $file->move($this->getParameter('image_directory'), $fileName);
+                $img[] = $fileName;
+            }
+            $event->setImages($img);
 
-            return $this->redirectToRoute('event_edit', array('id' => $event->getId()));
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($event);
+            $em->flush();
+
+            return $this->redirectToRoute('homepage');
+      
         }
 
         return $this->render('event/edit.html.twig', array(

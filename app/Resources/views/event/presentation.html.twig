@@ -5,36 +5,46 @@
 
 
     <div class="row mt-lg-5">
-
+        {% if event.images != null %}
+            {% set arr_size = event.images|length %}
+        {% endif %}
         <!--Product-->
         <div class="col-lg-7 wow fadeIn" data-wow-delay="0.2s">
 
             <!--Carousel Wrapper-->
             <div id="carousel-example-1z" class="carousel slide carousel-fade" data-ride="carousel">
                 <!--Indicators-->
+
                 <ol class="carousel-indicators">
-                    <li data-target="#carousel-example-1z" data-slide-to="0" class="active"></li>
-                    <li data-target="#carousel-example-1z" data-slide-to="1"></li>
-                    <li data-target="#carousel-example-1z" data-slide-to="2"></li>
+                    {% if event.images != null %}
+                        {% for i in range(0, arr_size-1) %} 
+                            <li data-target="#carousel-example-1z" data-slide-to="{{i}}"></li>
+                            {% endfor %}
+                        {% endif %}
                 </ol>
+
                 <!--/.Indicators-->
                 <!--Slides-->
                 <div class="carousel-inner" role="listbox">
                     <!--First slide-->
                     <div class="carousel-item active">
-                        <img class="d-block w-100" src="{{asset('uploads/images/' ~ event.image)}}" alt="First slide">
-                    </div>
+                          {% if event.images != null %}
+                        <img class="d-block w-100" src="{{asset('uploads/images/' ~ event.images[0])}}" alt="" style="width:635px;height:425px;">
+                  {% endif %}
+                          </div>
                     <!--/First slide-->
-                    <!--Second slide-->
-                    <div class="carousel-item">
-                        <img class="d-block w-100" src="{{asset('uploads/images/' ~ event.image)}}" alt="Second slide">
-                    </div>
-                    <!--/Second slide-->
-                    <!--Third slide-->
-                    <div class="carousel-item">
-                        <img class="d-block w-100" src="{{asset('uploads/images/' ~ event.image)}}" alt="Third slide">
-                    </div>
-                    <!--/Third slide-->
+                    
+                        
+                            {% for i in range(1, arr_size-1) %} 
+                                <!--Other slide-->
+
+                                <div class="carousel-item ">
+                                    <img class="d-block w-100" src="{{asset('uploads/images/' ~ event.images[i])}}" alt="" style="width:635px;height:425px;">
+                                </div>
+                                <!--/Other slide-->
+                            {% endfor %}
+                      
+             
                 </div>
                 <!--/.Slides-->
                 <!--Controls-->
@@ -93,6 +103,29 @@
 
         </div>
         <!--/.Info-->
+
+
+        {# gallery#}
+                <div class="row">
+                    <div class="col-md-12">
+        
+                        <div id="mdb-lightbox-ui"></div>
+        
+                        <div class="mdb-lightbox">
+                            {% for image in event.images %} 
+        
+                                <figure class="col-md-4">
+                                    <a href="{{asset('uploads/images/' ~ image)}}" data-size="1600x1067">
+                                        <img alt="picture" src="{{asset('uploads/images/' ~ image)}}" class="img-fluid">
+                                    </a>
+                                </figure>
+                            {% endfor %}
+                        </div>
+        
+                    </div>
+                </div>
+        {# /gallery#}
+
 
         <!--Reviews-->
         <div class="col-lg-12">
@@ -164,8 +197,5 @@
 
         </script>
         <script type="text/javascript">
-          
-          {#   document.getElementById("tri_btn").style.display = 'none';#}
-          
-        </script>
-    {% endblock %}
+
+        {% endblock %}

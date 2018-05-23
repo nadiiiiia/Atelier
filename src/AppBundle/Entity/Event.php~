@@ -161,7 +161,6 @@ class Event
     {
        
         $this->dateCreation = new \DateTime("now");  // get current date and time
-        $this->$images = new ArrayCollection();
         $this->credits = new ArrayCollection();
         $this->nbrParticipants = 0 ;
       
@@ -628,5 +627,29 @@ class Event
     public function getLat()
     {
         return $this->lat;
+    }
+
+    /**
+     * Set images
+     *
+     * @param array $images
+     *
+     * @return Event
+     */
+    public function setImages($images)
+    {
+        $this->images = $images;
+
+        return $this;
+    }
+
+    /**
+     * Get images
+     *
+     * @return array
+     */
+    public function getImages()
+    {
+        return $this->images;
     }
 }

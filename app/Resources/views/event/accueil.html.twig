@@ -29,12 +29,18 @@
                         <div class="card" id="card_{{event.id}}" onclick="location.href='{{ path('presentation',{'id': event.id})}}'">
 
                             <!--Card image-->
+                          
                             <div class="view overlay hm-white-slight z-depth-1">
-                                <img src="{{asset('uploads/images/' ~ event.image)}}" class="img-fluid" alt="" style="width:339.99px;height:226px;">
+                                
+                        {% if event.images != null %}
+                                <img src="{{asset('uploads/images/' ~ event.images[0])}}" class="img-fluid" alt="" style="width:339.99px;height:226px;">
+                                   {% endif %}
+
                                 <a>
                                     <div class="mask waves-effect waves-light"></div>
                                 </a>
                             </div>
+                       
                             <!--/.Card image-->
 
                             <!--Card content-->
