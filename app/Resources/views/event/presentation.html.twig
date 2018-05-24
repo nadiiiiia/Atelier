@@ -34,7 +34,7 @@
                           </div>
                     <!--/First slide-->
                     
-                          {% if event.images != null %}
+                          {% if (event.images != null) and (arr_size > 1) %}
                             {% for i in range(1, arr_size-1) %} 
                                 <!--Other slide-->
                                 <div class="carousel-item ">
