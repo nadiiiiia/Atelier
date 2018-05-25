@@ -80,12 +80,12 @@
                         </h2>
                         <dl class="row mt-4">
                             <dt class="col-sm-4">Date de début</dt>
-                            <dd class="col-sm-8">{{event.dateDebut}}</dd>
+                            <dd class="col-sm-8">{{event.dateDebut|date("d/m/Y")}}</dd>
 
                             <dt class="col-sm-4">Date de fin</dt>
-                            <dd class="col-sm-8">{{event.dateFin}}</dd>
-                            {#  <dt class="col-sm-4">Heures</dt>#}
-                            {#  <dd class="col-sm-8">De <strong>{{event.heureDeb}} </strong> à <strong>{{event.heureFin}} </strong> </dd>#}
+                            <dd class="col-sm-8">{{event.dateFin|date("d/m/Y")}}</dd>
+                            <dt class="col-sm-4">Heures</dt>
+                            <dd class="col-sm-8">De <strong>{{event.dateDebut|date("H:i")}} </strong> à <strong>{{event.dateFin|date("H:i")}} </strong> </dd>
 
                             <dt class="col-sm-4 text-truncate">Description</dt>
                             <dd class="col-sm-8">{{event.description|raw}}</dd>

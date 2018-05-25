@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints\DateTime;
 use AppBundle\Entity\Event;
 use Doctrine\ORM\EntityManager;
 
@@ -25,7 +26,7 @@ class EventController extends Controller {
      */
     public function eventsAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
-        $findEvents = $em->getRepository('AppBundle:Event')->findAll();
+        $findEvents = $em->getRepository('AppBundle:Event')->findAllCurrent();
 
 
         $paginator = $this->get('knp_paginator');
@@ -182,7 +183,7 @@ class EventController extends Controller {
         $filter_name = 'Résultat de recherche .. "' . $motcle . '"';
         return $this->render('event/accueil.html.twig', array('events' => $pagination, 'filter_name' => $filter_name));
     }
-    
+
     /**
      * Creates a new event entity.
      *
@@ -197,6 +198,7 @@ class EventController extends Controller {
         $event->setUtilisateur($user);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /*             * ********Traitement des images**************** */
             $files = $event->getImages();
             $img = array();
             foreach ($files as $file) {
@@ -206,6 +208,16 @@ class EventController extends Controller {
             }
             $event->setImages($img);
 
+            /*             * ********Traitement des dates**************** */
+
+            // Récupérer les dates de type string 
+            $form_date_deb = $form->get('dateDebut')->getData();
+            $form_date_fin = $form->get('dateFin')->getData();
+            // convertir string to objet DateTime
+            $event->setDateDebut(new \DateTime($form_date_deb));
+            $event->setDateFin(new \DateTime($form_date_fin));
+
+            /*             * ******** Insertion dans la DB **************** */
             $em = $this->getDoctrine()->getManager();
             $em->persist($event);
             $em->flush();
@@ -219,6 +231,5 @@ class EventController extends Controller {
                     'form' => $form->createView(),
         ));
     }
-
 
 }

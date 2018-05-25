@@ -52,16 +52,16 @@ class Event
     private $dateCreation;
 
     /**
-     * @var \string
+     * @var \datetime
      *
-     * @ORM\Column(name="date_debut", type="string", nullable=true)
+     * @ORM\Column(name="date_debut", type="datetime", nullable=true)
      */
     private $dateDebut;
 
     /**
-     * @var \string
+     * @var \datetime
      *
-     * @ORM\Column(name="date_fin", type="string", nullable=true)
+     * @ORM\Column(name="date_fin", type="datetime", nullable=true)
      */
     private $dateFin;
 
@@ -253,7 +253,7 @@ class Event
     /**
      * Set dateDebut
      *
-     * @param \string $dateDebut
+     * @param \datetime $dateDebut
      *
      * @return Event
      */
@@ -267,7 +267,7 @@ class Event
     /**
      * Get dateDebut
      *
-     * @return \string
+     * @return \datetime
      */
     public function getDateDebut()
     {
@@ -277,7 +277,7 @@ class Event
     /**
      * Set dateFin
      *
-     * @param \string $dateFin
+     * @param \datetime $dateFin
      *
      * @return Event
      */
@@ -291,7 +291,7 @@ class Event
     /**
      * Get dateFin
      *
-     * @return \string
+     * @return \datetime
      */
     public function getDateFin()
     {

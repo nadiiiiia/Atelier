@@ -11,13 +11,11 @@ namespace AppBundle\Repository;
 class EventRepository extends \Doctrine\ORM\EntityRepository {
    
         public function findAllCurrent() {
-             $currentDate = new \DateTime("now");
-             $stringDate = date_format($currentDate,"d/m/Y H:i");
         $query = $this->createQueryBuilder('u')
                 ->select('u')
-                ->where('u.dateDebut >= :currentDate')
-                ->setParameter('currentDate', $stringDate)
-                ->orderBy('u.dateCreation', 'DESC')
+                ->where('u.dateDebut > :currentDate')
+                ->setParameter('currentDate', new \DateTime("now"))
+                ->orderBy('u.dateCreation', 'DESC') // pour afficher les events recemment ajoutés au début
                 ->getQuery();
 
         return $query->getResult();

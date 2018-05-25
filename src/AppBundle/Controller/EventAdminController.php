@@ -12,7 +12,7 @@ use AppBundle\Entity\Event;
 /**
  * Event controller.
  *
- * @Route("event_admin")
+ * @Route("event")
  */
 class EventAdminController extends Controller {
 
