@@ -35,7 +35,7 @@ class EventAdminController extends Controller {
     /**
      * Creates a new event entity.
      *
-     * @Route("/new", name="event_new")
+     * @Route("/new", name="event_admin_new")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request) {
