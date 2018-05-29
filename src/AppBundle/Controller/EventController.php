@@ -2,7 +2,7 @@
 
 namespace AppBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,7 +10,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints\DateTime;
 use AppBundle\Entity\Event;
+use AppBundle\Entity\Order;
 use Doctrine\ORM\EntityManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 /**
  * Event controller.
@@ -231,5 +233,6 @@ class EventController extends Controller {
                     'form' => $form->createView(),
         ));
     }
+
 
 }

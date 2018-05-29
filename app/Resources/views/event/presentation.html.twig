@@ -93,9 +93,9 @@
 
                         <br>
                         {% if event.nbrParticipants == event.nbrMax %}
-                        <button type="button" class="btn btn-primary-atelier btn-md pull-right" >Complet</button>
+                        <a  class="btn btn-primary-atelier btn-md pull-right" >Complet</a>
                         {%else%}
-                            <button type="button" class="btn btn-primary-atelier btn-md pull-right" >Participez</button>
+                             <a  href="{{ path('order_new',{ 'amount': event.prix, 'event': event.id }) }}" class="btn btn-primary-atelier btn-md pull-right" >Participez</a>
                         {%endif%}
                     </div>
                     <!--Product-->

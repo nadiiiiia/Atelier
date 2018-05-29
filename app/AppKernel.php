@@ -21,6 +21,8 @@ class AppKernel extends Kernel {
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+            new JMS\Payment\CoreBundle\JMSPaymentCoreBundle(),
+            new JMS\Payment\PaypalBundle\JMSPaymentPaypalBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
