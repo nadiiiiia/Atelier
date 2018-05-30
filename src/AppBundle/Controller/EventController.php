@@ -2,7 +2,6 @@
 
 namespace AppBundle\Controller;
 
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,6 +12,7 @@ use AppBundle\Entity\Event;
 use AppBundle\Entity\Order;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
 
 /**
  * Event controller.
@@ -234,5 +234,32 @@ class EventController extends Controller {
         ));
     }
 
+    /**
+     * @Route("/order/{amount}_{event}", name="order_new")
+     * @param Request $request
+     */
+    public function orderAction($amount, $event, Request $request) {
+        $em = $this->getDoctrine()->getManager();
+
+        $event = $em->getRepository('AppBundle:Event')->find($event);
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        
+        $today = date("YmdHs");
+        $rand = strtoupper(substr(uniqid(sha1(time())), 0, 4));
+        $order_number = $today . $rand;
+  
+        $order = new Order();
+        $order->create_order($order_number, $amount, $user, $event);
+        $event->updateParticipants();
+        $em->persist($order);
+        $em->persist($event);
+        $em->flush();
+        $this->addFlash('success', 'Genus created!');
+            return $this->redirectToRoute('presentation', array('id' => $event->getId()));
+
+        
+        //return $this->redirect($request->getUri());
+       // return $this->render('event/presentation.html.twig', array('event' => $event));
+    }
 
 }

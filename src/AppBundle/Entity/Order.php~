@@ -57,8 +57,8 @@ class Order {
     public function create_order($orderNumber, $amount, $user, $event) {
         $this->orderNumber = $orderNumber;
         $this->amount = $amount;
+        $this->$user = $user;
         $this->event = $event;
-        $this->addUser($user);
     }
 
     public function getId() {
@@ -156,52 +156,4 @@ class Order {
         return $this->event;
     }
 
-
-    /**
-     * Set datePaiement
-     *
-     * @param \DateTime $datePaiement
-     *
-     * @return Order
-     */
-    public function setDatePaiement($datePaiement)
-    {
-        $this->datePaiement = $datePaiement;
-
-        return $this;
-    }
-
-    /**
-     * Get datePaiement
-     *
-     * @return \DateTime
-     */
-    public function getDatePaiement()
-    {
-        return $this->datePaiement;
-    }
-
-    /**
-     * Add user
-     *
-     * @param \AppBundle\Entity\User $user
-     *
-     * @return Order
-     */
-    public function addUser(\AppBundle\Entity\User $user)
-    {
-        $this->user[] = $user;
-
-        return $this;
-    }
-
-    /**
-     * Remove user
-     *
-     * @param \AppBundle\Entity\User $user
-     */
-    public function removeUser(\AppBundle\Entity\User $user)
-    {
-        $this->user->removeElement($user);
-    }
 }

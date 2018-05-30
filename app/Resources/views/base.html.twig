@@ -146,11 +146,12 @@
             <!--Main layout-->
             <div class="container">
                 {%  include 'modals/searchModal.html.twig' %}
-            {% block style %}{% endblock %}
-        {% block body %}{% endblock %}
-    {% block javascripts %}{% endblock %}
-</div>
-<!--/.Main layout-->
+
+                {% block style %}{% endblock %}
+            {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+    </div>
+    <!--/.Main layout-->
 </main>
 </body>
 
@@ -276,7 +277,7 @@
 <script>
     $(document).ready(function () {
         $('.mdb-select ').material_select();
-          
+
     });
 </script>
 
@@ -309,7 +310,7 @@
 #}
 <script type="text/javascript">
 
-$(document).ready(function () {
+    $(document).ready(function () {
         var currgeocoder;
         var user_lng;
         var user_lat;
@@ -361,11 +362,11 @@ $(document).ready(function () {
                     $("#lng").html(results[0].geometry.location.lng());
                     user_lng = results[0].geometry.location.lng();
                     user_lat = results[0].geometry.location.lat();
-                    
+
                     setCookie("user_lat", lat, 365);
                     setCookie("user_lng", lng, 365);
-                    
-                   // alert(results[0].geometry.location.lng());
+
+                    // alert(results[0].geometry.location.lng());
 
                 } else {
                     alert('Geocode was not successful for the following reason: ' + status);
@@ -378,9 +379,9 @@ $(document).ready(function () {
 
 
         url = Routing.generate('near_me', {lat: lat, lng: lng});
-        if(a != null){
-        a.setAttribute("href", '#' {#url#});
-    }
+        if (a != null) {
+            a.setAttribute("href", '#'{#url#});
+        }
 
 
     });
@@ -391,7 +392,7 @@ $(document).ready(function () {
 
 
 <script type="text/javascript">
-    
+
 </script>
 
 

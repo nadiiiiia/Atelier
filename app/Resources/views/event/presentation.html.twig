@@ -3,7 +3,11 @@
 
 {% block body %}
     <link href="https://cdn.rawgit.com/sachinchoolur/lightgallery.js/master/dist/css/lightgallery.css" rel="stylesheet">
-
+{% for msg in app.session.flashBag.get('success') %}
+                        <div class="alert alert-success">
+                            {{ msg }}
+                        </div>
+                    {% endfor %}
     <div class="row mt-lg-5">
         {% if event.images != null %}
             {% set arr_size = event.images|length %}
@@ -94,8 +98,10 @@
                         <br>
                         {% if event.nbrParticipants == event.nbrMax %}
                         <a  class="btn btn-primary-atelier btn-md pull-right" >Complet</a>
-                        {%else%}
+                        {%elseif is_granted('ROLE_ORGANIZER') %}
                              <a  href="{{ path('order_new',{ 'amount': event.prix, 'event': event.id }) }}" class="btn btn-primary-atelier btn-md pull-right" >Participez</a>
+                        {%else%}
+                             <a  href="{{ path('fos_user_security_login') }}" class="btn btn-primary-atelier btn-md pull-right" >Participez</a>
                         {%endif%}
                     </div>
                     <!--Product-->
@@ -163,6 +169,17 @@
         <script>
             lightGallery(document.getElementById('mdb-lightbox-ui'));
         </script>    
+                       <script type="text/javascript">
+                    $(document).ready(function () {
+
+                        window.setTimeout(function () {
+                            $(".alert").fadeTo(1000, 0).slideUp(1000, function () {
+                                $(this).remove();
+                            });
+                        }, 1000);
+
+                    });
+                </script>
 
 
     {% endblock %}

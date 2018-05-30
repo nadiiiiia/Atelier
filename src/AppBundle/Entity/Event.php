@@ -12,8 +12,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="atl_event")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\EventRepository")
  */
-class Event
-{
+class Event {
+
     /**
      * @var int
      *
@@ -22,7 +22,7 @@ class Event
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-	    
+
     /**
      * @Assert\NotNull()
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="events", cascade={"persist"})
@@ -65,7 +65,6 @@ class Event
      */
     private $dateFin;
 
-
     /**
      * @var float
      *
@@ -79,22 +78,22 @@ class Event
      * @ORM\Column(name="nbr_max", type="integer")
      */
     private $nbrMax;
-    
+
     /**
      * @var int
      *
      * @ORM\Column(name="nbr_participants", type="integer")
      */
     private $nbrParticipants;
-    
-        /**
+
+    /**
      * @var float
      *
      * @ORM\Column(name="lng", type="float", length=45, options={"default" : 0})
      *
      */
     private $lng;
-    
+
     /**
      * @var float
      *
@@ -102,22 +101,20 @@ class Event
      * 
      */
     private $lat;
-    
-      
+
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="events",  cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
      */
-    
     private $utilisateur;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Credit", mappedBy="event", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true)
      */
-    private $credits;
-    
-        /**
+    private $orders;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="adresse", type="string", length=255, nullable=true)
@@ -131,50 +128,44 @@ class Event
      */
     private $codeP;
 
-  /**
-   * @ORM\ManyToOne(targetEntity="Ville", inversedBy="events", cascade={"persist"})
-   * @ORM\JoinColumn(nullable=false)
-   */
-  private $ville;
+    /**
+     * @ORM\ManyToOne(targetEntity="Ville", inversedBy="events", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $ville;
 
-  /**
-   * @ORM\ManyToOne(targetEntity="Region", inversedBy="events", cascade={"persist"})
-   * @ORM\JoinColumn(nullable=true)
-   */
-  private $region;
-  
-  /**
-   * @ORM\ManyToOne(targetEntity="Departement", inversedBy="events", cascade={"persist"})
-   * @ORM\JoinColumn(nullable=true)
-   */
-  private $departement;
-    
+    /**
+     * @ORM\ManyToOne(targetEntity="Region", inversedBy="events", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $region;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Departement", inversedBy="events", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $departement;
+
     /**
      * @var array
      *
      * @ORM\Column(name="images", type="array", nullable=true)
      */
     private $images;
-    
-    
-     public function __construct()
-    {
-       
+
+    public function __construct() {
+
         $this->dateCreation = new \DateTime("now");  // get current date and time
         $this->credits = new ArrayCollection();
-        $this->nbrParticipants = 0 ;
-      
-       
+        $this->nbrParticipants = 0;
     }
-
 
     /**
      * Get id
      *
      * @return int
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -185,8 +176,7 @@ class Event
      *
      * @return Event
      */
-    public function setTitre($titre)
-    {
+    public function setTitre($titre) {
         $this->titre = $titre;
 
         return $this;
@@ -197,8 +187,7 @@ class Event
      *
      * @return string
      */
-    public function getTitre()
-    {
+    public function getTitre() {
         return $this->titre;
     }
 
@@ -209,8 +198,7 @@ class Event
      *
      * @return Event
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
 
         return $this;
@@ -221,8 +209,7 @@ class Event
      *
      * @return string
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
@@ -233,8 +220,7 @@ class Event
      *
      * @return Event
      */
-    public function setDateCreation($dateCreation)
-    {
+    public function setDateCreation($dateCreation) {
         $this->dateCreation = $dateCreation;
 
         return $this;
@@ -245,8 +231,7 @@ class Event
      *
      * @return \datetime
      */
-    public function getDateCreation()
-    {
+    public function getDateCreation() {
         return $this->dateCreation;
     }
 
@@ -257,8 +242,7 @@ class Event
      *
      * @return Event
      */
-    public function setDateDebut($dateDebut)
-    {
+    public function setDateDebut($dateDebut) {
         $this->dateDebut = $dateDebut;
 
         return $this;
@@ -269,8 +253,7 @@ class Event
      *
      * @return \datetime
      */
-    public function getDateDebut()
-    {
+    public function getDateDebut() {
         return $this->dateDebut;
     }
 
@@ -281,8 +264,7 @@ class Event
      *
      * @return Event
      */
-    public function setDateFin($dateFin)
-    {
+    public function setDateFin($dateFin) {
         $this->dateFin = $dateFin;
 
         return $this;
@@ -293,8 +275,7 @@ class Event
      *
      * @return \datetime
      */
-    public function getDateFin()
-    {
+    public function getDateFin() {
         return $this->dateFin;
     }
 
@@ -305,8 +286,7 @@ class Event
      *
      * @return Event
      */
-    public function setPrix($prix)
-    {
+    public function setPrix($prix) {
         $this->prix = $prix;
 
         return $this;
@@ -317,8 +297,7 @@ class Event
      *
      * @return float
      */
-    public function getPrix()
-    {
+    public function getPrix() {
         return $this->prix;
     }
 
@@ -329,8 +308,7 @@ class Event
      *
      * @return Event
      */
-    public function setNbrMax($nbrMax)
-    {
+    public function setNbrMax($nbrMax) {
         $this->nbrMax = $nbrMax;
 
         return $this;
@@ -341,13 +319,9 @@ class Event
      *
      * @return int
      */
-    public function getNbrMax()
-    {
+    public function getNbrMax() {
         return $this->nbrMax;
     }
-
-
-
 
     /**
      * Set category
@@ -356,8 +330,7 @@ class Event
      *
      * @return Event
      */
-    public function setCategory(\AppBundle\Entity\Category $category)
-    {
+    public function setCategory(\AppBundle\Entity\Category $category) {
         $this->category = $category;
 
         return $this;
@@ -368,12 +341,9 @@ class Event
      *
      * @return \AppBundle\Entity\Category
      */
-    public function getCategory()
-    {
+    public function getCategory() {
         return $this->category;
     }
-
-
 
     /**
      * Add credit
@@ -382,8 +352,7 @@ class Event
      *
      * @return Event
      */
-    public function addCredit(\AppBundle\Entity\Credit $credit)
-    {
+    public function addCredit(\AppBundle\Entity\Credit $credit) {
         $this->credits[] = $credit;
 
         return $this;
@@ -394,8 +363,7 @@ class Event
      *
      * @param \AppBundle\Entity\Credit $credit
      */
-    public function removeCredit(\AppBundle\Entity\Credit $credit)
-    {
+    public function removeCredit(\AppBundle\Entity\Credit $credit) {
         $this->credits->removeElement($credit);
     }
 
@@ -404,13 +372,9 @@ class Event
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getCredits()
-    {
+    public function getCredits() {
         return $this->credits;
     }
-
-    
-
 
     /**
      * Set adresse
@@ -419,8 +383,7 @@ class Event
      *
      * @return Event
      */
-    public function setAdresse($adresse)
-    {
+    public function setAdresse($adresse) {
         $this->adresse = $adresse;
 
         return $this;
@@ -431,8 +394,7 @@ class Event
      *
      * @return string
      */
-    public function getAdresse()
-    {
+    public function getAdresse() {
         return $this->adresse;
     }
 
@@ -443,8 +405,7 @@ class Event
      *
      * @return Event
      */
-    public function setCodeP($codeP)
-    {
+    public function setCodeP($codeP) {
         $this->codeP = $codeP;
 
         return $this;
@@ -455,8 +416,7 @@ class Event
      *
      * @return string
      */
-    public function getCodeP()
-    {
+    public function getCodeP() {
         return $this->codeP;
     }
 
@@ -467,8 +427,7 @@ class Event
      *
      * @return Event
      */
-    public function setVille(\AppBundle\Entity\Ville $ville)
-    {
+    public function setVille(\AppBundle\Entity\Ville $ville) {
         $this->ville = $ville;
 
         return $this;
@@ -479,8 +438,7 @@ class Event
      *
      * @return \AppBundle\Entity\Ville
      */
-    public function getVille()
-    {
+    public function getVille() {
         return $this->ville;
     }
 
@@ -491,8 +449,7 @@ class Event
      *
      * @return Event
      */
-    public function setRegion(\AppBundle\Entity\Region $region)
-    {
+    public function setRegion(\AppBundle\Entity\Region $region) {
         $this->region = $region;
 
         return $this;
@@ -503,8 +460,7 @@ class Event
      *
      * @return \AppBundle\Entity\Region
      */
-    public function getRegion()
-    {
+    public function getRegion() {
         return $this->region;
     }
 
@@ -515,8 +471,7 @@ class Event
      *
      * @return Event
      */
-    public function setDepartement(\AppBundle\Entity\Departement $departement)
-    {
+    public function setDepartement(\AppBundle\Entity\Departement $departement) {
         $this->departement = $departement;
 
         return $this;
@@ -527,11 +482,9 @@ class Event
      *
      * @return \AppBundle\Entity\Departement
      */
-    public function getDepartement()
-    {
+    public function getDepartement() {
         return $this->departement;
     }
-
 
     /**
      * Set utilisateur
@@ -540,8 +493,7 @@ class Event
      *
      * @return Event
      */
-    public function setUtilisateur(\AppBundle\Entity\User $utilisateur = null)
-    {
+    public function setUtilisateur(\AppBundle\Entity\User $utilisateur = null) {
         $this->utilisateur = $utilisateur;
 
         return $this;
@@ -552,8 +504,7 @@ class Event
      *
      * @return \AppBundle\Entity\User
      */
-    public function getUtilisateur()
-    {
+    public function getUtilisateur() {
         return $this->utilisateur;
     }
 
@@ -564,8 +515,7 @@ class Event
      *
      * @return Event
      */
-    public function setNbrParticipants($nbrParticipants)
-    {
+    public function setNbrParticipants($nbrParticipants) {
         $this->nbrParticipants = $nbrParticipants;
 
         return $this;
@@ -576,9 +526,20 @@ class Event
      *
      * @return integer
      */
-    public function getNbrParticipants()
-    {
+    public function getNbrParticipants() {
         return $this->nbrParticipants;
+    }
+
+    /**
+     * Update participants
+     *
+     * @return Event
+     */
+    public function updateParticipants() {
+        $nbr = $this->nbrParticipants;
+        $this->nbrParticipants = $nbr + 1;
+        
+        return $this;
     }
 
     /**
@@ -588,8 +549,7 @@ class Event
      *
      * @return Event
      */
-    public function setLng($lng)
-    {
+    public function setLng($lng) {
         $this->lng = $lng;
 
         return $this;
@@ -600,8 +560,7 @@ class Event
      *
      * @return float
      */
-    public function getLng()
-    {
+    public function getLng() {
         return $this->lng;
     }
 
@@ -612,8 +571,7 @@ class Event
      *
      * @return Event
      */
-    public function setLat($lat)
-    {
+    public function setLat($lat) {
         $this->lat = $lat;
 
         return $this;
@@ -624,8 +582,7 @@ class Event
      *
      * @return float
      */
-    public function getLat()
-    {
+    public function getLat() {
         return $this->lat;
     }
 
@@ -636,8 +593,7 @@ class Event
      *
      * @return Event
      */
-    public function setImages($images)
-    {
+    public function setImages($images) {
         $this->images = $images;
 
         return $this;
@@ -648,8 +604,8 @@ class Event
      *
      * @return array
      */
-    public function getImages()
-    {
+    public function getImages() {
         return $this->images;
     }
+
 }
