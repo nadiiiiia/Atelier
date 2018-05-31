@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {#{% form_theme form 'AppBundle:Orders:theme.html.twig' %}#}
+    <h1>Paiement</h1>
+    Evénement : {{ order.event.titre }}
+    <br>
+    Prix total: € {{ order.amount }}
+    <br>
+    Date: {{ order.event.dateDebut|date("d/m/Y") }}
+
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <input type="submit" value="Payer € {{ order.amount }}" />
+    {{ form_end(form) }}
+    
+{% endblock %}

@@ -247,6 +247,10 @@ jms_payment_core:
         secret: def00000827a066968f05722ee55f45cbfe3b73ea270b5f3c5868a676c20ebeab36687a7256d8499831cebceb09bc88f1e946e17fb52cc8d0de549f08d498d6c536ae40f
         
 jms_payment_paypal:
-    username: your_api_username # not your account username
-    password: your_api_password # not your account password
-    signature: your_api_signature
+    username: %paypal_username% # not your account username
+    password: %paypal_password% # not your account password
+    signature: %paypal_signature%
+    return_url: https://example.com/return-url
+    notify_url: https://example.com/notify-url
+    cancel_url: https://example.com/cancel-url
+    useraction: commit
