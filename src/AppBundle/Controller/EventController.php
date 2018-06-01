@@ -274,13 +274,13 @@ class EventController extends Controller {
      * 
      */
     public function showAction(Request $request, Order $order) {
-//        $config = [
-//            'paypal_express_checkout' => [
-//                'return_url' => $this->generateUrl('order_paymentcomplete', [
-//                    'id' => $order->getId(),
-//                        ], UrlGeneratorInterface::ABSOLUTE_URL),
-//            ],
-//        ];
+        $config = [
+            'paypal_express_checkout' => [
+                'return_url' => $this->generateUrl('create_payment', [  // si je change create_payment le payement ne marche pas
+                    'id' => $order->getId(),
+                        ], UrlGeneratorInterface::ABSOLUTE_URL),
+            ],
+        ];
         $form = $this->createForm(ChoosePaymentMethodType::class, null, [
             'amount' => $order->getAmount(),
             'currency' => 'EUR',
@@ -290,7 +290,7 @@ class EventController extends Controller {
                     'label' => false,
                 ],
             ],
-            //'predefined_data' => $config,
+            'predefined_data' => $config,
         ]);
 
         $form->handleRequest($request);
