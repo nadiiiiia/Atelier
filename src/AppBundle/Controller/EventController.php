@@ -17,7 +17,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\Payment\CoreBundle\PluginController\Result;
 use JMS\Payment\CoreBundle\Plugin\Exception\Action\VisitUrl;
 use JMS\Payment\CoreBundle\Plugin\Exception\ActionRequiredException;
-
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Event controller.
@@ -259,7 +259,7 @@ class EventController extends Controller {
         $em->persist($order);
         $em->persist($event);
         $em->flush();
-        $this->addFlash('success', 'Genus created!');
+        $this->addFlash('success', 'Genus created!'); /// à ajouter dans un if
         //  return $this->redirectToRoute('presentation', array('id' => $event->getId()));
         return $this->redirectToRoute('order_show', array('id' => $order->getId()));
 
@@ -274,10 +274,23 @@ class EventController extends Controller {
      * 
      */
     public function showAction(Request $request, Order $order) {
+//        $config = [
+//            'paypal_express_checkout' => [
+//                'return_url' => $this->generateUrl('order_paymentcomplete', [
+//                    'id' => $order->getId(),
+//                        ], UrlGeneratorInterface::ABSOLUTE_URL),
+//            ],
+//        ];
         $form = $this->createForm(ChoosePaymentMethodType::class, null, [
             'amount' => $order->getAmount(),
             'currency' => 'EUR',
-            'default_method'  => 'paypal_express_checkout',
+            'default_method' => 'paypal_express_checkout',
+            'method_options' => [
+                'paypal_express_checkout' => [
+                    'label' => false,
+                ],
+            ],
+            //'predefined_data' => $config,
         ]);
 
         $form->handleRequest($request);
@@ -327,7 +340,7 @@ class EventController extends Controller {
         $result = $ppc->approveAndDeposit($payment->getId(), $payment->getTargetAmount());
 
         if ($result->getStatus() === Result::STATUS_SUCCESS) {
-            return $this->redirect($this->generateUrl('app_orders_paymentcomplete', [
+            return $this->redirect($this->generateUrl('order_paymentcomplete', [
                                 'id' => $order->getId(),
             ]));
         }
@@ -349,6 +362,18 @@ class EventController extends Controller {
         // In a real-world application you wouldn't throw the exception. You would,
         // for example, redirect to the showAction with a flash message informing
         // the user that the payment was not successful.
+    }
+
+    
+    /**
+     * Creates a new event entity.
+     *
+     * @Route("order_paymentcomplete/{id}", name="order_paymentcomplete")
+     * 
+     */
+    public function orderCompleteAction(Order $order) {
+        
+        return $this->redirectToRoute('order_show', array('id' => $order->getId()));
     }
 
 }
