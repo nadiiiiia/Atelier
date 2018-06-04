@@ -4,11 +4,11 @@
 {% block body %}
     <link href="https://cdn.rawgit.com/sachinchoolur/lightgallery.js/master/dist/css/lightgallery.css" rel="stylesheet">
 
-    {#{% for msg in app.session.flashBag.get('success') %}
+    {% for msg in app.session.flashBag.get('success') %}
                             <div class="alert alert-success">
                                 {{ msg }}
                             </div>
-                        {% endfor %}#}
+                        {% endfor %}
         <div class="row mt-lg-5">
     {% if event.images != null %}
         {% set arr_size = event.images|length %}

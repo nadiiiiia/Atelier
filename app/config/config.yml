@@ -250,7 +250,7 @@ jms_payment_paypal:
     username: %paypal_username% # not your account username
     password: %paypal_password% # not your account password
     signature: %paypal_signature%
-    return_url: http://localhost/Atelier__/web/app_dev.php/
+    return_url: http://dsc-power.com/Atelier/web/
     notify_url: https://example.com/notify-url
-    cancel_url: http://localhost/Atelier__/web/app_dev.php/
+    cancel_url: http://dsc-power.com/Atelier/web/
     useraction: commit
