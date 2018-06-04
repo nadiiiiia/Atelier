@@ -348,7 +348,6 @@ class EventController extends Controller {
                                 'id' => $order->getEvent()->getId(),
                                 'order' => $order,
             ]));
-            //return $this->render('order/complete.html.twig');
         }
      
         if ($result->getStatus() === Result::STATUS_PENDING) {
@@ -372,14 +371,13 @@ class EventController extends Controller {
 
     
     /**
-     * Creates a new event entity.
+     * Finish payment.
      *
      * @Route("/order_complete/{id}", name="order_complete")
      * 
      */
     public function orderCompleteAction(Order $order) {
         
-      //  return $this->redirectToRoute('order_show', array('id' => $order->getId()));
          return $this->render('order/complete.html.twig', array(
                     'id' => $order->getEvent()->getId(),
                     'order' => $order,
