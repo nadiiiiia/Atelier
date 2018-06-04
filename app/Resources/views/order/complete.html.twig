@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {#{% form_theme form 'AppBundle:Orders:theme.html.twig' %}#}
+    <h1>Paiement avec succès</h1>
+    <h5>
+    <br>
+    Félicitation, vous êtets maintenant inscrit à l'evénement <b>{{ order.event.titre }}</h5>
+    
+   <h5> Soyez au rendez-vous le <b>{{ order.event.dateDebut|date("d/m/Y") }}</b> vers <b>{{ order.event.dateDebut|date("H:i")}}</b> à l'adresse suivante:  
+      </h5>
+      
+       <h5><b>{{ order.event.adresse}}</b>
+    </h5><br>
+    
+    <a  href="{{ path('homepage') }}" class="btn btn-primary-atelier btn-md pull-right" align='left'>Retour au site</a>
+    <br>
+    <br>
+    </h5>
+
+    
+{% endblock %}

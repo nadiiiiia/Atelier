@@ -3,25 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/Atelier__/app/Resources/views/event/categorie.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Entity/Order.php</file>
             <file>file:/C:/xampp/htdocs/Atelier__/app/config/config.yml</file>
+            <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Controller/EventController.php</file>
             <file>file:/C:/xampp/htdocs/Atelier__/app/config/security.yml</file>
-            <file>file:/C:/xampp/htdocs/Atelier__/web/uploads/images/geocoder.js</file>
-            <file>file:/C:/xampp/htdocs/Atelier__/web/bundles/app/css/style.css</file>
-            <file>file:/C:/xampp/htdocs/Atelier__/app/Resources/views/event/accueil.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Atelier__/app/Resources/views/Event.php</file>
-            <file>file:/C:/xampp/htdocs/Atelier__/app/Resources/views/event/new.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Atelier__/app/Resources/views/order/show.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Atelier__/app/config/parameters.yml</file>
+            <file>file:/C:/xampp/htdocs/Atelier__/app/Resources/views/event/presentation.html.twig</file>
             <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Controller/RegistrationController.php</file>
-            <file>file:/C:/xampp/htdocs/Atelier__/app/Resources/views/base.html.twig</file>
             <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Resources/public/css/style.css</file>
-            <file>file:/C:/xampp/htdocs/Atelier__/app/Resources/views/event/region.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Controller/DepartementController.php</file>
-            <file>file:/C:/xampp/htdocs/Atelier__/app/Resources/views/event/departement.html.twig</file>
             <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Controller/RegionController.php</file>
-            <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Controller/EventUserController.php</file>
             <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Repository/EventRepository.php</file>
             <file>file:/C:/xampp/htdocs/Atelier__/var/logs/dev.log</file>
-            <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Controller/CategoryController.php</file>
+            <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Entity/Event.php</file>
         </group>
     </open-files>
 </project-private>

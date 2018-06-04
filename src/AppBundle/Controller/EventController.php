@@ -259,7 +259,7 @@ class EventController extends Controller {
         $em->persist($order);
         $em->persist($event);
         $em->flush();
-        $this->addFlash('success', 'Genus created!'); /// à ajouter dans un if
+        // $this->addFlash('success', 'Genus created!'); /// à ajouter dans un if
         //  return $this->redirectToRoute('presentation', array('id' => $event->getId()));
         return $this->redirectToRoute('order_show', array('id' => $order->getId()));
 
@@ -276,9 +276,12 @@ class EventController extends Controller {
     public function showAction(Request $request, Order $order) {
         $config = [
             'paypal_express_checkout' => [
-                'return_url' => $this->generateUrl('create_payment', [  // si je change create_payment le payement ne marche pas
+                'return_url' => $this->generateUrl('create_payment', [// si je change create_payment le payement ne marche pas
                     'id' => $order->getId(),
                         ], UrlGeneratorInterface::ABSOLUTE_URL),
+                'checkout_params' => [
+                    'PAYMENTREQUEST_n_DESC' => $order->getEvent()->getTitre(),
+                ],
             ],
         ];
         $form = $this->createForm(ChoosePaymentMethodType::class, null, [
@@ -340,11 +343,14 @@ class EventController extends Controller {
         $result = $ppc->approveAndDeposit($payment->getId(), $payment->getTargetAmount());
 
         if ($result->getStatus() === Result::STATUS_SUCCESS) {
-            return $this->redirect($this->generateUrl('order_paymentcomplete', [
-                                'id' => $order->getId(),
+          //  $this->addFlash('success', 'Inscription réussit!'); // if rdierct presentation
+            return $this->redirect($this->generateUrl('order_complete', [
+                                'id' => $order->getEvent()->getId(),
+                                'order' => $order,
             ]));
+            //return $this->render('order/complete.html.twig');
         }
-
+     
         if ($result->getStatus() === Result::STATUS_PENDING) {
             $ex = $result->getPluginException();
 
@@ -356,24 +362,27 @@ class EventController extends Controller {
                 }
             }
         }
-
+        
         throw $result->getPluginException();
-
         // In a real-world application you wouldn't throw the exception. You would,
         // for example, redirect to the showAction with a flash message informing
         // the user that the payment was not successful.
+        // $this->addFlash('failure', 'Erreur d\'inscription !!');
     }
 
     
     /**
      * Creates a new event entity.
      *
-     * @Route("order_paymentcomplete/{id}", name="order_paymentcomplete")
+     * @Route("/order_complete/{id}", name="order_complete")
      * 
      */
     public function orderCompleteAction(Order $order) {
         
-        return $this->redirectToRoute('order_show', array('id' => $order->getId()));
+      //  return $this->redirectToRoute('order_show', array('id' => $order->getId()));
+         return $this->render('order/complete.html.twig', array(
+                    'id' => $order->getEvent()->getId(),
+                    'order' => $order,
+        ));
     }
-
 }

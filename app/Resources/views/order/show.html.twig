@@ -2,17 +2,48 @@
 
 {% block body %}
     {#{% form_theme form 'AppBundle:Orders:theme.html.twig' %}#}
-    <h1>Paiement</h1>
-    Evénement : {{ order.event.titre }}
-    <br>
-    Prix total: € {{ order.amount }}
-    <br>
-    Date: {{ order.event.dateDebut|date("d/m/Y") }}
+        <div class="row"
+        <!--Grid column-->
+        <div class="col-md-2">
+
+
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-md-8 pb-5">
+    <h2>Paiement des frais d'inscription</h2>
+    <br> 
+    <b> Evénement :</b> {{ order.event.titre }}
+    <br>   
+    <b>Date:</b> {{ order.event.dateDebut|date("d/m/Y") }}
+    <br>   <b>Prix total: </b>{{ order.amount }} €
+    <br><br>
 
 
     {{ form_start(form) }}
     {{ form_widget(form) }}
-    <input type="submit" value="Payer € {{ order.amount }}" />
+
+
+    <input type="image"
+           src="{{asset('bundles/app/img/paypal_btn.jpg')}}" style="width:270px;height:52.22px;"
+           border="0" name="submit" alt="PayPal - The safer, easier way to pay online!" align='right'>
+
+
     {{ form_end(form) }}
-    
+    </div>
+            <!--Grid column-->
+ {# <div class="col-md-2">
+
+
+        </div>#}
+        <!--Grid column-->
+
+
+    </div>
+
+    <script type="text/javascript" src="{{asset('bundles/app/js/jquery-3.2.1.min.js')}}"></script>
+    <script>
+       $('#jms_choose_payment_method').hide();
+    </script>
 {% endblock %}
