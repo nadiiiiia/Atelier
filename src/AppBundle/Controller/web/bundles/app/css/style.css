@@ -1,0 +1,193 @@
+/* YOUR CUSTOM STYLES */
+
+main {
+    margin-top: 3rem;
+}
+
+main .card {
+    margin-bottom: 2rem;
+}
+
+@media only screen and (max-width: 768px) {
+    .read-more {
+        text-align: center;
+    }
+}
+
+.navbar {
+    background-color: #730b42 !important;
+}
+
+.atelier-header-color{
+    background-color: #7b6b74 !important
+}
+footer.page-footer {
+    background-color: #730b42 !important;
+    margin-top: 2rem !important;
+}
+.navbar .btn-group .dropdown-menu a:hover {
+    color: #000 !important;
+}
+
+.navbar .btn-group .dropdown-menu a:active {
+    color: #fff !important;
+}
+.btn-primary-atelier{
+    background-color: #535466 !important;
+}
+.btn-primary-atelier:focus, .btn-primary-atelier:active, .btn-primary-atelier.active {
+    background-color: #730b42 !important;
+}
+
+.btn-primary-atelier:hover {
+    background-color: #730b42 !important;
+}
+
+.btn-primary-inverse{
+    background-color: #730b42 !important;
+}
+.btn-primary-inverse:focus, .btn-primary-inverse:active, .btn-primary-inverse.active {
+    background-color: #535466 !important;
+}
+
+.btn-primary-inverse:hover {
+    background-color: #535466 !important;
+}
+
+.card-title a {
+    color: #730b42 !important;
+}
+
+.card-title a:hover {
+    color: #535466 !important;
+}
+
+.pagination .active .page-link {
+    background-color: #fff !important;
+}
+
+
+
+.page-item.active .page-link {
+    z-index: 2;
+    color: #fff !important;
+    background-color: #730b42 !important;
+    border-color: #730b42 !important;
+}
+.page-link:hover {
+    color: #730b42 !important;
+}
+
+
+.page-link {
+
+    color: #730b42 !important;
+}
+
+.badge, .navbar.navbar-dark .breadcrumb .nav-item.active>.nav-link:hover, .navbar.navbar-dark .navbar-nav .nav-item.active>.nav-link:hover, .navbar.navbar-dark .navbar-toggler, .navbar.navbar-dark form .form-control, .pagination .active  .page-link:hover {
+    color: #fff !important;
+}
+
+.rose{
+    background-color: #ea727d !important;
+}
+
+.elegant-card .card-label {
+    margin-bottom: -27px;
+    margin-top: 0;
+    z-index: 10;
+    position: relative;
+}
+/*datePicker style */
+
+.dtp > .dtp-content > .dtp-date-view > header.dtp-header { 
+    background: #5C0935 !important;
+}
+
+.dtp div.dtp-date, .dtp div.dtp-time {
+    background: #730B42 !important;
+}
+.dtp table.dtp-picker-days tr > td > a.selected {
+    background: #730B42 !important;
+}
+.dtp .p10 > a {
+    color: #ffff !important;
+}
+/*End datePicker style */
+
+#adresse::-webkit-input-placeholder {
+    color: #FFFFFF;
+}
+ 
+#adresse::-moz-placeholder {
+    color: #FFFFFF;
+}
+
+.navbar.navbar-dark form input[type=text]:focus:not([readonly]){
+    border-color: #b6babd !important;
+}
+input[type=date]:focus:not([readonly]), input[type=datetime-local]:focus:not([readonly]), input[type=email]:focus:not([readonly]), input[type=number]:focus:not([readonly]), input[type=password]:focus:not([readonly]), input[type=search-md]:focus:not([readonly]), input[type=search]:focus:not([readonly]), input[type=tel]:focus:not([readonly]), input[type=text]:focus:not([readonly]), input[type=time]:focus:not([readonly]), input[type=url]:focus:not([readonly]), textarea.md-textarea:focus:not([readonly]) {
+    border-bottom: 1px solid #b6babd !important;
+    -webkit-box-shadow: 0 1px 0 0 #b6babd !important;
+    box-shadow: 0 1px 0 0 #b6babd !important;
+}
+
+.modal-dialog.modal-notify.modal-success .badge, .modal-dialog.modal-notify.modal-success .btn-primary-modal, .modal-dialog.modal-notify.modal-success .modal-header {
+    background-color: #730B42 !important;
+}
+
+.modal-dialog.modal-notify.modal-success .badge, .modal-dialog.modal-notify.modal-success .btn-primary-modal, .modal-dialog.modal-notify.modal-success .modal-header {
+    background-color: #730B42 !important;
+}
+
+/*.modal-header {
+    padding: 10px !important;
+    border-top-left-radius: .0rem !important;
+    border-top-right-radius: .0rem !important;
+}*/
+
+/*validation form*/
+
+.error{
+        font-size: 13px;
+      color: #f44336;
+      opacity: 1; 
+   }
+   
+    .md-form input[type=text].error, .md-form input[type=text]:focus.error,
+    .md-form input[type=password].error,
+    .md-form input[type=password]:focus.error,
+    .md-form input[type=email].error,
+    .md-form input[type=email]:focus.error,
+    .md-form input[type=url].error,
+    .md-form input[type=url]:focus.error,
+    .md-form input[type=time].error,
+    .md-form input[type=time]:focus.error,
+    .md-form input[type=date].error,
+    .md-form input[type=date]:focus.error,
+    .md-form input[type=datetime-local].error,
+    .md-form input[type=datetime-local]:focus.error,
+    .md-form input[type=tel].error,
+    .md-form input[type=tel]:focus.error,
+    .md-form input[type=number].error,
+    .md-form input[type=number]:focus.error,
+    .md-form input[type=search-md].error,
+    .md-form input[type=search-md]:focus.error,
+    .md-form input[type=search].error,
+    .md-form input[type=search]:focus.error,
+    .md-form textarea.md-textarea.error,
+    .md-form textarea.md-textarea:focus.error {
+      border-bottom: 1px solid #f44336;
+      box-shadow: 0 1px 0 0 #f44336; }
+	  
+/*   .md-form label.error {
+    transform: translateY(220%);
+}*/
+
+/*validation form*/
+
+ .carte_img{
+     width:339.99px;
+     height:226px;
+ }
+

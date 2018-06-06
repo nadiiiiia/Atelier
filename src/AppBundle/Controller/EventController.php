@@ -9,8 +9,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints\DateTime;
-use AppBundle\Entity\Event;
-use AppBundle\Entity\Order;
 use Doctrine\ORM\EntityManager;
 use JMS\Payment\CoreBundle\Form\ChoosePaymentMethodType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -18,6 +16,8 @@ use JMS\Payment\CoreBundle\PluginController\Result;
 use JMS\Payment\CoreBundle\Plugin\Exception\Action\VisitUrl;
 use JMS\Payment\CoreBundle\Plugin\Exception\ActionRequiredException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use AppBundle\Entity\Event;
+use AppBundle\Entity\Order;
 
 /**
  * Event controller.
@@ -195,6 +195,7 @@ class EventController extends Controller {
      * Creates a new event entity.
      *
      * @Route("event/new", name="event_new")
+     * @param Request $request
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request) {
@@ -376,10 +377,12 @@ class EventController extends Controller {
      * @Route("/order_complete/{id}", name="order_complete")
      * 
      */
-    public function orderCompleteAction(Order $order) {
+    public function orderCompleteAction($id) {
+        
+       
+        
         
          return $this->render('AppBundle:default:order/complete.html.twig', array(
-                    'id' => $order->getEvent()->getId(),
                     'order' => $order,
         ));
     }

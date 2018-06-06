@@ -46,6 +46,7 @@ class EventAdminController extends Controller {
         $event->setUtilisateur($user);
 
         if ($form->isSubmitted() && $form->isValid()) {
+                        /*             * ********Traitement des images**************** */
             $files = $event->getImages();
             $img = array();
             foreach ($files as $file) {
@@ -55,6 +56,17 @@ class EventAdminController extends Controller {
             }
             $event->setImages($img);
 
+            /*             * ********Traitement des dates**************** */
+
+            // Récupérer les dates de type string 
+            $form_date_deb = $form->get('dateDebut')->getData();
+            $form_date_fin = $form->get('dateFin')->getData();
+            // convertir string to objet DateTime
+            $event->setDateDebut(new \DateTime($form_date_deb));
+            $event->setDateFin(new \DateTime($form_date_fin));
+
+            /*             * ******** Insertion dans la DB **************** */
+      
             $em = $this->getDoctrine()->getManager();
             $em->persist($event);
             $em->flush();
