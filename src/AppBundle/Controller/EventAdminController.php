@@ -27,7 +27,7 @@ class EventAdminController extends Controller {
 
         $events = $em->getRepository('AppBundle:Event')->findAll();
 
-        return $this->render('event/index.html.twig', array(
+        return $this->render('AppBundle:default:event/index.html.twig', array(
                     'events' => $events,
         ));
     }
@@ -63,7 +63,7 @@ class EventAdminController extends Controller {
         }
 
 
-        return $this->render('event/new.html.twig', array(
+        return $this->render('AppBundle:default:event/new.html.twig', array(
                     'event' => $event,
                     'form' => $form->createView(),
         ));
@@ -78,7 +78,7 @@ class EventAdminController extends Controller {
     public function showAction(Event $event) {
         $deleteForm = $this->createDeleteForm($event);
 
-        return $this->render('event/show.html.twig', array(
+        return $this->render('AppBundle:default:event/show.html.twig', array(
                     'event' => $event,
                     'delete_form' => $deleteForm->createView(),
         ));
@@ -114,7 +114,7 @@ class EventAdminController extends Controller {
       
         }
 
-        return $this->render('event/edit.html.twig', array(
+        return $this->render('AppBundle:default:event/edit.html.twig', array(
                     'event' => $event,
                     'edit_form' => $editForm->createView(),
                     'delete_form' => $deleteForm->createView(),

@@ -43,7 +43,7 @@ class EventController extends Controller {
 
         $events_json = 0; //$this->get('jms_serializer')->serialize($findEvents, 'json');
         $filter_name = 'Tous les Ateliers';
-        return $this->render('event/accueil.html.twig', array('events' => $pagination, 'filter_name' => $filter_name, 'events_json' => $events_json));
+        return $this->render('AppBundle:default:event/accueil.html.twig', array('events' => $pagination, 'filter_name' => $filter_name, 'events_json' => $events_json));
     }
 
     /**
@@ -68,15 +68,15 @@ class EventController extends Controller {
         switch ($type) {
             case "region":
                 $filter_name = $findEvents[0]->getRegion();
-                return $this->render('event/accueil.html.twig', array('events' => $pagination, 'filter_name' => $filter_name, 'events_json' => $events_json));
+                return $this->render('AppBundle:default:event/accueil.html.twig', array('events' => $pagination, 'filter_name' => $filter_name, 'events_json' => $events_json));
                 break;
             case "departement":
                 $filter_name = $findEvents[0]->getDepartement();
-                return $this->render('event/accueil.html.twig', array('events' => $pagination, 'filter_name' => $filter_name, 'events_json' => $events_json));
+                return $this->render('AppBundle:default:event/accueil.html.twig', array('events' => $pagination, 'filter_name' => $filter_name, 'events_json' => $events_json));
                 break;
             case "category":
                 $filter_name = $findEvents[0]->getCategory();
-                return $this->render('event/accueil.html.twig', array('events' => $pagination, 'filter_name' => $filter_name, 'events_json' => $events_json));
+                return $this->render('AppBundle:default:event/accueil.html.twig', array('events' => $pagination, 'filter_name' => $filter_name, 'events_json' => $events_json));
                 break;
         }
     }
@@ -97,7 +97,7 @@ class EventController extends Controller {
 
         $events_json = 0; //$this->get('jms_serializer')->serialize($findEvents, 'json');
         $filter_name = 'Tri par Moins cher';
-        return $this->render('event/accueil.html.twig', array('events' => $pagination, 'filter_name' => $filter_name, 'events_json' => $events_json));
+        return $this->render('AppBundle:default:event/accueil.html.twig', array('events' => $pagination, 'filter_name' => $filter_name, 'events_json' => $events_json));
     }
 
     /**
@@ -116,7 +116,7 @@ class EventController extends Controller {
 
         $events_json = 0; //$this->get('jms_serializer')->serialize($findEvents, 'json');
         $filter_name = 'Tri par plus cher';
-        return $this->render('event/accueil.html.twig', array('events' => $pagination, 'filter_name' => $filter_name, 'events_json' => $events_json));
+        return $this->render('AppBundle:default:event/accueil.html.twig', array('events' => $pagination, 'filter_name' => $filter_name, 'events_json' => $events_json));
     }
 
     /**
@@ -135,7 +135,7 @@ class EventController extends Controller {
 
         $events_json = 0; //$this->get('jms_serializer')->serialize($findEvents, 'json');
         $filter_name = 'Tri par plus avancés';
-        return $this->render('event/accueil.html.twig', array('events' => $pagination, 'filter_name' => $filter_name, 'events_json' => $events_json));
+        return $this->render('AppBundle:default:event/accueil.html.twig', array('events' => $pagination, 'filter_name' => $filter_name, 'events_json' => $events_json));
     }
 
     /**
@@ -154,7 +154,7 @@ class EventController extends Controller {
 
         $events_json = 0; //$this->get('jms_serializer')->serialize($findEvents, 'json');
         $filter_name = 'Tri par plus proches';
-        return $this->render('event/accueil.html.twig', array('events' => $pagination, 'filter_name' => $filter_name, 'events_json' => $events_json));
+        return $this->render('AppBundle:default:event/accueil.html.twig', array('events' => $pagination, 'filter_name' => $filter_name, 'events_json' => $events_json));
     }
 
     /**
@@ -167,7 +167,7 @@ class EventController extends Controller {
 
         $event_json = 0; //$this->get('jms_serializer')->serialize($event, 'json');
 
-        return $this->render('event/presentation.html.twig', array('event' => $event, 'event_json' => $event_json));
+        return $this->render('AppBundle:default:event/presentation.html.twig', array('event' => $event, 'event_json' => $event_json));
     }
 
     /**
@@ -188,7 +188,7 @@ class EventController extends Controller {
 
         $findEvents_json = 0; //$this->get('jms_serializer')->serialize($findEvents, 'json');
         $filter_name = 'Résultat de recherche .. "' . $motcle . '"';
-        return $this->render('event/accueil.html.twig', array('events' => $pagination, 'filter_name' => $filter_name));
+        return $this->render('AppBundle:default:event/accueil.html.twig', array('events' => $pagination, 'filter_name' => $filter_name));
     }
 
     /**
@@ -233,7 +233,7 @@ class EventController extends Controller {
         }
 
 
-        return $this->render('event/new.html.twig', array(
+        return $this->render('AppBundle:default:event/new.html.twig', array(
                     'event' => $event,
                     'form' => $form->createView(),
         ));
@@ -313,7 +313,7 @@ class EventController extends Controller {
             ]));
         }
 
-        return $this->render('order/show.html.twig', array(
+        return $this->render('AppBundle:default:order/show.html.twig', array(
                     'order' => $order,
                     'form' => $form->createView(),
         ));
@@ -378,7 +378,7 @@ class EventController extends Controller {
      */
     public function orderCompleteAction(Order $order) {
         
-         return $this->render('order/complete.html.twig', array(
+         return $this->render('AppBundle:default:order/complete.html.twig', array(
                     'id' => $order->getEvent()->getId(),
                     'order' => $order,
         ));
