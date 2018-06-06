@@ -241,7 +241,7 @@ class EventController extends Controller {
     }
 
     /**
-     * @Route("/order/{amount}_{event}", name="order_new")
+     * @Route("/order/{amount}/{event}", name="order_new")
      * @param Request $request
      */
     public function orderAction($amount, $event, Request $request) {
@@ -345,9 +345,11 @@ class EventController extends Controller {
 
         if ($result->getStatus() === Result::STATUS_SUCCESS) {
             $this->addFlash('success', 'Inscription avec succès !'); // if rdierct presentation
-            return $this->redirect($this->generateUrl('presentation', [
-                                'id' => $order->getEvent()->getId(),
-                                //'order' => $order,
+            return $this->redirect($this->generateUrl('order_complete', [
+                                'id' => $order->getId(),
+                                'order' => $order,
+           //'event'=>$order->getEvent(),
+            
             ]));
         }
      
@@ -379,7 +381,8 @@ class EventController extends Controller {
      */
     public function orderCompleteAction($id) {
         
-       
+        $em = $this->getDoctrine()->getManager();
+        $order = $em->getRepository('AppBundle:Order')->find($id);
         
         
          return $this->render('AppBundle:default:order/complete.html.twig', array(
