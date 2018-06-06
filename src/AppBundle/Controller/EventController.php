@@ -344,7 +344,7 @@ class EventController extends Controller {
         $result = $ppc->approveAndDeposit($payment->getId(), $payment->getTargetAmount());
 
         if ($result->getStatus() === Result::STATUS_SUCCESS) {
-            $this->addFlash('success', 'Inscription avec succès !'); // if rdierct presentation
+         //   $this->addFlash('success', 'Inscription avec succès !'); // if rdierct presentation
             return $this->redirect($this->generateUrl('order_complete', [
                                 'id' => $order->getId(),
                                 'order' => $order,
