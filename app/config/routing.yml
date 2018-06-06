@@ -23,3 +23,6 @@ google_login:
     
 twitter_login:
     path: /secured/login_twitter
+    
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
