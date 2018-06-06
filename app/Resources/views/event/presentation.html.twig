@@ -123,7 +123,13 @@
         <h2> Description </h2>
 
         {{event.description|raw}}
-
+        <br>
+        <br>
+        <a href="#" class="csbuttons" data-type="facebook" data-count="true" data-href="{{ app.request.uri }}"><img src="{{asset('bundles/app/img/fb_01.png')}}" alt="">{#<span class="csbuttons-count"></span>#}</a>
+   <a href="#" class="csbuttons" data-type="google" data-count="true"><img src="{{asset('bundles/app/img/gp_01.png')}}" alt="">{#<span class="csbuttons-count"></span>#}</a>
+<a href="#" class="csbuttons" data-type="twitter" data-count="true"><img src="{{asset('bundles/app/img/tw_01.png')}}" alt="">{#<span class="csbuttons-count"></span>#}</a>
+    
+    
     </div>
     {# gallery#}
     {#{% if (event.images != null) and (arr_size > 1) %}#}
@@ -161,7 +167,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-
+<script type="text/javascript" src="{{asset('bundles/app/js/jquery-3.2.1.min.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/picturefill/2.3.1/picturefill.min.js"></script>
     <script src="https://cdn.rawgit.com/sachinchoolur/lightgallery.js/master/dist/js/lightgallery.js"></script>
     <script src="https://cdn.rawgit.com/sachinchoolur/lg-pager.js/master/dist/lg-pager.js"></script>
@@ -240,6 +246,5 @@
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdI6hYrzRf5QMgKGj8RQsEeLE9bS-1vOQ&callback=initMap">
 
     </script>
-
 
 {% endblock %}
