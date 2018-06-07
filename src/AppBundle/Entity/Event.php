@@ -152,6 +152,12 @@ class Event {
      * @ORM\Column(name="images", type="array", nullable=true)
      */
     private $images;
+        /**
+     * @var boolean
+     *
+     * @ORM\Column(name="validation", type="boolean",nullable=false, options={"default" : 0})
+     */
+    private $validation;
 
     public function __construct() {
 
@@ -608,4 +614,62 @@ class Event {
         return $this->images;
     }
 
+
+    /**
+     * Set validation
+     *
+     * @param boolean $validation
+     *
+     * @return Event
+     */
+    public function setValidation($validation)
+    {
+        $this->validation = $validation;
+
+        return $this;
+    }
+
+    /**
+     * Get validation
+     *
+     * @return boolean
+     */
+    public function getValidation()
+    {
+        return $this->validation;
+    }
+
+    /**
+     * Add order
+     *
+     * @param \AppBundle\Entity\Credit $order
+     *
+     * @return Event
+     */
+    public function addOrder(\AppBundle\Entity\Credit $order)
+    {
+        $this->orders[] = $order;
+
+        return $this;
+    }
+
+    /**
+     * Remove order
+     *
+     * @param \AppBundle\Entity\Credit $order
+     */
+    public function removeOrder(\AppBundle\Entity\Credit $order)
+    {
+        $this->orders->removeElement($order);
+    }
+
+    /**
+     * Get orders
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOrders()
+    {
+        return $this->orders;
+    }
 }

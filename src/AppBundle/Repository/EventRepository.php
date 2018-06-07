@@ -14,6 +14,7 @@ class EventRepository extends \Doctrine\ORM\EntityRepository {
         $query = $this->createQueryBuilder('u')
                 ->select('u')
                 ->where('u.dateDebut > :currentDate')
+                ->andWhere('u.validation = 1')
                 ->setParameter('currentDate', new \DateTime("now"))
                 ->orderBy('u.dateCreation', 'DESC') // pour afficher les events recemment ajoutés au début
                 ->getQuery();

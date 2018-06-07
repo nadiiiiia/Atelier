@@ -16,6 +16,7 @@ use JMS\Payment\CoreBundle\PluginController\Result;
 use JMS\Payment\CoreBundle\Plugin\Exception\Action\VisitUrl;
 use JMS\Payment\CoreBundle\Plugin\Exception\ActionRequiredException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Http\Util\TargetPathTrait;
 use AppBundle\Entity\Event;
 use AppBundle\Entity\Order;
 
@@ -164,6 +165,7 @@ class EventController extends Controller {
 
         $em = $this->getDoctrine()->getManager();
         $event = $em->getRepository('AppBundle:Event')->find($id);
+        
 
         $event_json = 0; //$this->get('jms_serializer')->serialize($event, 'json');
 
