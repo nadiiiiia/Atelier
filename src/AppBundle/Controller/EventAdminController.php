@@ -10,25 +10,30 @@ use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Event;
 
 /**
- * Event controller.
+ * Event Admin controller.
  *
- * @Route("event")
+ * @Route("/admin/event")
  */
 class EventAdminController extends Controller {
 
     /**
      * Lists all event entities.
      *
-     * @Route("/", name="event_index")
+     * @Route("/", name="admin_events_index")
      * @Method("GET")
      */
-    public function indexAction() {
+    public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
 
         $events = $em->getRepository('AppBundle:Event')->findAll();
+        
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+                $events, $request->query->getInt('page', 1)/* page number */, 6 /* limit per page */
+        );
 
-        return $this->render('AppBundle:default:event/index.html.twig', array(
-                    'events' => $events,
+        return $this->render('AppBundle:default:event/admin/index.html.twig', array(
+                    'events' => $pagination,
         ));
     }
 
@@ -46,7 +51,7 @@ class EventAdminController extends Controller {
         $event->setUtilisateur($user);
 
         if ($form->isSubmitted() && $form->isValid()) {
-                        /*             * ********Traitement des images**************** */
+            /*             * ********Traitement des images**************** */
             $files = $event->getImages();
             $img = array();
             foreach ($files as $file) {
@@ -66,7 +71,7 @@ class EventAdminController extends Controller {
             $event->setDateFin(new \DateTime($form_date_fin));
 
             /*             * ******** Insertion dans la DB **************** */
-      
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($event);
             $em->flush();
@@ -78,6 +83,26 @@ class EventAdminController extends Controller {
         return $this->render('AppBundle:default:event/new.html.twig', array(
                     'event' => $event,
                     'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     * Validate an event .
+     *
+     * @Route("/valider/{id}", name="valider_event")
+     * @Method("GET")
+     */
+    public function validateAction($id) {
+
+        $em = $this->getDoctrine()->getManager();
+        $event = $em->getRepository('AppBundle:Event')->find($id);
+         $events = $em->getRepository('AppBundle:Event')->findAll();
+        $event->setValidation(1);
+        $em->persist($event);
+        $em->flush();
+
+        return $this->render('AppBundle:default:event/admin/index.html.twig', array(
+                    'events' => $events,
         ));
     }
 
@@ -99,7 +124,7 @@ class EventAdminController extends Controller {
     /**
      * Displays a form to edit an existing event entity.
      *
-     * @Route("/{id}/edit", name="event_edit")
+     * @Route("/{id}/edit", name="admin_event_edit")
      * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, Event $event) {
@@ -108,7 +133,7 @@ class EventAdminController extends Controller {
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            
+
             $files = $event->getImages();
             $img = array();
             foreach ($files as $file) {
@@ -123,7 +148,6 @@ class EventAdminController extends Controller {
             $em->flush();
 
             return $this->redirectToRoute('homepage');
-      
         }
 
         return $this->render('AppBundle:default:event/edit.html.twig', array(

@@ -36,7 +36,6 @@ class EventController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $findEvents = $em->getRepository('AppBundle:Event')->findAllCurrent();
 
-
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
                 $findEvents, $request->query->getInt('page', 1)/* page number */, 6 /* limit per page */

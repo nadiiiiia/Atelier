@@ -10,10 +10,7 @@
                 <th>Titre</th>
                 <th>Description</th>
                 <th>Datecreation</th>
-                <th>Datedebut</th>
-                <th>Datefin</th>
-                <th>Heuredeb</th>
-                <th>Heurefin</th>
+        
                 <th>Prix</th>
                 <th>Nbrmax</th>
                 <th>Adresse</th>
@@ -28,10 +25,7 @@
                 <td>{{ event.titre }}</td>
                 <td>{{ event.description }}</td>
                 <td>{% if event.dateCreation %}{{ event.dateCreation|date('Y-m-d') }}{% endif %}</td>
-                <td>{% if event.dateDebut %}{{ event.dateDebut|date('Y-m-d') }}{% endif %}</td>
-                <td>{% if event.dateFin %}{{ event.dateFin|date('Y-m-d') }}{% endif %}</td>
-                <td>{% if event.heureDeb %}{{ event.heureDeb|date('H:i:s') }}{% endif %}</td>
-                <td>{% if event.heureFin %}{{ event.heureFin|date('H:i:s') }}{% endif %}</td>
+               
                 <td>{{ event.prix }}</td>
                 <td>{{ event.nbrMax }}</td>
                 <td>{{ event.adresse }}</td>

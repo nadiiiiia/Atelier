@@ -3,7 +3,15 @@
 {% block body %}
     {#  {{ dump(events_json)}}#}
     <main>
-        {{ include('elements/tri_btn.html.twig') }}
+
+
+        {% if is_granted('ROLE_ADMIN') %}
+            <div class="list_event">
+                <button class=" btn btn-primary-atelier btn-md pull-right waves-effect waves-light" type="button" onclick="location.href = '{{ path('admin_events_index')}}'" id="list_events">Liste des Ateliers </button>
+            </div>
+        {% elseif is_granted('ROLE_ORGANIZER') %}
+            {{ include('elements/tri_btn.html.twig') }}
+        {% endif %}
 
         <!--Main layout-->
         <div class="container">
@@ -11,7 +19,7 @@
             <!--Page heading-->
             <div class="row">
                 <div class="col-md-12">
-                    <h1 class="h1-responsive">{{filter_name}}
+                    <h1 class="h1-responsive">{{filter_name}}  {#le titre#}
                         <!-- <small class="text-muted">recipes for launches and desserts </small> -->
                     </h1>
                 </div>
