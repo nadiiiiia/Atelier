@@ -9,7 +9,7 @@
             <div class="list_event">
                 <button class=" btn btn-primary-atelier btn-md pull-right waves-effect waves-light" type="button" onclick="location.href = '{{ path('admin_events_index')}}'" id="list_events">Liste des Ateliers </button>
             </div>
-        {% elseif is_granted('ROLE_ORGANIZER') %}
+        {% else %}
             {{ include('elements/tri_btn.html.twig') }}
         {% endif %}
 
