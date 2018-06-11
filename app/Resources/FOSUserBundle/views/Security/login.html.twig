@@ -32,8 +32,9 @@
                     <!--Body-->
                     <form action="{{ path("fos_user_security_check") }}" method="post" >
 
+{#{% set referer = app.request.get('referer') %}#}
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-                    {#    <input type="hidden" name="_target_path" value="{{ _security.main.target_path }}" />#}
+                        <input type="hidden" name="_target_path" value="{{ app.session.get('referer') }}" />
 
                         <div class="md-form">
                             <i class="fa fa-user-circle prefix grey-text"></i>

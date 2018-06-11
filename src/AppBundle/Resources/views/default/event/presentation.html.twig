@@ -114,12 +114,14 @@
                         <br>
                         {% if event.nbrParticipants == event.nbrMax %}
                             <a  class="btn btn-primary-atelier btn-md pull-right" >Complet</a>
-                        {%elseif is_granted('ROLE_ORGANIZER') %}
+                        {%elseif is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                             <a  href="{{ path('order_new',{ 'amount': event.prix, 'event': event.id }) }}" class="btn btn-primary-atelier btn-md pull-right" >Participez</a>
                         {%else%}
-                            <a  href="{{ path('fos_user_security_login') }}" class="btn btn-primary-atelier btn-md pull-right" >Participez</a>
+                            <a  href="{{ path('fos_user_security_login') }}"  class="btn btn-primary-atelier btn-md pull-right" >Participez</a>
                         {%endif%}
                     </div>
+                    {{ app.session.set('referer', app.request.uri ) }}
+
                     <!--Product-->
 
                 </div>

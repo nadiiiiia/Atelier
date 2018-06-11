@@ -9,65 +9,85 @@
 
             </br>
 
-                {#<h3>Liste des ateliers</h3>#}
-           
-                    <table class="table table-responsive ">
-                        <thead>
-                            <tr>
+            {#<h3>Liste des ateliers</h3>#}
+            <div class="table-responsive">
 
-                                <th>
-                                    Atelier                     
-                                </th>
-                                <th>
-                                    Categorie
-                                </th>
-                                <th>
-                                    validation
-                                </th>
+
+                <table class="table ">
+                    <thead>
+                        <tr>
+
+                            <th>
+                                Atelier                     
+                            </th>
+                            <th>
+                                Categorie
+                            </th>
+                            <th>
+                                validation
+                            </th>
+                            <th>
+                                Action
+                            </th>
+                        </tr>
+
+                    </thead>
+                    <tbody >
+                        {% for event in events %}
+                            <tr>
+                                <td><a href="{{ path('presentation', { 'id': event.id }) }}">{{ event.titre }}</a></td>
+
+                                <td>{{ event.category.nom }}</td>
+                                {% if event.validation == 0 %}
+                                    <td><i class="fa fa-remove "  style="color: red" aria-hidden="true"></i></td>
+
+
+                                    <td> <a class="btn btn-success btn-sm" href="{{ path('valider_event', { 'id': event.id }) }}"> Valider </a></td>
+
+                                {% elseif event.validation == 1 %}
+                                    <td><i class="fa fa-check "  style="color:#00C851;" aria-hidden="true"></i></td>
+                                    {% endif %}
+                                </td>
                             </tr>
 
-                        </thead>
-                        <tbody>
-                            {% for event in events %}
-                                <tr>
-                                    <td><a href="{{ path('presentation', { 'id': event.id }) }}">{{ event.titre }}</a></td>
+                        {% endfor %}
+                    </tbody>
 
-                                    <td>{{ event.category.nom }}</td>
-                                     {% if event.validation == 0 %}
-                                         <td><i class="fa fa-remove "  style="color: red" aria-hidden="true"></i></td>
+                </table>
+            </div>
 
-
-                                         <td> <a class="btn btn-success btn-sm" href="{{ path('valider_event', { 'id': event.id }) }}"> Valider </a></td>
-
-{% elseif event.validation == 1 %}
-    <td><i class="fa fa-check "  style="color:#00C851;" aria-hidden="true"></i></td>
-                                    {% endif %}
-                                    </td>
-                                </tr>
-
-                            {% endfor %}
-                        </tbody>
-
-                    </table>
-
-            
 
 
         </div>
-        <div class="col-lg-2"></div>
+        <div class="col-lg-2">
+            <div class="dropdown show">
+
+                <!--Trigger-->
+                <button class=" btn btn-primary-atelier btn-sm pull-right waves-effect waves-light" type="button" id="tri_btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Trier par </button>
+
+                <!--Menu-->
+                <div class="dropdown-menu dropdown-mdb-color" x-placement="top-start" style="position: absolute; transform: translate3d(69px, -163px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item" href="{{ path('nonValide') }}">non validé</a>
+                     <a class="dropdown-item" href="{{ path('admin_events_index') }}">Tous</a>
+                </div>
+
+            </div>
+        </div>
 
 
-        
+
 
     </div>
-                            
-                              <!--Pagination-->
-            <nav class="row flex-center wow fadeIn" data-wow-delay="0.2s">
-                        <div class="col-lg-2"></div>
-                <div class="navigation flex-center col-lg-8">
-                    {{ knp_pagination_render(events) }}
-                </div>
-                        <div class="col-lg-2"></div>
-            </nav>
-            <!--/.Pagination-->
+                <br> 
+                <br>
+                
+    <!--Pagination-->
+    <nav class="row flex-center wow fadeIn" data-wow-delay="0.2s">
+        <div class="col-lg-2"></div>
+        <div class="navigation flex-center col-lg-8">
+            {{ knp_pagination_render(events) }}
+        </div>
+        <div class="col-lg-2"></div>
+    </nav>
+    <!--/.Pagination-->
 {% endblock %}

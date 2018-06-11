@@ -390,4 +390,19 @@ class EventController extends Controller {
                     'order' => $order,
         ));
     }
+        /**
+     * 
+     * @Route("/referrer", name="referrer")
+     * @param Request $request
+     * 
+     */
+    public function referrerAction(Request $request) {
+       $url = $request->headers->get('referer');
+//     
+        if (!$url) {
+            $url = $this->router->generate('homepage');
+        }
+           return $this->redirect($url);
+    }
+    
 }

@@ -7,6 +7,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Http\Util\TargetPathTrait;
+use FOS\UserBundle\Event\FormEvent;
+use FOS\UserBundle\FOSUserEvents;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Routing\RouterInterface;
 use AppBundle\Entity\Event;
 
 /**
@@ -25,8 +31,8 @@ class EventAdminController extends Controller {
     public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
 
-        $events = $em->getRepository('AppBundle:Event')->findAll();
-        
+        $events = $em->getRepository('AppBundle:Event')->findAdminAllCurrent();
+
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
                 $events, $request->query->getInt('page', 1)/* page number */, 6 /* limit per page */
@@ -92,18 +98,48 @@ class EventAdminController extends Controller {
      * @Route("/valider/{id}", name="valider_event")
      * @Method("GET")
      */
-    public function validateAction($id) {
+    public function validateAction(Request $request, $id) {
+
 
         $em = $this->getDoctrine()->getManager();
         $event = $em->getRepository('AppBundle:Event')->find($id);
-         $events = $em->getRepository('AppBundle:Event')->findAll();
+
         $event->setValidation(1);
         $em->persist($event);
         $em->flush();
 
+        $url = $request->headers->get('referer');
+//     
+        if (!$url) {
+            $url = $this->router->generate('homepage');
+        }
+           return $this->redirect($url);
+    }
+
+    /**
+     * @Route("/non_valide", name="nonValide")
+     * @param Request $request
+     */
+    public function nonValideEvents(Request $request) {
+        //dump($type,$value);die;
+        $em = $this->getDoctrine()->getManager();
+        $events = $em->getRepository('AppBundle:Event')->findByNonValide();
+
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+                $events, $request->query->getInt('page', 1)/* page number */, 6 /* limit per page */
+        );
+
+        $list_name = 'Ateliers non validés';
+
         return $this->render('AppBundle:default:event/admin/index.html.twig', array(
-                    'events' => $events,
+                    'events' => $pagination,
         ));
+
+
+
+        //   return $this->render('AppBundle:default:event/admin/index.html.twig', array('events' => $pagination, 'titre'=> $list_name));
     }
 
     /**

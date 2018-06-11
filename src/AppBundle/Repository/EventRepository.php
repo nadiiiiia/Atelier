@@ -21,6 +21,28 @@ class EventRepository extends \Doctrine\ORM\EntityRepository {
 
         return $query->getResult();
     }
+    
+            public function findByNonValide() {
+        $query = $this->createQueryBuilder('u')
+                ->select('u')
+                ->where('u.dateDebut > :currentDate')
+                ->andWhere('u.validation = 0')
+                ->setParameter('currentDate', new \DateTime("now"))
+                ->orderBy('u.dateCreation', 'DESC') // pour afficher les events recemment ajoutés au début
+                ->getQuery();
+
+        return $query->getResult();
+    }
+            public function findAdminAllCurrent() {
+        $query = $this->createQueryBuilder('u')
+                ->select('u')
+                ->where('u.dateDebut > :currentDate')
+                ->setParameter('currentDate', new \DateTime("now"))
+                ->orderBy('u.dateCreation', 'DESC') // pour afficher les events recemment ajoutés au début
+                ->getQuery();
+
+        return $query->getResult();
+    }
 
     public function findEventByTitle($motcle) {
         $query = $this->createQueryBuilder('u')
