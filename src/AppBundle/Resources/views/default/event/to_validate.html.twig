@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    
+    <div class="row" >
+        <div class="col-md-2"></div>
+        <div class="col-md-8 mb-r pb-5">
+<br>
+                    <br>
+            <div class="card">
+                <div class="card-body z-depth-4">
+
+                    <!--Header
+                    <div class="form-header cyan-darken-4-color">
+                        <h3>
+                           Accueil</h3>
+                    </div>-->
+
+                    <!--Body-->
+                    <br>
+                    <br>
+                    <p>
+                     Cher utilisateur,
+                     <br>
+                     <br>
+                     Votre demande est en cours de traitement, l'événement sera publié sur le site après son validation.
+                     Nous vous remercions pour votre confience.
+                     <br><br>
+                     Cordialement,<br>
+                     Equipe l'Atelier
+                     
+                     
+                    </p>
+                  <button class=" btn btn-primary-atelier btn-sm pull-right waves-effect waves-light" type="button" onclick="location.href = '{{ path('homepage')}}'" >Retour au site</button>
+                    <br>
+                    <br>
+
+
+
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-2"></div>
+    </div>
+
+{% endblock %}
+
+

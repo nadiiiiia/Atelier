@@ -164,7 +164,7 @@ class EventController extends Controller {
 
         $em = $this->getDoctrine()->getManager();
         $event = $em->getRepository('AppBundle:Event')->find($id);
-        
+
 
         $event_json = 0; //$this->get('jms_serializer')->serialize($event, 'json');
 
@@ -242,6 +242,14 @@ class EventController extends Controller {
     }
 
     /**
+     * @Route("/event/to_validate", name="to_valisate")
+     * @param Request $request
+     */
+    public function toValidateAction() {
+        return $this->render('AppBundle:default:event/to_validate.html.twig');
+    }
+
+    /**
      * @Route("/order/{amount}/{event}", name="order_new")
      * @param Request $request
      */
@@ -261,14 +269,8 @@ class EventController extends Controller {
         $em->persist($order);
         $em->persist($event);
         $em->flush();
-        // $this->addFlash('success', 'Genus created!'); /// à ajouter dans un if
-        //  return $this->redirectToRoute('presentation', array('id' => $event->getId()));
+
         return $this->redirectToRoute('order_show', array('id' => $order->getId()));
-
-
-
-        //return $this->redirect($request->getUri());
-        // return $this->render('event/presentation.html.twig', array('event' => $event));
     }
 
     /**
@@ -345,15 +347,14 @@ class EventController extends Controller {
         $result = $ppc->approveAndDeposit($payment->getId(), $payment->getTargetAmount());
 
         if ($result->getStatus() === Result::STATUS_SUCCESS) {
-         //   $this->addFlash('success', 'Inscription avec succès !'); // if rdierct presentation
+            //   $this->addFlash('success', 'Inscription avec succès !'); // if rdierct presentation
             return $this->redirect($this->generateUrl('order_complete', [
                                 'id' => $order->getId(),
                                 'order' => $order,
-           //'event'=>$order->getEvent(),
-            
+                                    //'event'=>$order->getEvent(),
             ]));
         }
-     
+
         if ($result->getStatus() === Result::STATUS_PENDING) {
             $ex = $result->getPluginException();
 
@@ -365,7 +366,7 @@ class EventController extends Controller {
                 }
             }
         }
-        
+
         throw $result->getPluginException();
         // In a real-world application you wouldn't throw the exception. You would,
         // for example, redirect to the showAction with a flash message informing
@@ -373,7 +374,6 @@ class EventController extends Controller {
         // $this->addFlash('failure', 'Erreur d\'inscription !!');
     }
 
-    
     /**
      * Finish payment.
      *
@@ -381,28 +381,43 @@ class EventController extends Controller {
      * 
      */
     public function orderCompleteAction($id) {
-        
+
         $em = $this->getDoctrine()->getManager();
         $order = $em->getRepository('AppBundle:Order')->find($id);
+        $user = $this->get('security.token_storage')->getToken()->getUser()->getEmailCanonical();
+        $username = $this->get('security.token_storage')->getToken()->getUser()->getUsername();
+     
         
+        // ici le mail de confirmation
+        $message = \Swift_Message::newInstance()
+                ->setSubject('Validation du paiement')
+                ->setFrom(array('equipelatelier@gmail.com' => 'L\'Atelier'))
+                ->setTo($user)
+                ->setCharset('utf-8')
+                ->setContentType('text/html')
+                ->setBody($this->renderView('AppBundle:default:swiftLayout/validate_payment.html.twig', array('order' => $order, 'user' => $username)));
+
+        $this->get('mailer')->send($message);
+        // Fin mail de confirmation
         
-         return $this->render('AppBundle:default:order/complete.html.twig', array(
+        return $this->render('AppBundle:default:order/complete.html.twig', array(
                     'order' => $order,
         ));
     }
-        /**
+
+    /**
      * 
      * @Route("/referrer", name="referrer")
      * @param Request $request
      * 
      */
     public function referrerAction(Request $request) {
-       $url = $request->headers->get('referer');
+        $url = $request->headers->get('referer');
 //     
         if (!$url) {
             $url = $this->router->generate('homepage');
         }
-           return $this->redirect($url);
+        return $this->redirect($url);
     }
-    
+
 }

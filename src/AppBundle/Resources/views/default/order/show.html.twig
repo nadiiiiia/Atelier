@@ -12,20 +12,60 @@
 
         <!--Grid column-->
         <div class="col-md-8 pb-5">
-    <h2>Paiement des frais d'inscription</h2>
-    <br> 
-    <b> Evénement :</b> {{ order.event.titre }}
-    <br>   
-    <b>Date:</b> {{ order.event.dateDebut|date("d/m/Y") }}
-    <br>   <b>Prix total: </b>{{ order.amount }} €
-    <br><br>
+    <h2>Confirmation d'inscription</h2>
+    
+    <p> Vous êtes en train de confirmer votre inscription pour participer à l'atelier suivant:</p>
 
+      <table>
+        <tbody>
+            <tr>
+                <th>Titre</th>
+                <td>{{ order.event.titre }}</td>
+            </tr>
+            
+            <tr>
+                <th>Description</th>
+                <td>{{ order.event.description }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ order.event.dateDebut|date("d/m/Y") }}</td>
+            </tr>
+            <tr>
+                <th>Prix total</th>
+                <td>{{ order.amount }} €</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ order.event.adresse}}<br>
+                
+                </td>
+            </tr>
+            <tr>
+                <th>Organisateur</th>
+                <td>
+                    {% if order.event.utilisateur.getFirstName() and order.event.utilisateur.getLastName() %}
+                       {{ order.event.utilisateur.getFirstName()}} {{ order.event.utilisateur.getLastName()}}
+                    {%else%}
+                         {{ order.event.utilisateur.username}}
+                     {%endif%}</td>
+            </tr>
+                 </tbody>
+    </table>
+            <br>
+             <div id="map" style="height: 200px"></div>
+    <br>
+    <div class="form-check">
+    <input type="checkbox" class="form-check-input" id="checkbox_cgu">
+    <label class="form-check-label" for="checkbox_cgu">J’ai lu et j’accepte les <a href="" data-toggle="modal" data-target="#CguModal">conditions d’utilisation</a></label>
+</div>
+{%  include 'AppBundle:default:modals/cguModal.html.twig' %}
 
     {{ form_start(form) }}
     {{ form_widget(form) }}
 
 
-    <input type="image"
+    <input type="image" id="pay_btn"
            src="{{asset('bundles/app/img/paypal_btn.jpg')}}" style="width:270px;height:52.22px;"
            border="0" name="submit" alt="PayPal - The safer, easier way to pay online!" align='right'>
 
@@ -33,10 +73,10 @@
     {{ form_end(form) }}
     </div>
             <!--Grid column-->
- {# <div class="col-md-2">
+  <div class="col-md-2">
 
 
-        </div>#}
+        </div>
         <!--Grid column-->
 
 
@@ -44,6 +84,70 @@
 
     <script type="text/javascript" src="{{asset('bundles/app/js/jquery-3.2.1.min.js')}}"></script>
     <script>
-       $('#jms_choose_payment_method').hide();
+       $('#pay_btn').hide();
+       
+
+$('#checkbox_cgu').on('change', function() { 
+    // From the other examples
+    if (this.checked) {
+        $('#pay_btn').show();
+    }else{
+         $('#pay_btn').hide();
+    }
+});
     </script>
+     <script>
+       $('#jms_choose_payment_method').hide();
+    </script>   
+    
+      
+      <script type="text/javascript">
+            function initMap() {
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 18,
+
+                });
+                var geocoder = new google.maps.Geocoder();
+                geocodeAddress(geocoder, map);
+            }
+
+            function geocodeAddress(geocoder, resultsMap) {
+                var address = '{{order.event.adresse}},  ' + '{{order.event.ville}}';
+                var title = '{{order.event.titre}}';
+                geocoder.geocode({'address': address}, function (results, status) {
+                    if (status === 'OK') {
+                        resultsMap.setCenter(results[0].geometry.location);
+                        var marker = new google.maps.Marker({
+                            map: resultsMap,
+                            position: results[0].geometry.location,
+                            title: '{{order.event.titre}}',
+                            animation: google.maps.Animation.DROP,
+                            address: '{{order.event.adresse}}',
+                        })
+                        infoWindow(marker, map, title, address);
+                    } else {
+                        alert('Geocode was not successful for the following reason: ' + status);
+                    }
+                });
+            }
+            var iw;
+            function infoWindow(marker, map, title, address) {
+                google.maps.event.addListener(marker, 'click', function () {
+                    var html = "<div><h3>" + title + "</h3><p>" + address + "<br></div> ";
+                    iw = new google.maps.InfoWindow({
+                        content: html,
+                        maxWidth: 350
+                    });
+                    iw.open(map, marker);
+                });
+                google.maps.event.addListener(marker, 'click', function () {
+
+                    // iw.close();
+                });
+
+            }
+
+        </script>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdI6hYrzRf5QMgKGj8RQsEeLE9bS-1vOQ&callback=initMap"> </script>
+
 {% endblock %}

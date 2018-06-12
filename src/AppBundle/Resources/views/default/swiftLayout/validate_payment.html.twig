@@ -1,0 +1,55 @@
+
+
+<h2>Paiement avec succès</h2>
+
+<p> Bonjour {{ user }}</p>
+
+<p>   Félicitation, votre paiement a été effectué avec succès.Vous êtets maintenant inscrit à l'evénement <b>{{ order.event.titre }}</b>. </p> 
+
+<p> Soyez au rendez-vous le <b>{{ order.event.dateDebut|date("d/m/Y") }}</b> vers <b>{{ order.event.dateDebut|date("H:i")}}</b>, à l'adresse suivante: </p> 
+<p><b>{{ order.event.adresse}}</b> </p>
+<br>
+
+<h2>Information de l'atelier</h2>
+<table>
+    <tbody>
+
+        <tr>
+            <th>Titre</th>
+            <td>{{ order.event.titre }}</td>
+        </tr>
+
+        <tr>
+            <th>Description</th>
+            <td>{{ order.event.description }}</td>
+        </tr>
+        <tr>
+            <th>Date de debut</th>
+            <td>{{ order.event.dateDebut|date("d/m/Y") }}</td>
+        </tr>
+        <tr>
+            <th>Date de fin</th>
+            <td>{{order.event.dateFin|date("d/m/Y")}}</td>
+        </tr>
+        <tr>
+            <th>Horaires</th>
+            <td>De <strong>{{order.event.dateDebut|date("H:i")}} </strong> à <strong>{{order.event.dateFin|date("H:i")}} </strong></td>
+        </tr>
+        <tr>
+            <th>Prix total</th>
+            <td>{{ order.amount }} €</td>
+        </tr>
+        <tr>
+            <th>Adresse</th>
+            <td>{{ order.event.adresse}}<br>
+
+            </td>
+        </tr>
+
+    </tbody>
+</table>
+            <br>
+            <br>
+            Cordialement,
+          
+            <br>Equipe l'Atelier
