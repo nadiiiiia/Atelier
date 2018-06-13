@@ -64,6 +64,14 @@
                     <label for="verification">Répéter le mot de passe</label>
                     {{form_widget(form.plainPassword.second, { 'attr': {'class': 'inputbox required'} }) }}
                     <div class=" alert-danger">   {{ form_errors(form.plainPassword.second) }}</div>
+                    <br>
+                    <div class="md-form"> 
+                        <i class="fa fa-photo prefix grey-text"></i>
+                        <label for="password">Photo de profil</label>
+                        <br><br>
+                        {{form_widget(form.photo) }}
+                        <div class=" alert-danger">   {{ form_errors(form.photo) }}</div>
+                    </div>
 
                 </div>
                 <div class="md-form">
@@ -87,22 +95,22 @@
                     <h4>Ou</h4>
 
                     <h5>Se connecter avec:</h5>
-                          <span>
-                            <!--Facebook-->
-                            <a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook' }) }}" type="button" class="btn-floating btn-fb waves-effect waves-light">
-                                <i class="fa fa-facebook"></i>
-                            </a>
-                            <!--Google +-->
-                            <a href="{{ path('hwi_oauth_service_redirect', {'service': 'google' }) }}" type="button" class="btn-floating btn-gplus waves-effect waves-light">
-                                <i class="fa fa-google-plus"></i>
-                            </a>
-                            <!--Twitter-->
-                            <a href="{{ path('hwi_oauth_service_redirect', {'service': 'twitter' }) }}" type="button" class="btn-floating btn-tw waves-effect waves-light">
-                                <i class="fa fa-twitter"></i>
-                            </a>
+                    <span>
+                        <!--Facebook-->
+                        <a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook' }) }}" type="button" class="btn-floating btn-fb waves-effect waves-light">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                        <!--Google +-->
+                        <a href="{{ path('hwi_oauth_service_redirect', {'service': 'google' }) }}" type="button" class="btn-floating btn-gplus waves-effect waves-light">
+                            <i class="fa fa-google-plus"></i>
+                        </a>
+                        <!--Twitter-->
+                        <a href="{{ path('hwi_oauth_service_redirect', {'service': 'twitter' }) }}" type="button" class="btn-floating btn-tw waves-effect waves-light">
+                            <i class="fa fa-twitter"></i>
+                        </a>
 
 
-                        </span>
+                    </span>
                 </div>
                 <div class="options text-right">
                     <hr>
@@ -124,3 +132,6 @@
     </div>
     <!--Grid column-->
 </div>
+<script type="text/javascript">
+    document.querySelector('#fos_user_registration_form_photo').required = false;
+</script>

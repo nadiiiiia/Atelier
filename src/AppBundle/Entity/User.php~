@@ -22,12 +22,12 @@ class User extends BaseUser {
     protected $id;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $first_name;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $last_name;
 
@@ -45,16 +45,30 @@ class User extends BaseUser {
      * @ORM\Column(type="string", name="twitter_id", nullable=true)
      */
     protected $twitterId;
-
-    /**
-     * @ORM\Column(type="float", name="lng", nullable=true)
-     */
-    protected $lng;
     
-     /**
-     * @ORM\Column(type="float", name="lat", nullable=true)
+        /**
+     * @ORM\Column(type="string", name="tel", nullable=true)
      */
-    protected $lat;
+    protected $tel;
+    
+        /**
+     * @ORM\Column(type="string", name="cin", nullable=true)
+     */
+    protected $cin;
+    
+        /**
+     * @ORM\Column(type="string", name="photo", nullable=true)
+     */
+    protected $photo;
+    
+    /**
+     * @var array
+     *
+     * @ORM\Column(type="array", name="certifs", nullable=true)
+     */
+    private $certifs;
+
+
 
     /**
      *
@@ -198,51 +212,4 @@ class User extends BaseUser {
         $this->twitterId = $twitterId;
     }
 
-    /**
-     * Set lng
-     *
-     * @param float $lng
-     *
-     * @return User
-     */
-    public function setLng($lng)
-    {
-        $this->lng = $lng;
-
-        return $this;
-    }
-
-    /**
-     * Get lng
-     *
-     * @return float
-     */
-    public function getLng()
-    {
-        return $this->lng;
-    }
-
-    /**
-     * Set lat
-     *
-     * @param float $lat
-     *
-     * @return User
-     */
-    public function setLat($lat)
-    {
-        $this->lat = $lat;
-
-        return $this;
-    }
-
-    /**
-     * Get lat
-     *
-     * @return float
-     */
-    public function getLat()
-    {
-        return $this->lat;
-    }
 }

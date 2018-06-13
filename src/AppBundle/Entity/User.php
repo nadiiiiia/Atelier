@@ -45,16 +45,30 @@ class User extends BaseUser {
      * @ORM\Column(type="string", name="twitter_id", nullable=true)
      */
     protected $twitterId;
-
-    /**
-     * @ORM\Column(type="float", name="lng", nullable=true)
-     */
-    protected $lng;
     
-     /**
-     * @ORM\Column(type="float", name="lat", nullable=true)
+        /**
+     * @ORM\Column(type="string", name="tel", nullable=true)
      */
-    protected $lat;
+    protected $tel;
+    
+        /**
+     * @ORM\Column(type="string", name="cin", nullable=true)
+     */
+    protected $cin;
+    
+        /**
+     * @ORM\Column(type="string", name="photo", nullable=true)
+     */
+    protected $photo;
+    
+    /**
+     * @var array
+     *
+     * @ORM\Column(type="array", name="certifs", nullable=true)
+     */
+    private $certifs;
+
+
 
     /**
      *
@@ -198,51 +212,100 @@ class User extends BaseUser {
         $this->twitterId = $twitterId;
     }
 
+
     /**
-     * Set lng
+     * Set tel
      *
-     * @param float $lng
+     * @param string $tel
      *
      * @return User
      */
-    public function setLng($lng)
+    public function setTel($tel)
     {
-        $this->lng = $lng;
+        $this->tel = $tel;
 
         return $this;
     }
 
     /**
-     * Get lng
+     * Get tel
      *
-     * @return float
+     * @return string
      */
-    public function getLng()
+    public function getTel()
     {
-        return $this->lng;
+        return $this->tel;
     }
 
     /**
-     * Set lat
+     * Set cin
      *
-     * @param float $lat
+     * @param string $cin
      *
      * @return User
      */
-    public function setLat($lat)
+    public function setCin($cin)
     {
-        $this->lat = $lat;
+        $this->cin = $cin;
 
         return $this;
     }
 
     /**
-     * Get lat
+     * Get cin
      *
-     * @return float
+     * @return string
      */
-    public function getLat()
+    public function getCin()
     {
-        return $this->lat;
+        return $this->cin;
+    }
+
+    /**
+     * Set photo
+     *
+     * @param string $photo
+     *
+     * @return User
+     */
+    public function setPhoto($photo)
+    {
+        $this->photo = $photo;
+
+        return $this;
+    }
+
+    /**
+     * Get photo
+     *
+     * @return string
+     */
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+
+    /**
+     * Set certifs
+     *
+     * @param array $certifs
+     *
+     * @return User
+     */
+    public function setCertifs($certifs)
+    {
+        $this->certifs = $certifs;
+
+        return $this;
+    }
+
+    /**
+     * Get certifs
+     *
+     * @return array
+     */
+    public function getCertifs()
+    {
+        return $this->certifs;
     }
 }
