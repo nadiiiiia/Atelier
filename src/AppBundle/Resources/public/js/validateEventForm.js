@@ -23,6 +23,7 @@ $(document).ready(function () {
         errorClass: 'error',
         rules: {
             category: "required",
+            description: "required",
             titre: "required",
             dateDebut: "required",
             dateFin: "required",
@@ -38,6 +39,7 @@ $(document).ready(function () {
         },
         messages: {
             category: "Veuillez choisir une catégorie",
+            description: "Veuillez saisir une description",
             titre: "Veuillez saisir un titre",
             dateDebut: "Veuillez choisir la date de début",
             dateFin: "Veuillez choisir la date de fin",

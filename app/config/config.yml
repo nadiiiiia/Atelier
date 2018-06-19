@@ -11,6 +11,7 @@ parameters:
 
 framework:
     #esi: ~
+    validation: { enable_annotations: true }
     templating: { engines: ['twig'] }   #à ajouter après l'installation du console Bundle
     default_locale: fr
     translator: { fallbacks: ['%locale%'] }

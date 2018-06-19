@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row text-left">
+        <!--Grid column-->
+        <div class="col-md-1 mb-r">
+
+
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-md-10 mb-r pb-5">
+            <h2>Informations de l'organisateur</h2>
+            <br>
+
+            <div class="card">
+                <div class="card-body z-depth-1">
+
+                    {{ form_start(form, { 'attr': {'id': 'eventForm'} })}}
+                    <br>
+                    <!--Body-->
+
+              
+                        
+                          <div class="md-form"> 
+                        {{ form_label(form.tel) }}
+                        {{form_widget(form.tel) }}
+                        <span class="error-msg"></span>
+                    </div>
+                    <div class="md-form"> 
+                        {{ form_label(form.cin) }}
+                        <br><br>
+                        {{form_widget(form.cin) }}
+                        <span class="error-msg"></span>
+                    </div>
+                           <div class="md-form"> 
+                        {{ form_label(form.photo) }}
+                         <br><br>
+                        {{form_widget(form.photo) }}
+                        <span class="error-msg"></span>
+                    </div>
+                           <div class="md-form"> 
+                               {{ form_label(form.certifs) }}
+                         <br>
+                         <br>
+                       
+                        {{form_widget(form.certifs) }}
+                        <span class="error-msg"></span>
+                    </div>
+
+
+                    <div class="text-right">
+                        <br><br>
+                        <input class="btn btn-primary-inverse btn-md waves-effect waves-light" id="submit_event" type="submit" value="Terminé" />
+                        <br><br>
+                    </div>
+                    <br>
+
+
+                </div>
+
+
+            </div>
+            {{ form_end(form) }}
+
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-md-1 mb-r">
+
+
+        </div>
+        <!--Grid column-->
+
+    </div>
+
+    <!-- Google Map -->	
+    <script src="http://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places&key=AIzaSyBdI6hYrzRf5QMgKGj8RQsEeLE9bS-1vOQ"></script>
+
+
+    <script type="text/javascript">
+
+        //   document.querySelector('#category').required = true;
+        document.querySelector('#form_certifs').required = false;
+
+
+    </script>
+
+{% endblock %}
+
+

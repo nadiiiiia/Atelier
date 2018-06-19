@@ -25,7 +25,8 @@ class EventType extends AbstractType {
                 ->add('category', EntityType::class, array(
                     // looks for choices from this entity
                     'class' => 'AppBundle:Category',
-                    'empty_data' => NULL,
+                    'empty_data' => 'NULL',
+                    'required' => true,
                     'placeholder' => 'Choisir une Catégorie',
                     'choice_label' => 'nom',
                     'attr' => ['class' => 'mdb-select select-dropdown',
@@ -97,6 +98,7 @@ class EventType extends AbstractType {
                     'accept' => 'image/*' // pour n'accepter que les images
                     ),
                     'multiple' => true,
+                     'label' => 'Images de l\'événement'
         ));
     }
 

@@ -32,7 +32,7 @@ class Event {
 
     /**
      * @var string
-     *
+     * @Assert\NotNull()
      * @ORM\Column(name="titre", type="string", length=255)
      */
     private $titre;
@@ -164,6 +164,7 @@ class Event {
         $this->dateCreation = new \DateTime("now");  // get current date and time
         $this->credits = new ArrayCollection();
         $this->nbrParticipants = 0;
+        $this->validation = 0;
     }
 
     /**

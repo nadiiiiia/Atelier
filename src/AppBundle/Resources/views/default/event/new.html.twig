@@ -85,7 +85,8 @@
                         <span class="error-msg"></span>
                     </div>
                     <div class="md-form"> 
-
+                         {{ form_label(form.images) }}
+                         <br><br>
                         {{form_widget(form.images) }}
                         <span class="error-msg"></span>
                     </div>
@@ -124,7 +125,7 @@
     <script type="text/javascript">
 
         //   document.querySelector('#category').required = true;
-        document.querySelector('#description').required = false;
+       // document.querySelector('#description').required = false;
         google.maps.event.addDomListener(window, 'load', intilize);
         function intilize() {
             var autocomplete = new google.maps.places.Autocomplete(document.getElementById("adresse"));

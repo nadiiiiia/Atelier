@@ -17,6 +17,8 @@ use JMS\Payment\CoreBundle\Plugin\Exception\Action\VisitUrl;
 use JMS\Payment\CoreBundle\Plugin\Exception\ActionRequiredException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use AppBundle\Entity\Event;
 use AppBundle\Entity\Order;
 
@@ -231,7 +233,11 @@ class EventController extends Controller {
             $em->persist($event);
             $em->flush();
 
-            return $this->redirectToRoute('homepage');
+            if ($user->getTel() == null || $user->getPhoto() == null || $user->getCin() == null) {
+                return $this->redirectToRoute('org_info');
+            } else {
+                return $this->redirectToRoute('to_validate');
+            }
         }
 
 
@@ -242,7 +248,86 @@ class EventController extends Controller {
     }
 
     /**
-     * @Route("/event/to_validate", name="to_valisate")
+     * Creates a new event entity.
+     *
+     * @Route("event/org_info", name="org_info")
+     * @param Request $request
+     * @Method({"GET", "POST"})
+     */
+    public function orgInfoAction(Request $request) {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+
+
+        $form = $this->createFormBuilder()
+                ->add('tel', NumberType::class, array(
+                    'attr' => array('class' => 'form-control'),
+                    'label' => 'Numéro de téléphone *'
+                ))
+                ->add('cin', FileType::class, array('attr' => array(
+                        'accept' => 'image/*' // pour n'accepter que les images
+                    ),
+                    'label' => 'Identifiant *'
+                ))
+                ->add('photo', FileType::class, array('attr' => array(
+                        'accept' => 'image/*' // pour n'accepter que les images
+                    ),
+                    'label' => 'Photo de profile *'
+                ))
+                ->add('certifs', FileType::class, array('attr' => array(
+                        'accept' => 'image/*' // pour n'accepter que les images
+                    ),
+                    'multiple' => TRUE,
+                    'label' => 'Certificats'
+                ))
+                ->getForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // data is an array with "name", "email", and "message" keys
+            $data = $form->getData();
+            $user->setTel($data['tel']);
+
+            //la partie d'ajout de CIN
+            $cin = $data['cin'];
+            $cinName = md5(uniqid()) . '.' . $cin->guessExtension();
+            //dump($cin); die;
+            $cin->move($this->getParameter('image_directory'), $cinName);
+            $user->setCin($cinName);
+            // fin ajout cin
+            //la partie d'ajout de photo de profile
+            $photo = $data['photo'];
+            $photoName = md5(uniqid()) . '.' . $photo->guessExtension();
+            $photo->move($this->getParameter('image_directory'), $photoName);
+            $user->setPhoto($photoName);
+            // fin ajout photo
+            /*             * ********Traitement des certifs**************** */
+            if ($data['certifs']) {
+                $certifs = $data['certifs'];
+                $cert = array();
+                foreach ($certifs as $certif) {
+                    $certifName = md5(uniqid()) . '.' . $certif->guessExtension();
+                    $certif->move($this->getParameter('image_directory'), $certifName);
+                    $cert[] = $certifName;
+                }
+                $user->setCertifs($cert);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->flush();
+            }
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+            return $this->redirectToRoute('to_validate');
+        }
+
+        return $this->render('AppBundle:default:event/org_info.html.twig', array(
+                    'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     * @Route("/event/to_validate", name="to_validate")
      * @param Request $request
      */
     public function toValidateAction() {
@@ -386,8 +471,8 @@ class EventController extends Controller {
         $order = $em->getRepository('AppBundle:Order')->find($id);
         $user = $this->get('security.token_storage')->getToken()->getUser()->getEmailCanonical();
         $username = $this->get('security.token_storage')->getToken()->getUser()->getUsername();
-     
-        
+
+
         // ici le mail de confirmation
         $message = \Swift_Message::newInstance()
                 ->setSubject('Validation du paiement')
@@ -399,7 +484,7 @@ class EventController extends Controller {
 
         $this->get('mailer')->send($message);
         // Fin mail de confirmation
-        
+
         return $this->render('AppBundle:default:order/complete.html.twig', array(
                     'order' => $order,
         ));
