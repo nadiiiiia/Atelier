@@ -1,0 +1,31 @@
+  
+        <div class="well">
+       <ul class="nav nav-list">
+            <li>
+                <a href="{{ path('fos_user_profile_show') }}">Mes informations</a>
+            </li>
+            <li>
+                <a href="{{ path('fos_user_profile_edit') }}">Editer mes informations</a>
+            </li>
+            <li>
+                <a href="{{ path('fos_user_change_password') }}">Changer mot de passe</a>
+            </li>
+            <li>
+                <a href=""  data-toggle="modal" data-target="#photoModal">Changer photo de profile</a>
+            </li>
+
+            <li>
+                <a href="{{ path('fos_user_security_logout') }}">Déconnexion</a>
+            </li>
+        </ul>
+        </div>
+  
+
+           
+        {%  include 'AppBundle:default:modals/photoModal.html.twig' %}
+  
+
+
+
+
+

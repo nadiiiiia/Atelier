@@ -73,12 +73,12 @@ class RegistrationController extends Controller {
             if ($form->isValid()) {
                 $event = new FormEvent($form, $request);
 
-                $photo = $user->getPhoto();
-
-                $fileName = md5(uniqid()) . '.' . $photo->guessExtension();
-                $photo->move($this->getParameter('image_directory'), $fileName);
-
-                $user->setPhoto($photo);
+//                $photo = $user->getPhoto();
+//
+//                $fileName = md5(uniqid()) . '.' . $photo->guessExtension();
+//                $photo->move($this->getParameter('image_directory'), $fileName);
+//
+//                $user->setPhoto($photo);
 
                 $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
 

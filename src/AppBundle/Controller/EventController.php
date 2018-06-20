@@ -19,6 +19,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Filesystem\Filesystem;
 use AppBundle\Entity\Event;
 use AppBundle\Entity\Order;
 
@@ -324,6 +325,32 @@ class EventController extends Controller {
         return $this->render('AppBundle:default:event/org_info.html.twig', array(
                     'form' => $form->createView(),
         ));
+    }
+
+    /**
+     * @Route("/event/change_photo", name="change_photo")
+     * @param Request $request
+     */
+    public function changePhotoAction(Request $request) {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        $oldPhoto = $user->getPhoto();
+        $path = 'uploads/images/' . $oldPhoto;
+
+        $filesystem = new Filesystem();
+        $filesystem->remove($path);
+        //$user->setPhoto(null);
+        
+        $photo = $request->get('photo');
+        dump($request); die;
+        $photoName = md5(uniqid()) . '.' . $photo->guessExtension();
+        $photo->move($this->getParameter('image_directory'), $photoName);
+        $user->setPhoto($photoName);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        return $this->redirectToRoute('fos_user_profile_show');
     }
 
     /**
