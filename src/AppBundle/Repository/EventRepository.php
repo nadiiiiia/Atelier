@@ -43,6 +43,17 @@ class EventRepository extends \Doctrine\ORM\EntityRepository {
 
         return $query->getResult();
     }
+    
+                public function findAllByOrg($id) {
+        $query = $this->createQueryBuilder('u')
+                ->select('u')
+                ->where('u.utilisateur = :orgId')
+                ->setParameter('orgId', $id)
+                ->orderBy('u.dateCreation', 'DESC') // pour afficher les events recemment ajoutés au début
+                ->getQuery();
+
+        return $query->getResult();
+    }
 
     public function findEventByTitle($motcle) {
         $query = $this->createQueryBuilder('u')

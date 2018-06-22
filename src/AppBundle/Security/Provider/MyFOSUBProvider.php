@@ -84,6 +84,7 @@ class MyFOSUBProvider extends FOSUBUserProvider
         $user->setEmail($response->getEmail());
         $user->setFirstname($response->getFirstName());
         $user->setLastname($response->getLastName());
+        
 
         $this->userManager->updateUser($user);
 

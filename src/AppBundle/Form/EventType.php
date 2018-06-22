@@ -46,11 +46,11 @@ class EventType extends AbstractType {
                 ))
                 //     ->add('dateCreation')
                 ->add('dateDebut', TextType::class, array(
-                    'attr' => array('class' => 'form-control date-fr floating-label'),
+                    'attr' => array('class' => 'form-control date-deb-fr floating-label'),
                     'label' => 'Date de début'
                 ))
                 ->add('dateFin', TextType::class, array(
-                    'attr' => array('class' => 'form-control date-fr floating-label'),
+                    'attr' => array('class' => 'form-control date-fin-fr floating-label'),
                     'label' => 'Date de fin'
                 ))
                 ->add('prix', NumberType::class, array(

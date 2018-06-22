@@ -3,5 +3,46 @@
 
 
 {% block fos_user_content %}
+      <div class="row">
+
+        <div class="col-lg-3">
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and app.user.getPhoto %}
+
+                <div class="avatar text-center"><img src="{{asset('uploads/profiles/' ~ app.user.getPhoto)}}" class="img-circle img-responsive"  height="150" width="150" style="border-radius: 50%;">
+                </div>
+            {% else%}
+                <div class="avatar text-center"><img src="{{asset('bundles/app/img/login-avatar.jpg')}}" class="img-circle img-responsive"  height="150" width="150" >
+                </div>
+            {% endif %}
+            <br>
+            {% if is_granted('ROLE_ADMIN') %}
+                <p align="center">ADMINISTRATEUR</p>
+            {% elseif is_granted('ROLE_ORGANIZER') %}
+                <p align="center"> ORGANISATEUR</p>
+            {% elseif is_granted('ROLE_USER') %}
+                <p align="center"> UTILISATEUR</p>
+            {% endif %}
+            {% include 'AppBundle:default:user/sidebarUser.html.twig' %}
+        </div>
+
+        <div class="col-lg-9">
+            <h4>Editer mes informations</h4>
+
+
+                <hr>  
+
+            <div class="row">
+
+
+                <div class="col-lg-1"></div>
+                <div class="col-lg-8">
      {% include "@FOSUser/Profile/edit_content.html.twig" %}
+     
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+
+    
 {% endblock fos_user_content %}

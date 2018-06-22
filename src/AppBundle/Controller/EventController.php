@@ -257,9 +257,6 @@ class EventController extends Controller {
      */
     public function orgInfoAction(Request $request) {
         $user = $this->get('security.token_storage')->getToken()->getUser();
-
-
-
         $form = $this->createFormBuilder()
                 ->add('tel', NumberType::class, array(
                     'attr' => array('class' => 'form-control'),
@@ -291,15 +288,15 @@ class EventController extends Controller {
 
             //la partie d'ajout de CIN
             $cin = $data['cin'];
-            $cinName = md5(uniqid()) . '.' . $cin->guessExtension();
+            $cinName = 'ID_' . md5(uniqid()) . '.' . $cin->guessExtension();
             //dump($cin); die;
-            $cin->move($this->getParameter('image_directory'), $cinName);
+            $cin->move($this->getParameter('profile_directory'), $cinName);
             $user->setCin($cinName);
             // fin ajout cin
             //la partie d'ajout de photo de profile
             $photo = $data['photo'];
-            $photoName = md5(uniqid()) . '.' . $photo->guessExtension();
-            $photo->move($this->getParameter('image_directory'), $photoName);
+            $photoName = 'avatar_'. md5(uniqid()) . '.' . $photo->guessExtension();
+            $photo->move($this->getParameter('profile_directory'), $photoName);
             $user->setPhoto($photoName);
             // fin ajout photo
             /*             * ********Traitement des certifs**************** */
@@ -307,8 +304,8 @@ class EventController extends Controller {
                 $certifs = $data['certifs'];
                 $cert = array();
                 foreach ($certifs as $certif) {
-                    $certifName = md5(uniqid()) . '.' . $certif->guessExtension();
-                    $certif->move($this->getParameter('image_directory'), $certifName);
+                    $certifName = 'certif_' . md5(uniqid()) . '.' . $certif->guessExtension();
+                    $certif->move($this->getParameter('profile_directory'), $certifName);
                     $cert[] = $certifName;
                 }
                 $user->setCertifs($cert);
@@ -333,6 +330,18 @@ class EventController extends Controller {
      */
     public function changePhotoAction(Request $request) {
         $user = $this->get('security.token_storage')->getToken()->getUser();
+                $form = $this->createFormBuilder()
+            
+                ->add('photo', FileType::class, array('attr' => array(
+                        'accept' => 'image/*' // pour n'accepter que les images
+                    ),
+                    'label' => 'Photo de profile *'
+                ))
+            
+                ->getForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
 
         $oldPhoto = $user->getPhoto();
         $path = 'uploads/images/' . $oldPhoto;
@@ -342,7 +351,7 @@ class EventController extends Controller {
         //$user->setPhoto(null);
         
         $photo = $request->get('photo');
-        dump($request); die;
+        dump($_FILES[$photo]['tmp_name']); die;
         $photoName = md5(uniqid()) . '.' . $photo->guessExtension();
         $photo->move($this->getParameter('image_directory'), $photoName);
         $user->setPhoto($photoName);
@@ -351,6 +360,11 @@ class EventController extends Controller {
         $em->flush();
 
         return $this->redirectToRoute('fos_user_profile_show');
+           }
+
+        return $this->render('AppBundle:default:modals/photoModal.html.twig', array(
+                    'form' => $form->createView(),
+        ));
     }
 
     /**
@@ -514,6 +528,27 @@ class EventController extends Controller {
 
         return $this->render('AppBundle:default:order/complete.html.twig', array(
                     'order' => $order,
+        ));
+    }
+    
+        /**
+     * Lists all event entities.
+     *
+     * @Route("/list/{orgId}", name="org_events_index")
+     * @Method("GET")
+     */
+    public function listAction(Request $request, $orgId) {
+        $em = $this->getDoctrine()->getManager();
+
+        $events = $em->getRepository('AppBundle:Event')->findAllByOrg($orgId);
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+                $events, $request->query->getInt('page', 1)/* page number */, 6 /* limit per page */
+        );
+
+        return $this->render('AppBundle:default:event/org/list.html.twig', array(
+                    'events' => $pagination,
         ));
     }
 

@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-lg-2"></div>
+
+        <div class="col-lg-8 flex-center ">
+
+            </br>
+
+            {#<h3>Liste des ateliers</h3>#}
+            <div class="table-responsive">
+
+
+                <table class="table ">
+                    <thead>
+                        <tr>
+
+                            <th>
+                                Atelier                     
+                            </th>
+                            <th>
+                                Categorie
+                            </th>
+                            <th>
+                                Etat
+                            </th>
+                            <th>
+                                Action
+                            </th>
+                        </tr>
+
+                    </thead>
+                    <tbody >
+                        {% for event in events %}
+                            <tr>
+                                <td><a href="{{ path('presentation', { 'id': event.id }) }}">{{ event.titre }}</a></td>
+
+                                <td>{{ event.category.nom }}</td>
+                                {% if event.validation == 0 %}
+                                    <td><p style="color:orange">En Cours</p></td>
+
+
+                                    <td> <a class="btn btn-success btn-sm" href="{#{{ path('valider_event', { 'id': event.id }) }}#}"> Modifier </a></td>
+
+                                {% elseif event.validation == 1 %}
+                           <td> <p style="color:#00C851;">Validé</p></td>
+                           <td>                           </td>
+                                    {% endif %}
+                                </td>
+                            </tr>
+
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+
+
+
+        </div>
+      
+
+
+
+
+    </div>
+                <br> 
+                <br>
+                
+    <!--Pagination-->
+    <nav class="row flex-center wow fadeIn" data-wow-delay="0.2s">
+        <div class="col-lg-2"></div>
+        <div class="navigation flex-center col-lg-8">
+            {{ knp_pagination_render(events) }}
+        </div>
+        <div class="col-lg-2"></div>
+    </nav>
+    <!--/.Pagination-->
+{% endblock %}

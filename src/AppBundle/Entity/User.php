@@ -50,7 +50,13 @@ class User extends BaseUser {
      * @ORM\Column(type="string", name="tel", nullable=true)
      */
     protected $tel;
-    
+
+    /**
+     * @var \datetime
+     *
+     * @ORM\Column(name="date_naissance", type="datetime", nullable=true)
+     */
+    protected $date_naissance;    
         /**
      * @ORM\Column(type="string", name="cin", nullable=true)
      */
@@ -308,5 +314,29 @@ class User extends BaseUser {
     public function getCertifs()
     {
         return $this->certifs;
+    }
+
+    /**
+     * Set dateNaissance
+     *
+     * @param \DateTime $dateNaissance
+     *
+     * @return User
+     */
+    public function setDateNaissance($dateNaissance)
+    {
+        $this->date_naissance = $dateNaissance;
+
+        return $this;
+    }
+
+    /**
+     * Get dateNaissance
+     *
+     * @return \DateTime
+     */
+    public function getDateNaissance()
+    {
+        return $this->date_naissance;
     }
 }

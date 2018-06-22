@@ -77,11 +77,17 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Contacts</a>
                             </li>
+                
 
                             {% if is_granted('ROLE_ORGANIZER') %}
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ path('event_new') }}">Nouveau Atelier</a>
-                                </li> 
+                                        <li class="nav-item btn-group">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mes Ateliers
+                                </a>
+                                <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+                                   <a class="dropdown-item" href="{{ path('event_new') }}">Nouveau Atelier</a>
+                                     <a class="dropdown-item" href="{{ path('org_events_index', {'orgId': app.user.getId}) }}">Liste des Ateliers</a>
+                                </div>
+                            </li> 
 
                             {% endif %}
 
@@ -147,11 +153,11 @@
             <div class="container">
                 {%  include 'AppBundle:default:modals/searchModal.html.twig' %}
 
-                {% block style %}{% endblock %}
-            {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </div>
-    <!--/.Main layout-->
+            {% block style %}{% endblock %}
+        {% block body %}{% endblock %}
+    {% block javascripts %}{% endblock %}
+</div>
+<!--/.Main layout-->
 </main>
 </body>
 
@@ -286,7 +292,7 @@
     $(document).ready(function ()
     {
 
-        $('.date-fr').bootstrapMaterialDatePicker
+        $('.date-deb-fr').bootstrapMaterialDatePicker
                 ({
                     format: 'YYYY-MM-DD HH:mm:ss',
                     lang: 'fr',
@@ -295,6 +301,29 @@
                     nowButton: false,
                     switchOnClick: true
                 });
+
+        $('.date-fin-fr').bootstrapMaterialDatePicker
+                ({
+                    format: 'YYYY-MM-DD HH:mm:ss',
+                    lang: 'fr',
+                    weekStart: 1,
+                    cancelText: 'ANNULER',
+                    nowButton: false,
+                    switchOnClick: true,
+                   // minDate: new Date('2018-6-22'),
+                    maxDate: '+30Y',
+                });
+        $('.birth-day-fr').bootstrapMaterialDatePicker
+                ({
+                    format: 'YYYY-MM-DD',
+                    lang: 'fr',
+                    weekStart: 1,
+                    cancelText: 'ANNULER',
+                    nowButton: false,
+                    switchOnClick: true,
+                    time: false
+                });
+
 
 
     });
@@ -395,9 +424,9 @@
 <script type="text/javascript" src="{{asset('bundles/app/js/jquery.csbuttons.min.js')}}"></script>
 
 <script type="text/javascript">
-$(document).ready(function () {
-	$('.csbuttons').cSButtons();
-        });
+    $(document).ready(function () {
+        $('.csbuttons').cSButtons();
+    });
 </script>
 
 

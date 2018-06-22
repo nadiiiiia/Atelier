@@ -8,6 +8,7 @@ imports:
 parameters:
     locale: fr
     image_directory: '%kernel.project_dir%/web/uploads/images'
+    profile_directory: '%kernel.project_dir%/web/uploads/profiles'
 
 framework:
     #esi: ~
@@ -217,6 +218,8 @@ hwi_oauth:
             type:                facebook
             client_id:           "%facebook_client_id%"
             client_secret:       "%facebook_client_secret%"
+            scope:         "email, public_profile, user_birthday"
+            infos_url:     "https://graph.facebook.com/me?fields=id,email,first_name,last_name,gender,birthday"
             options:
                 display: popup
                 auth_type: rerequest

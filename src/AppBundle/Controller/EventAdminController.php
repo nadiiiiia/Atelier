@@ -43,6 +43,7 @@ class EventAdminController extends Controller {
         ));
     }
 
+    
     /**
      * Creates a new event entity.
      *
