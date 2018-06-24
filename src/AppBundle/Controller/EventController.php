@@ -295,7 +295,7 @@ class EventController extends Controller {
             // fin ajout cin
             //la partie d'ajout de photo de profile
             $photo = $data['photo'];
-            $photoName = 'avatar_'. md5(uniqid()) . '.' . $photo->guessExtension();
+            $photoName = 'avatar_' . md5(uniqid()) . '.' . $photo->guessExtension();
             $photo->move($this->getParameter('profile_directory'), $photoName);
             $user->setPhoto($photoName);
             // fin ajout photo
@@ -330,37 +330,36 @@ class EventController extends Controller {
      */
     public function changePhotoAction(Request $request) {
         $user = $this->get('security.token_storage')->getToken()->getUser();
-                $form = $this->createFormBuilder()
-            
+        $form = $this->createFormBuilder()
                 ->add('photo', FileType::class, array('attr' => array(
                         'accept' => 'image/*' // pour n'accepter que les images
                     ),
                     'label' => 'Photo de profile *'
                 ))
-            
                 ->getForm();
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-        $oldPhoto = $user->getPhoto();
-        $path = 'uploads/images/' . $oldPhoto;
+            $oldPhoto = $user->getPhoto();
+            $path = 'uploads/images/' . $oldPhoto;
 
-        $filesystem = new Filesystem();
-        $filesystem->remove($path);
-        //$user->setPhoto(null);
-        
-        $photo = $request->get('photo');
-        dump($_FILES[$photo]['tmp_name']); die;
-        $photoName = md5(uniqid()) . '.' . $photo->guessExtension();
-        $photo->move($this->getParameter('image_directory'), $photoName);
-        $user->setPhoto($photoName);
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($user);
-        $em->flush();
+            $filesystem = new Filesystem();
+            $filesystem->remove($path);
+            //$user->setPhoto(null);
 
-        return $this->redirectToRoute('fos_user_profile_show');
-           }
+            $photo = $request->get('photo');
+            dump($_FILES[$photo]['tmp_name']);
+            die;
+            $photoName = md5(uniqid()) . '.' . $photo->guessExtension();
+            $photo->move($this->getParameter('image_directory'), $photoName);
+            $user->setPhoto($photoName);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            return $this->redirectToRoute('fos_user_profile_show');
+        }
 
         return $this->render('AppBundle:default:modals/photoModal.html.twig', array(
                     'form' => $form->createView(),
@@ -530,8 +529,8 @@ class EventController extends Controller {
                     'order' => $order,
         ));
     }
-    
-        /**
+
+    /**
      * Lists all event entities.
      *
      * @Route("/list/{orgId}", name="org_events_index")
@@ -549,6 +548,53 @@ class EventController extends Controller {
 
         return $this->render('AppBundle:default:event/org/list.html.twig', array(
                     'events' => $pagination,
+        ));
+    }
+
+    /**
+     * Displays a form to edit an existing Events entity.
+     *
+     * @Route("event/edit/{id}", name="org_event_edit")
+     * @Method({"GET", "POST"})
+     */
+    public function editAction(Request $request, Event $event) {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        //$deleteForm = $this->createDeleteForm($event);
+        $editForm = $this->createForm('AppBundle\Form\EventType', $event);
+        $editForm->handleRequest($request);
+        /*         * ********Traitement des dates**************** */
+
+        // Récupérer les dates de type Objet et  convertir objet DateTime to string
+        $form_date_deb = $event->getDateDebut()->format('Y-m-d H:i:s');
+        $form_date_fin = $event->getDateFin()->format('Y-m-d H:i:s');
+        //
+        $editForm->get('dateDebut')->setData($form_date_deb);
+        $editForm->get('dateFin')->setData($form_date_fin);
+
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+             /*             * ********Traitement des dates**************** */
+
+            // Récupérer les dates de type string 
+            $form_date_deb = $editForm->get('dateDebut')->getData();
+            $form_date_fin = $editForm->get('dateFin')->getData();
+            // convertir string to objet DateTime
+            $event->setDateDebut(new \DateTime($form_date_deb));
+            $event->setDateFin(new \DateTime($form_date_fin));
+
+            
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($event);
+            $em->flush();
+
+            return $this->redirectToRoute('org_events_index', array('id' => $user->getId()));
+            // retour à la liste des evenements après les modifications 
+        }
+
+        return $this->render('AppBundle:default:event/org/edit.html.twig', array(
+                    'event' => $event,
+                    'edit_form' => $editForm->createView(),
+                        // 'delete_form' => $deleteForm->createView(),
         ));
     }
 

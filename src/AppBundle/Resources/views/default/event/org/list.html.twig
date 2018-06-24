@@ -42,7 +42,7 @@
                                     <td><p style="color:orange">En Cours</p></td>
 
 
-                                    <td> <a class="btn btn-success btn-sm" href="{#{{ path('valider_event', { 'id': event.id }) }}#}"> Modifier </a></td>
+                                    <td> <a class="btn btn-success btn-sm" href="{{ path('org_event_edit', { 'id': event.id }) }}"> Modifier </a></td>
 
                                 {% elseif event.validation == 1 %}
                            <td> <p style="color:#00C851;">Validé</p></td>

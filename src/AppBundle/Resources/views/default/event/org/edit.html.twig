@@ -1,0 +1,177 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row text-left">
+        <!--Grid column-->
+        <div class="col-md-1 mb-r">
+
+
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-md-10 mb-r pb-5">
+            <h2>Modifier Événement</h2>
+            <br>
+
+            <div class="card">
+                <div class="card-body z-depth-1">
+
+                    {{ form_start(edit_form)}}
+                    <br>
+                    <!--Body-->
+
+                    <div class="md-form">
+
+                        {{form_widget(edit_form.category) }}
+                        <span class="error-msg"></span>
+                    </div>
+
+                    <div class="md-form">
+                         {{ form_label(edit_form.titre) }}
+                        {{form_widget(edit_form.titre) }}
+                        <span class="error-msg"></span>
+                    </div>
+
+                    <div class="md-form">
+                        {{ form_label(edit_form.description) }}
+                        {{form_widget(edit_form.description) }}
+                        <span class="error-msg"></span>
+                    </div>
+
+                    <div class="md-form ">
+                         {{ form_label(edit_form.dateDebut) }}
+                        {{form_widget(edit_form.dateDebut) }}
+                        <span class="error-msg"></span>
+                    </div>
+                    <div class="md-form">
+                          {{ form_label(edit_form.dateFin) }}
+                        {{form_widget(edit_form.dateFin) }}
+                        <span class="error-msg"></span>
+                    </div>
+
+                    <div class="md-form">
+                         {{ form_label(edit_form.prix) }}
+                        {{form_widget(edit_form.prix) }}
+                        <span class="error-msg"></span>
+                    </div>
+                    <div class="md-form">
+                        {{ form_label(edit_form.nbrMax) }}
+                        {{form_widget(edit_form.nbrMax) }}
+                        <span class="error-msg"></span>
+                    </div>
+
+                    <div class="md-form"> 
+                        {{ form_label(edit_form.adresse) }}
+                        {{form_widget(edit_form.adresse) }}
+                        <span class="error-msg"></span>
+                    </div>
+
+                    <div class="md-form"> 
+                         {{ form_label(edit_form.codeP) }}
+                        {{form_widget(edit_form.codeP) }}
+                        <span class="error-msg"></span>
+                    </div>
+                    <div class="md-form"> 
+                        {{form_widget(edit_form.ville) }}
+                        <span class="error-msg"></span>
+                    </div>
+                    <div class="md-form"> 
+                        {{form_widget(edit_form.region) }}
+                        <span class="error-msg"></span>
+                    </div>
+                    <div class="md-form"> 
+                        {{form_widget(edit_form.departement) }}
+                        <span class="error-msg"></span>
+                    </div>
+                    <div class="md-form"> 
+                         {{ form_label(edit_form.images) }}
+                         <br><br>
+                        {{form_widget(edit_form.images) }}
+                        <span class="error-msg"></span>
+                    </div>
+
+
+                    <div class="text-right">
+                        <br><br>
+                        <input class="btn btn-primary-inverse btn-md waves-effect waves-light" id="submit_event" type="submit" value="Modifier" />
+                        <br><br>
+                    </div>
+                    <br>
+
+
+                </div>
+
+
+            </div>
+            {{ form_end(edit_form) }}
+
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-md-1 mb-r">
+
+
+        </div>
+        <!--Grid column-->
+
+    </div>
+
+    <!-- Google Map -->	
+    <script src="http://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places&key=AIzaSyBdI6hYrzRf5QMgKGj8RQsEeLE9bS-1vOQ"></script>
+
+
+    <script type="text/javascript">
+
+        //   document.querySelector('#category').required = true;
+       // document.querySelector('#description').required = false;
+        google.maps.event.addDomListener(window, 'load', intilize);
+        function intilize() {
+            var autocomplete = new google.maps.places.Autocomplete(document.getElementById("adresse"));
+
+            google.maps.event.addListener(autocomplete, 'place_changed', function () {
+
+                var place = autocomplete.getPlace();
+                
+                var lat= place.geometry.location.lat();
+                var lng = place.geometry.location.lng();
+                document.getElementById("lng").value = lng ;
+                 document.getElementById("lat").value = lat ;
+                
+        });
+    }
+
+
+    </script>
+
+{% endblock %}
+
+
+
+
+
+
+
+{#{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Event edit</h1>
+
+    {{ form_start(edit_form) }}
+        {{ form_widget(edit_form) }}
+        <input type="submit" value="Edit" />
+    {{ form_end(edit_form) }}
+
+    <ul>
+        <li>
+            <a href="{{ path('org_event_index') }}">Back to the list</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}
+#}

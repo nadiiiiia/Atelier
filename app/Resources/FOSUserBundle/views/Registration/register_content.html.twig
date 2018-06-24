@@ -67,6 +67,7 @@
                     <br>
                     
                     <div class="md-form ">
+                        <i class="fa fa-calendar prefix grey-text" ></i>
                        <label for="date_naissance">Date de naissance</label>
                         {{form_widget(form.date_naissance) }}
                        <div class=" alert-danger">   {{ form_errors(form.date_naissance) }}</div>
@@ -91,11 +92,15 @@
                 </div>
 
 
+    <div class="form-check">
+    <input type="checkbox" class="form-check-input" id="checkbox_cgu" value="accept_cgu" >
+    <label class="form-check-label" for="checkbox_cgu">J’ai lu et j’accepte les <a href="" data-toggle="modal" data-target="#CguModal">conditions d’utilisation</a></label>
+</div>
+                {%  include 'AppBundle:default:modals/cguModal.html.twig' %}
                 <div class="text-center">
                     <input type="submit" id="_submit" name="_submit" value="Inscription" class="btn btn-primary-inverse btn-md waves-effect waves-light" />
                 </div>
                 {{ form_end(form) }}
-
 
                 <div class="text-center">
                     <h4>Ou</h4>
@@ -138,6 +143,20 @@
     </div>
     <!--Grid column-->
 </div>
+                
+                <script type="text/javascript" src="{{asset('bundles/app/js/jquery-3.2.1.min.js')}}"></script>
 <script type="text/javascript">
-    document.querySelector('#fos_user_registration_form_photo').required = false;
+   // document.querySelector('#fos_user_registration_form_photo').required = false;
+    // document.querySelector('#checkbox_cgu').required = true;
+    
+        $(document).ready(function() {
+     $(':input[type="checkbox"]').prop('required', true);
+    {# $('input[type="text"]').keyup(function() {
+        if($(this).val() != '') {
+           $(':input[type="submit"]').prop('disabled', false);
+        }
+     });#}
+ });
+    
+
 </script>
