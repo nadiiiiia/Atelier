@@ -2,6 +2,10 @@
 
 namespace AppBundle\Controller;
 
+//
+//ini_set('memory_limit','-1');
+//ini_set('max_execution_time','450');
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -36,6 +40,7 @@ class EventController extends Controller {
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function eventsAction(Request $request) {
+        
         $em = $this->getDoctrine()->getManager();
         $findEvents = $em->getRepository('AppBundle:Event')->findAllCurrent();
 

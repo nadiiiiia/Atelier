@@ -3,7 +3,7 @@
 
 {% block body %}
     <link href="https://cdn.rawgit.com/sachinchoolur/lightgallery.js/master/dist/css/lightgallery.css" rel="stylesheet">
-     
+
     {#   {% for msg in app.session.flashBag.get('success') %}
                                <div class="alert alert-success">
                                    {{ msg }}
@@ -70,20 +70,20 @@
 
         <!--Info-->
         <div class="col-lg-5">
-    
+
             <!--First row-->
             <div class="row wow fadeIn" data-wow-delay="0.4s">
-                  <div class="col-md-12">
-                {% if is_granted('ROLE_ADMIN') and event.validation == 0 %}
+                <div class="col-md-12">
+                    {% if is_granted('ROLE_ADMIN') and event.validation == 0 %}
                         <button class=" btn btn-success btn-sm pull-right waves-effect waves-light" type="button" onclick="location.href = '{{ path('valider_event', { 'id': event.id }) }}'" id="list_events">Valider</button>
                         <button class=" btn btn-primary-atelier btn-sm pull-right waves-effect waves-light" type="button" onclick="location.href = '{{ path('admin_events_index')}}'" id="list_events">Liste des Ateliers</button>
                     {% endif %}
-                        {% if is_granted('ROLE_ADMIN') and event.validation == 1 %}
-                       <button class=" btn btn-primary-atelier btn-sm pull-right waves-effect waves-light" type="button" onclick="location.href = '{{ path('admin_events_index')}}'" id="list_events">Liste des Ateliers</button>
-                      {% endif %} 
-            </div>
+                    {% if is_granted('ROLE_ADMIN') and event.validation == 1 %}
+                        <button class=" btn btn-primary-atelier btn-sm pull-right waves-effect waves-light" type="button" onclick="location.href = '{{ path('admin_events_index')}}'" id="list_events">Liste des Ateliers</button>
+                    {% endif %} 
+                </div>
                 <div class="col-md-12">
-              
+
                     <!--Product-->
                     <div class="product-wrapper">
                         {%set titre = event.titre %}
@@ -95,7 +95,7 @@
                         <h2>
                             <span class="badge" style="background-color: #B579D2">{{event.prix}} €</span>
                         </h2>
-                     
+
                         <dl class="row mt-4">
                             <dt class="col-sm-4">Date de début</dt>
                             <dd class="col-sm-8">{{event.dateDebut|date("d/m/Y")}}</dd>
@@ -161,6 +161,37 @@
                 {% endfor %}
             </ul>
         </div>
+        {% if is_granted('ROLE_ADMIN')%}
+            <div class="col-lg-12">
+                <br><br>
+                <h2>Documents de l'organisateur {{event.getUtilisateur.getUsername}} </h2>
+                {{event.utilisateur.photo}}
+
+                <ul id="mdb-lightbox-documents" class="list-unstyled row">
+                      <li class="col-xs-6 col-sm-4 col-md-3" data-responsive="{{asset('uploads/profiles/' ~ event.getUtilisateur.getPhoto)}}" data-src="{{asset('uploads/profiles/' ~ event.getUtilisateur.getPhoto)}}" data-sub-html="<h4>Photo de profile</h4>" data-pinterest-text="Pin it1" data-tweet-text="share on twitter 1">
+                            <a href="">
+                                <img class="img-responsive" src="{{asset('uploads/profiles/' ~ event.getUtilisateur.getPhoto)}}" style="width:282px;height:188px;" alt="Thumb-1">
+                            </a>
+                        </li>
+                  {#      <li class="col-xs-6 col-sm-4 col-md-3" data-responsive="{{asset('uploads/profiles/' ~ event.utilisateur.cin)}}" data-src="{{asset('uploads/profiles/' ~ event.utilisateur.cin)}}" data-sub-html="<h4>CIN</h4>" data-pinterest-text="Pin it1" data-tweet-text="share on twitter 1">
+                            <a href="">
+                                <img class="img-responsive" src="{{asset('uploads/profiles/' ~ event.utiltsateur.cin)}}" style="width:282px;height:188px;" alt="Thumb-1">
+                            </a>
+                        </li>#}
+                    {% for certif in event.getUtilisateur.getCertifs %} 
+              
+                        <li class="col-xs-6 col-sm-4 col-md-3" data-responsive="{{asset('uploads/profiles/' ~ certif)}}" data-src="{{asset('uploads/profiles/' ~ certif)}}" data-sub-html="<h4>{{titre}}</h4>" data-pinterest-text="Pin it1" data-tweet-text="share on twitter 1">
+                            <a href="">
+                                <img class="img-responsive" src="{{asset('uploads/profiles/' ~ certif)}}" style="width:282px;height:188px;" alt="Thumb-1">
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>  
+
+        {%endif%}
+
+
         {#{%endif%}#}
         {# gallery#}
 
@@ -191,7 +222,8 @@
         <script src="https://cdn.rawgit.com/sachinchoolur/lg-hash.js/master/dist/lg-hash.js"></script>
         <script src="https://cdn.rawgit.com/sachinchoolur/lg-share.js/master/dist/lg-share.js"></script>
         <script>
-                lightGallery(document.getElementById('mdb-lightbox-ui'));
+                            lightGallery(document.getElementById('mdb-lightbox-ui'));
+                            lightGallery(document.getElementById('mdb-lightbox-documents'));
         </script>    
         <script type="text/javascript">
             $(document).ready(function () {
