@@ -165,7 +165,7 @@
             <div class="col-lg-12">
                 <br><br>
                 <h2>Documents de l'organisateur {{event.getUtilisateur.getUsername}} </h2>
-                {{event.utilisateur.photo}}
+              
 
                 <ul id="mdb-lightbox-documents" class="list-unstyled row">
                       <li class="col-xs-6 col-sm-4 col-md-3" data-responsive="{{asset('uploads/profiles/' ~ event.getUtilisateur.getPhoto)}}" data-src="{{asset('uploads/profiles/' ~ event.getUtilisateur.getPhoto)}}" data-sub-html="<h4>Photo de profile</h4>" data-pinterest-text="Pin it1" data-tweet-text="share on twitter 1">
@@ -173,14 +173,14 @@
                                 <img class="img-responsive" src="{{asset('uploads/profiles/' ~ event.getUtilisateur.getPhoto)}}" style="width:282px;height:188px;" alt="Thumb-1">
                             </a>
                         </li>
-                  {#      <li class="col-xs-6 col-sm-4 col-md-3" data-responsive="{{asset('uploads/profiles/' ~ event.utilisateur.cin)}}" data-src="{{asset('uploads/profiles/' ~ event.utilisateur.cin)}}" data-sub-html="<h4>CIN</h4>" data-pinterest-text="Pin it1" data-tweet-text="share on twitter 1">
+                      <li class="col-xs-6 col-sm-4 col-md-3" data-responsive="{{asset('uploads/profiles/' ~ event.getUtilisateur.getCin)}}" data-src="{{asset('uploads/profiles/' ~ event.getUtilisateur.getCin)}}" data-sub-html="<h4>CIN</h4>" data-pinterest-text="Pin it1" data-tweet-text="share on twitter 1">
                             <a href="">
-                                <img class="img-responsive" src="{{asset('uploads/profiles/' ~ event.utiltsateur.cin)}}" style="width:282px;height:188px;" alt="Thumb-1">
+                                <img class="img-responsive" src="{{asset('uploads/profiles/' ~ event.getUtilisateur.getCin)}}" style="width:282px;height:188px;" alt="Thumb-1">
                             </a>
-                        </li>#}
+                        </li>
                     {% for certif in event.getUtilisateur.getCertifs %} 
               
-                        <li class="col-xs-6 col-sm-4 col-md-3" data-responsive="{{asset('uploads/profiles/' ~ certif)}}" data-src="{{asset('uploads/profiles/' ~ certif)}}" data-sub-html="<h4>{{titre}}</h4>" data-pinterest-text="Pin it1" data-tweet-text="share on twitter 1">
+                        <li class="col-xs-6 col-sm-4 col-md-3" data-responsive="{{asset('uploads/profiles/' ~ certif)}}" data-src="{{asset('uploads/profiles/' ~ certif)}}" data-sub-html="<h4>certificats</h4>" data-pinterest-text="Pin it1" data-tweet-text="share on twitter 1">
                             <a href="">
                                 <img class="img-responsive" src="{{asset('uploads/profiles/' ~ certif)}}" style="width:282px;height:188px;" alt="Thumb-1">
                             </a>
