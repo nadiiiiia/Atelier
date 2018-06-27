@@ -630,7 +630,7 @@ class EventController extends Controller {
 
     /**
      *
-     * @Route("profile/edit_info", name="profile_edit_info")
+     * @Route("test/edit_info", name="profile_edit_info")
      * @param Request $request
      * @Method({"GET", "POST"})
      */
@@ -702,7 +702,7 @@ class EventController extends Controller {
             return $this->redirectToRoute('profile_edit_info');
         }
 
-        return $this->render('@FOSUser/profile/editDocs.html.twig', array(
+        return $this->render('AppBundle:default:user/editDocs.html.twig', array(
                     'form' => $form->createView(),
         ));
     }
