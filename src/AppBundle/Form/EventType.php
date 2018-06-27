@@ -22,6 +22,7 @@ class EventType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
+                
                 ->add('category', EntityType::class, array(
                     // looks for choices from this entity
                     'class' => 'AppBundle:Category',

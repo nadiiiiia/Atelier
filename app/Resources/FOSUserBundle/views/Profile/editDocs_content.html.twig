@@ -1,0 +1,66 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{{ form_start(form, { 'action': path('profile_edit_info'), 'attr': { 'class': 'fos_user_profile_edit' } }) }}
+{#  {{ form_widget(form) }}#}
+<div class="md-form"> 
+    {{ form_label(form.tel) }}
+    {{form_widget(form.tel) }}
+    <span class="error-msg"></span>
+</div>
+
+<div class="md-form"> 
+    {{ form_label(form.cin) }}
+    <br><br>
+    {{form_widget(form.cin) }}
+    <span class="error-msg"></span>
+</div>
+        <div class="md-form"> 
+    {% if  app.user.getPhoto %}
+
+        <div class="avatar text-left"><img src="{{asset('uploads/profiles/' ~ app.user.getCin)}}" class="img-responsive"  height="70" width="70">
+        </div>
+  
+    {% endif %}
+</div>
+<div class="md-form"> 
+    {{ form_label(form.photo) }}
+    <br><br>
+    {{form_widget(form.photo) }}
+    <span class="error-msg"></span>
+</div>
+    <div class="md-form"> 
+    {% if  app.user.getPhoto %}
+
+        <div class="avatar text-left"><img src="{{asset('uploads/profiles/' ~ app.user.getPhoto)}}" class="img-responsive"  height="70" width="70">
+        </div>
+    {% else%}
+        <div class="avatar text-left"><img src="{{asset('bundles/app/img/login-avatar.jpg')}}" class="img-responsive"  height="70" width="70" >
+        </div>
+    {% endif %}
+</div>
+<div class="md-form"> 
+    {{ form_label(form.certifs) }}
+    <br>
+    <br>
+
+    {{form_widget(form.certifs) }}
+    <span class="error-msg"></span>
+</div>
+    <div class="md-form"> 
+        {% if  app.user.getCertifs %}
+            {% for certif in app.user.getCertifs %} 
+                <div class="avatar text-left"><img src="{{asset('uploads/profiles/' ~ certif)}}" class="img-responsive"  height="70" width="70" style="float:left;">
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <br><br>
+
+<div class="text-right">
+    <br><br>
+    <input class="btn btn-primary-inverse btn-md waves-effect waves-light" id="submit_event" type="submit" value="{{ 'profile.edit.submit'|trans }}" />
+    <br><br>
+</div>
+
+
+{{ form_end(form) }}

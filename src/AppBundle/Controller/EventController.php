@@ -40,7 +40,7 @@ class EventController extends Controller {
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function eventsAction(Request $request) {
-        
+
         $em = $this->getDoctrine()->getManager();
         $findEvents = $em->getRepository('AppBundle:Event')->findAllCurrent();
 
@@ -285,24 +285,27 @@ class EventController extends Controller {
                 ))
                 ->getForm();
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             // data is an array with "name", "email", and "message" keys
             $data = $form->getData();
             $user->setTel($data['tel']);
 
             //la partie d'ajout de CIN
-            $cin = $data['cin'];
-            $cinName = 'ID_' . md5(uniqid()) . '.' . $cin->guessExtension();
-            //dump($cin); die;
-            $cin->move($this->getParameter('profile_directory'), $cinName);
-            $user->setCin($cinName);
+            if ($data['cin']) {
+                $cin = $data['cin'];
+                $cinName = 'ID_' . md5(uniqid()) . '.' . $cin->guessExtension();
+                //dump($cin); die;
+                $cin->move($this->getParameter('profile_directory'), $cinName);
+                $user->setCin($cinName);
+            }
             // fin ajout cin
             //la partie d'ajout de photo de profile
-            $photo = $data['photo'];
-            $photoName = 'avatar_' . md5(uniqid()) . '.' . $photo->guessExtension();
-            $photo->move($this->getParameter('profile_directory'), $photoName);
-            $user->setPhoto($photoName);
+            if ($data['photo']) {
+                $photo = $data['photo'];
+                $photoName = 'avatar_' . md5(uniqid()) . '.' . $photo->guessExtension();
+                $photo->move($this->getParameter('profile_directory'), $photoName);
+                $user->setPhoto($photoName);
+            }
             // fin ajout photo
             /*             * ********Traitement des certifs**************** */
             if ($data['certifs']) {
@@ -314,9 +317,6 @@ class EventController extends Controller {
                     $cert[] = $certifName;
                 }
                 $user->setCertifs($cert);
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($user);
-                $em->flush();
             }
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
@@ -560,26 +560,20 @@ class EventController extends Controller {
      * Displays a form to edit an existing Events entity.
      *
      * @Route("event/edit/{id}", name="org_event_edit")
+     * @param Request $request
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, Event $event) {
+    public function editAction(Request $request, Event $event, $id) {
         $user = $this->get('security.token_storage')->getToken()->getUser();
         //$deleteForm = $this->createDeleteForm($event);
         $editForm = $this->createForm('AppBundle\Form\EventType', $event);
         $editForm->handleRequest($request);
-        /*         * ********Traitement des dates**************** */
-
-        // Récupérer les dates de type Objet et  convertir objet DateTime to string
-        $form_date_deb = $event->getDateDebut()->format('Y-m-d H:i:s');
-        $form_date_fin = $event->getDateFin()->format('Y-m-d H:i:s');
-        //
-        $editForm->get('dateDebut')->setData($form_date_deb);
-        $editForm->get('dateFin')->setData($form_date_fin);
-
-
+        
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-             /*             * ********Traitement des dates**************** */
+             
 
+             
+            /*             * ********Traitement des dates**************** */
             // Récupérer les dates de type string 
             $form_date_deb = $editForm->get('dateDebut')->getData();
             $form_date_fin = $editForm->get('dateFin')->getData();
@@ -587,19 +581,129 @@ class EventController extends Controller {
             $event->setDateDebut(new \DateTime($form_date_deb));
             $event->setDateFin(new \DateTime($form_date_fin));
 
+            /*             * ********Traitement des images**************** */
+          
+
+     $uploaded=$editForm->get('images')->getData();
+            if (!empty($uploaded)) {
             
+            $files =$uploaded;
+            $img = array();
+            foreach ($files as $file) {
+                $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+                $file->move($this->getParameter('image_directory'), $fileName);
+                $img[] = $fileName;
+            }
+            $test=array('nas','hbr');
+          //   dump($test); die;
+            $event->setImages($img);
+            
+           
+            }else{
+                 dump($event); die;
+            }
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($event);
             $em->flush();
 
-            return $this->redirectToRoute('org_events_index', array('id' => $user->getId()));
+            return $this->redirectToRoute('org_events_index', array('orgId' => $user->getId()));
             // retour à la liste des evenements après les modifications 
         }
+
+        /*         * ********Traitement des dates**************** */
+
+        //  Récupérer les dates de type Objet et  convertir objet DateTime to string
+        $form_date_deb = $event->getDateDebut()->format('Y-m-d H:i:s');
+        $form_date_fin = $event->getDateFin()->format('Y-m-d H:i:s');
+
+
+        $editForm->get('dateDebut')->setData($form_date_deb);
+        $editForm->get('dateFin')->setData($form_date_fin);
 
         return $this->render('AppBundle:default:event/org/edit.html.twig', array(
                     'event' => $event,
                     'edit_form' => $editForm->createView(),
                         // 'delete_form' => $deleteForm->createView(),
+        ));
+    }
+
+    /**
+     *
+     * @Route("profile/edit_info", name="profile_edit_info")
+     * @param Request $request
+     * @Method({"GET", "POST"})
+     */
+    public function editProfileAction(Request $request) {
+
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $tel = $user->getTel();
+        $form = $this->createFormBuilder()
+                ->add('tel', NumberType::class, array(
+                    'attr' => array('class' => 'form-control',
+                        'value' => $tel),
+                    'label' => 'Numéro de téléphone '
+                ))
+                ->add('cin', FileType::class, array('attr' => array(
+                        'accept' => 'image/*' // pour n'accepter que les images
+                    ),
+                    'label' => 'Identifiant '
+                ))
+                ->add('photo', FileType::class, array('attr' => array(
+                        'accept' => 'image/*' // pour n'accepter que les images
+                    ),
+                    'label' => 'Photo de profile '
+                ))
+                ->add('certifs', FileType::class, array('attr' => array(
+                        'accept' => 'image/*' // pour n'accepter que les images
+                    ),
+                    'multiple' => TRUE,
+                    'label' => 'Certificats'
+                ))
+                ->getForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // data is an array with "name", "email", and "message" keys
+            $data = $form->getData();
+            $user->setTel($data['tel']);
+
+            //la partie d'ajout de CIN
+            if ($data['cin']) {
+                $cin = $data['cin'];
+                $cinName = 'ID_' . md5(uniqid()) . '.' . $cin->guessExtension();
+                //dump($cin); die;
+                $cin->move($this->getParameter('profile_directory'), $cinName);
+                $user->setCin($cinName);
+            }
+            // fin ajout cin
+            //la partie d'ajout de photo de profile
+            if ($data['photo']) {
+                $photo = $data['photo'];
+                $photoName = 'avatar_' . md5(uniqid()) . '.' . $photo->guessExtension();
+                $photo->move($this->getParameter('profile_directory'), $photoName);
+                $user->setPhoto($photoName);
+            }
+            // fin ajout photo
+            /*             * ********Traitement des certifs**************** */
+            if ($data['certifs']) {
+                $certifs = $data['certifs'];
+                $cert = array();
+                foreach ($certifs as $certif) {
+                    $certifName = 'certif_' . md5(uniqid()) . '.' . $certif->guessExtension();
+                    $certif->move($this->getParameter('profile_directory'), $certifName);
+                    $cert[] = $certifName;
+                }
+                $user->setCertifs($cert);
+            }
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+            return $this->redirectToRoute('profile_edit_info');
+        }
+
+        return $this->render('@FOSUser/profile/editDocs.html.twig', array(
+                    'form' => $form->createView(),
         ));
     }
 

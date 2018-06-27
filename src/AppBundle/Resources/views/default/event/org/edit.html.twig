@@ -12,6 +12,7 @@
         <!--Grid column-->
         <div class="col-md-10 mb-r pb-5">
             <h2>Modifier Événement</h2>
+
             <br>
 
             <div class="card">
@@ -20,6 +21,7 @@
                     {{ form_start(edit_form)}}
                     <br>
                     <!--Body-->
+                    {#<input type="hidden" name="eventId" value="{{event.id}}">#}
 
                     <div class="md-form">
 
@@ -28,7 +30,7 @@
                     </div>
 
                     <div class="md-form">
-                         {{ form_label(edit_form.titre) }}
+                        {{ form_label(edit_form.titre) }}
                         {{form_widget(edit_form.titre) }}
                         <span class="error-msg"></span>
                     </div>
@@ -40,18 +42,18 @@
                     </div>
 
                     <div class="md-form ">
-                         {{ form_label(edit_form.dateDebut) }}
+                        {{ form_label(edit_form.dateDebut) }}
                         {{form_widget(edit_form.dateDebut) }}
                         <span class="error-msg"></span>
                     </div>
                     <div class="md-form">
-                          {{ form_label(edit_form.dateFin) }}
+                        {{ form_label(edit_form.dateFin) }}
                         {{form_widget(edit_form.dateFin) }}
                         <span class="error-msg"></span>
                     </div>
 
                     <div class="md-form">
-                         {{ form_label(edit_form.prix) }}
+                        {{ form_label(edit_form.prix) }}
                         {{form_widget(edit_form.prix) }}
                         <span class="error-msg"></span>
                     </div>
@@ -68,7 +70,7 @@
                     </div>
 
                     <div class="md-form"> 
-                         {{ form_label(edit_form.codeP) }}
+                        {{ form_label(edit_form.codeP) }}
                         {{form_widget(edit_form.codeP) }}
                         <span class="error-msg"></span>
                     </div>
@@ -84,12 +86,23 @@
                         {{form_widget(edit_form.departement) }}
                         <span class="error-msg"></span>
                     </div>
+      
+                   
                     <div class="md-form"> 
-                         {{ form_label(edit_form.images) }}
-                         <br><br>
+                        {{ form_label(edit_form.images) }}
+                        <br><br>
                         {{form_widget(edit_form.images) }}
                         <span class="error-msg"></span>
                     </div>
+                    <div class="md-form"> 
+                        {% if  event.getImages %}
+                            {% for image in event.images %} 
+                                <div class="avatar text-left"><img src="{{asset('uploads/images/' ~ image)}}" class="img-responsive"  height="70" width="70" style="float:left; margin-right: 5px;">
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <br><br>
 
 
                     <div class="text-right">
@@ -125,7 +138,7 @@
     <script type="text/javascript">
 
         //   document.querySelector('#category').required = true;
-       // document.querySelector('#description').required = false;
+        // document.querySelector('#description').required = false;
         google.maps.event.addDomListener(window, 'load', intilize);
         function intilize() {
             var autocomplete = new google.maps.places.Autocomplete(document.getElementById("adresse"));
@@ -133,18 +146,23 @@
             google.maps.event.addListener(autocomplete, 'place_changed', function () {
 
                 var place = autocomplete.getPlace();
-                
-                var lat= place.geometry.location.lat();
+
+                var lat = place.geometry.location.lat();
                 var lng = place.geometry.location.lng();
-                document.getElementById("lng").value = lng ;
-                 document.getElementById("lat").value = lat ;
-                
-        });
-    }
+                document.getElementById("lng").value = lng;
+                document.getElementById("lat").value = lat;
+
+            });
+        }
 
 
     </script>
-
+    <script type="text/javascript" src="{{asset('bundles/app/js/jquery-3.2.1.min.js')}}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(':input[id="images"]').prop('required', false);
+        });
+    </script>
 {% endblock %}
 
 

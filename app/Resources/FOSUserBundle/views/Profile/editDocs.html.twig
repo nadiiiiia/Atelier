@@ -1,0 +1,60 @@
+{% extends "@FOSUser/layout.html.twig" %}
+
+
+
+{% block fos_user_content %}
+      <div class="row">
+
+        <div class="col-lg-3">
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and app.user.getPhoto %}
+
+                <div class="avatar text-center"><img src="{{asset('uploads/profiles/' ~ app.user.getPhoto)}}" class="img-circle img-responsive"  height="150" width="150" style="border-radius: 50%;">
+                </div>
+            {% else%}
+                <div class="avatar text-center"><img src="{{asset('bundles/app/img/login-avatar.jpg')}}" class="img-circle img-responsive"  height="150" width="150" >
+                </div>
+            {% endif %}
+            <br>
+            {% if is_granted('ROLE_ADMIN') %}
+                <p align="center">ADMINISTRATEUR</p>
+            {% elseif is_granted('ROLE_ORGANIZER') %}
+                <p align="center"> ORGANISATEUR</p>
+            {% elseif is_granted('ROLE_USER') %}
+                <p align="center"> UTILISATEUR</p>
+            {% endif %}
+            {% include 'AppBundle:default:user/sidebarUser.html.twig' %}
+        </div>
+
+        <div class="col-lg-9">
+            <h4>Informations de profile</h4>
+
+
+                <hr>  
+
+            <div class="row">
+
+
+                <div class="col-lg-1"></div>
+                <div class="col-lg-8">
+     {% include "@FOSUser/Profile/editDocs_content.html.twig" %}
+     
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+                <script type="text/javascript" src="{{asset('bundles/app/js/jquery-3.2.1.min.js')}}"></script>
+<script type="text/javascript">
+        $(document).ready(function() {
+            $(':input[id="form_tel"]').prop('required', false);
+     $(':input[id="form_photo"]').prop('required', false);
+      $(':input[id="form_cin"]').prop('required', false); 
+      $(':input[id="form_certifs"]').prop('required', false);
+
+ });
+    
+
+</script>
+    
+{% endblock fos_user_content %}
+
