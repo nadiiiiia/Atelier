@@ -42,12 +42,12 @@
                                     <td><i class="fa fa-remove "  style="color: red" aria-hidden="true"></i></td>
 
 
-                                    <td> <a class="btn btn-success btn-sm" href="{{ path('valider_event', { 'id': event.id }) }}"> Valider </a></td>
-
+                                    
                                 {% elseif event.validation == 1 %}
                                     <td><i class="fa fa-check "  style="color:#00C851;" aria-hidden="true"></i></td>
                                     {% endif %}
-                                </td>
+                               <td> <a class="btn btn-success btn-sm" href="{{ path('presentation', { 'id': event.id }) }}"> Consulter </a></td>
+
                             </tr>
 
                         {% endfor %}

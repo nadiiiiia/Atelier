@@ -74,13 +74,7 @@
             <!--First row-->
             <div class="row wow fadeIn" data-wow-delay="0.4s">
                 <div class="col-md-12">
-                    {% if is_granted('ROLE_ADMIN') and event.validation == 0 %}
-                        <button class=" btn btn-success btn-sm pull-right waves-effect waves-light" type="button" onclick="location.href = '{{ path('valider_event', { 'id': event.id }) }}'" id="list_events">Valider</button>
-                        <button class=" btn btn-primary-atelier btn-sm pull-right waves-effect waves-light" type="button" onclick="location.href = '{{ path('admin_events_index')}}'" id="list_events">Liste des Ateliers</button>
-                    {% endif %}
-                    {% if is_granted('ROLE_ADMIN') and event.validation == 1 %}
-                        <button class=" btn btn-primary-atelier btn-sm pull-right waves-effect waves-light" type="button" onclick="location.href = '{{ path('admin_events_index')}}'" id="list_events">Liste des Ateliers</button>
-                    {% endif %} 
+                    <button class=" btn btn-primary-atelier btn-sm pull-right waves-effect waves-light" type="button" onclick="location.href = '{{ path('admin_events_index')}}'" id="list_events">Liste des Ateliers</button>
                 </div>
                 <div class="col-md-12">
 
@@ -139,10 +133,10 @@
             {{event.description|raw}}
             <br>
             <br>
-            <a href="#" class="csbuttons" data-type="facebook" data-count="true" data-href="{{ app.request.uri }}"><img src="{{asset('bundles/app/img/fb_01.png')}}" alt="">{#<span class="csbuttons-count"></span>#}</a>
-            <a href="#" class="csbuttons" data-type="google" data-count="true"><img src="{{asset('bundles/app/img/gp_01.png')}}" alt="">{#<span class="csbuttons-count"></span>#}</a>
-            <a href="#" class="csbuttons" data-type="twitter" data-count="true"><img src="{{asset('bundles/app/img/tw_01.png')}}" alt="">{#<span class="csbuttons-count"></span>#}</a>
-
+            {#       <a href="#" class="csbuttons" data-type="facebook" data-count="true" data-href="{{ app.request.uri }}"><img src="{{asset('bundles/app/img/fb_01.png')}}" alt=""><!--<span class="csbuttons-count"></span>--></a>
+                     <a href="#" class="csbuttons" data-type="google" data-count="true"><img src="{{asset('bundles/app/img/gp_01.png')}}" alt=""><!--<span class="csbuttons-count"></span-->a>
+                     <a href="#" class="csbuttons" data-type="twitter" data-count="true"><img src="{{asset('bundles/app/img/tw_01.png')}}" alt=""><!--<span class="csbuttons-count"></span>--></a>
+         -->#}
 
         </div>
         {# gallery#}
@@ -165,21 +159,21 @@
             <div class="col-lg-12">
                 <br><br>
                 <h2>Documents de l'organisateur {{event.getUtilisateur.getUsername}} </h2>
-              
+
 
                 <ul id="mdb-lightbox-documents" class="list-unstyled row">
-                      <li class="col-xs-6 col-sm-4 col-md-3" data-responsive="{{asset('uploads/profiles/' ~ event.getUtilisateur.getPhoto)}}" data-src="{{asset('uploads/profiles/' ~ event.getUtilisateur.getPhoto)}}" data-sub-html="<h4>Photo de profile</h4>" data-pinterest-text="Pin it1" data-tweet-text="share on twitter 1">
-                            <a href="">
-                                <img class="img-responsive" src="{{asset('uploads/profiles/' ~ event.getUtilisateur.getPhoto)}}" style="width:282px;height:188px;" alt="Thumb-1">
-                            </a>
-                        </li>
-                      <li class="col-xs-6 col-sm-4 col-md-3" data-responsive="{{asset('uploads/profiles/' ~ event.getUtilisateur.getCin)}}" data-src="{{asset('uploads/profiles/' ~ event.getUtilisateur.getCin)}}" data-sub-html="<h4>CIN</h4>" data-pinterest-text="Pin it1" data-tweet-text="share on twitter 1">
-                            <a href="">
-                                <img class="img-responsive" src="{{asset('uploads/profiles/' ~ event.getUtilisateur.getCin)}}" style="width:282px;height:188px;" alt="Thumb-1">
-                            </a>
-                        </li>
+                    <li class="col-xs-6 col-sm-4 col-md-3" data-responsive="{{asset('uploads/profiles/' ~ event.getUtilisateur.getPhoto)}}" data-src="{{asset('uploads/profiles/' ~ event.getUtilisateur.getPhoto)}}" data-sub-html="<h4>Photo de profile</h4>" data-pinterest-text="Pin it1" data-tweet-text="share on twitter 1">
+                        <a href="">
+                            <img class="img-responsive" src="{{asset('uploads/profiles/' ~ event.getUtilisateur.getPhoto)}}" style="width:282px;height:188px;" alt="Thumb-1">
+                        </a>
+                    </li>
+                    <li class="col-xs-6 col-sm-4 col-md-3" data-responsive="{{asset('uploads/profiles/' ~ event.getUtilisateur.getCin)}}" data-src="{{asset('uploads/profiles/' ~ event.getUtilisateur.getCin)}}" data-sub-html="<h4>CIN</h4>" data-pinterest-text="Pin it1" data-tweet-text="share on twitter 1">
+                        <a href="">
+                            <img class="img-responsive" src="{{asset('uploads/profiles/' ~ event.getUtilisateur.getCin)}}" style="width:282px;height:188px;" alt="Thumb-1">
+                        </a>
+                    </li>
                     {% for certif in event.getUtilisateur.getCertifs %} 
-              
+
                         <li class="col-xs-6 col-sm-4 col-md-3" data-responsive="{{asset('uploads/profiles/' ~ certif)}}" data-src="{{asset('uploads/profiles/' ~ certif)}}" data-sub-html="<h4>certificats</h4>" data-pinterest-text="Pin it1" data-tweet-text="share on twitter 1">
                             <a href="">
                                 <img class="img-responsive" src="{{asset('uploads/profiles/' ~ certif)}}" style="width:282px;height:188px;" alt="Thumb-1">
@@ -187,110 +181,192 @@
                         </li>
                     {% endfor %}
                 </ul>
-            </div>  
-
-        {%endif%}
-
-
-        {#{%endif%}#}
-        {# gallery#}
-
-        <!--Reviews-->
-        <div class="col-lg-12">
-            <hr>
-            <div id="map" style="height: 300px"></div>
-            <div class="media wow fadeIn" data-wow-delay="0.2s">
-                <!--      <h4><strong>Description</strong></h4>
-                      <p> </p>
-                  </div>-->
-                <hr>
-                <!--Share with social media-->
             </div>
-            <!--/.Reviews-->
+            <div class="col-lg-12">
+                <br><br>
+                <h2>Décision de l'administration </h2>
 
-        </div>
+                {% if is_granted('ROLE_ADMIN') and event.validation == 0 %}
+                    <br>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+                    <div class="card">
+                        <div class="card-body z-depth-1-half">
 
-        <script type="text/javascript" src="{{asset('bundles/app/js/jquery-3.2.1.min.js')}}"></script>
-        <script src="https://cdn.jsdelivr.net/picturefill/2.3.1/picturefill.min.js"></script>
-        <script src="https://cdn.rawgit.com/sachinchoolur/lightgallery.js/master/dist/js/lightgallery.js"></script>
-        <script src="https://cdn.rawgit.com/sachinchoolur/lg-pager.js/master/dist/lg-pager.js"></script>
-        <script src="https://cdn.rawgit.com/sachinchoolur/lg-autoplay.js/master/dist/lg-autoplay.js"></script>
-        <script src="https://cdn.rawgit.com/sachinchoolur/lg-fullscreen.js/master/dist/lg-fullscreen.js"></script>
-        <script src="https://cdn.rawgit.com/sachinchoolur/lg-zoom.js/master/dist/lg-zoom.js"></script>
-        <script src="https://cdn.rawgit.com/sachinchoolur/lg-hash.js/master/dist/lg-hash.js"></script>
-        <script src="https://cdn.rawgit.com/sachinchoolur/lg-share.js/master/dist/lg-share.js"></script>
-        <script>
-                            lightGallery(document.getElementById('mdb-lightbox-ui'));
-                            lightGallery(document.getElementById('mdb-lightbox-documents'));
-        </script>    
-        <script type="text/javascript">
-            $(document).ready(function () {
+                            <!--Header
+                            <div class="form-header cyan-darken-4-color">
+                                <h3>
+                                   Accueil</h3>
+                            </div>-->
 
-                window.setTimeout(function () {
-                    $(".alert").fadeTo(1000, 0).slideUp(1000, function () {
-                        $(this).remove();
+                            <!--Body-->
+
+                            <p>
+                                Etat de la demande
+                                <br>
+                            <form method='post' action='{{path('validation')}}'>
+
+
+<input type="hidden" name="eventId" value="{{event.id}}"
+                                <fieldset class="form-check">
+                                    <input class="form-check-input" name="validation" type="radio" value="1" id="valider" >
+                                    <label class="form-check-label" for="valider">Valider</label>
+                                </fieldset>
+
+                                <fieldset class="form-check">
+                                    <input class="form-check-input" name="validation" type="radio" value="2" id="refuser">
+                                    <label class="form-check-label" for="refuser">Refuser</label>
+                                </fieldset>
+
+                                <br>
+
+                                <div class="md-form">
+                                    <textarea type="text" id="form7" name="remarques" class="form-control md-textarea" rows="3"></textarea>
+                                    <label for="form7" class="">Remarques de l'administrateur</label>
+                                </div>
+                                <br>  
+                                </p>
+                                <input class=" btn btn-primary-atelier btn-sm pull-right waves-effect waves-light" type="submit" value='Confirmer'  >
+                                <br>
+                                <br>
+                            </form>
+                        </div>
+
+                    {% endif %}
+                    {% if is_granted('ROLE_ADMIN') and event.validation == 1 %}
+                        <br>
+                        <br>
+                        <div class="card">
+                            <div class="card-body z-depth-4">
+
+                                <!--Header
+                                <div class="form-header cyan-darken-4-color">
+                                    <h3>
+                                       Accueil</h3>
+                                </div>-->
+
+                                <!--Body-->
+                                <br>
+                                <br>
+                                <p>
+                                    Cher utilisateur,
+                                    <br>
+                                    <br>
+                                    Votre demande est en cours de traitement, l'événement sera publié sur le site après son validation.
+                                    Nous vous remercions pour votre confience.
+                                    <br><br>
+                                    Cordialement,<br>
+                                    Equipe l'Atelier
+
+
+                                </p>
+                                <button class=" btn btn-primary-atelier btn-sm pull-right waves-effect waves-light" type="button" onclick="location.href = '{{ path('homepage')}}'" >confirmer la décision</button>
+                                <br>
+                                <br>
+                            </div>
+                        {% endif %} 
+                    </div>
+                {%endif%}
+
+
+                {#{%endif%}#}
+                {# gallery#}
+
+                <!--Reviews-->
+                <div class="col-lg-12">
+                    <hr>
+                    <div id="map" style="height: 300px"></div>
+                    <div class="media wow fadeIn" data-wow-delay="0.2s">
+                        <!--      <h4><strong>Description</strong></h4>
+                              <p> </p>
+                          </div>-->
+                        <hr>
+                        <!--Share with social media-->
+                    </div>
+                    <!--/.Reviews-->
+
+                </div>
+
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+                <script type="text/javascript" src="{{asset('bundles/app/js/jquery-3.2.1.min.js')}}"></script>
+                <script src="https://cdn.jsdelivr.net/picturefill/2.3.1/picturefill.min.js"></script>
+                <script src="https://cdn.rawgit.com/sachinchoolur/lightgallery.js/master/dist/js/lightgallery.js"></script>
+                <script src="https://cdn.rawgit.com/sachinchoolur/lg-pager.js/master/dist/lg-pager.js"></script>
+                <script src="https://cdn.rawgit.com/sachinchoolur/lg-autoplay.js/master/dist/lg-autoplay.js"></script>
+                <script src="https://cdn.rawgit.com/sachinchoolur/lg-fullscreen.js/master/dist/lg-fullscreen.js"></script>
+                <script src="https://cdn.rawgit.com/sachinchoolur/lg-zoom.js/master/dist/lg-zoom.js"></script>
+                <script src="https://cdn.rawgit.com/sachinchoolur/lg-hash.js/master/dist/lg-hash.js"></script>
+                <script src="https://cdn.rawgit.com/sachinchoolur/lg-share.js/master/dist/lg-share.js"></script>
+                <script>
+                                    lightGallery(document.getElementById('mdb-lightbox-ui'));
+                                    lightGallery(document.getElementById('mdb-lightbox-documents'));
+                </script>    
+                <script type="text/javascript">
+                    $(document).ready(function () {
+
+                        window.setTimeout(function () {
+                            $(".alert").fadeTo(1000, 0).slideUp(1000, function () {
+                                $(this).remove();
+                            });
+                        }, 1000);
+
                     });
-                }, 1000);
-
-            });
-        </script>
+                </script>
 
 
-    {% endblock %}
+            {% endblock %}
 
-    {% block javascripts %}
+            {% block javascripts %}
 
-        <script type="text/javascript">
-            function initMap() {
-                var map = new google.maps.Map(document.getElementById('map'), {
-                    zoom: 14,
+                <script type="text/javascript">
+                    function initMap() {
+                        var map = new google.maps.Map(document.getElementById('map'), {
+                            zoom: 14,
 
-                });
-                var geocoder = new google.maps.Geocoder();
-                geocodeAddress(geocoder, map);
-            }
-
-            function geocodeAddress(geocoder, resultsMap) {
-                var address = '{{event.adresse}},  ' + '{{event.ville}}';
-                var title = '{{event.titre}}';
-                geocoder.geocode({'address': address}, function (results, status) {
-                    if (status === 'OK') {
-                        resultsMap.setCenter(results[0].geometry.location);
-                        var marker = new google.maps.Marker({
-                            map: resultsMap,
-                            position: results[0].geometry.location,
-                            title: '{{event.titre}}',
-                            animation: google.maps.Animation.DROP,
-                            address: '{{event.adresse}}',
-                        })
-                        infoWindow(marker, map, title, address);
-                    } else {
-                        alert('Geocode was not successful for the following reason: ' + status);
+                        });
+                        var geocoder = new google.maps.Geocoder();
+                        geocodeAddress(geocoder, map);
                     }
-                });
-            }
-            var iw;
-            function infoWindow(marker, map, title, address) {
-                google.maps.event.addListener(marker, 'click', function () {
-                    var html = "<div><h3>" + title + "</h3><p>" + address + "<br></div> ";
-                    iw = new google.maps.InfoWindow({
-                        content: html,
-                        maxWidth: 350
-                    });
-                    iw.open(map, marker);
-                });
-                google.maps.event.addListener(marker, 'click', function () {
 
-                    // iw.close();
-                });
+                    function geocodeAddress(geocoder, resultsMap) {
+                        var address = '{{event.adresse}},  ' + '{{event.ville}}';
+                        var title = '{{event.titre}}';
+                        geocoder.geocode({'address': address}, function (results, status) {
+                            if (status === 'OK') {
+                                resultsMap.setCenter(results[0].geometry.location);
+                                var marker = new google.maps.Marker({
+                                    map: resultsMap,
+                                    position: results[0].geometry.location,
+                                    title: '{{event.titre}}',
+                                    animation: google.maps.Animation.DROP,
+                                    address: '{{event.adresse}}',
+                                })
+                                infoWindow(marker, map, title, address);
+                            } else {
+                                alert('Geocode was not successful for the following reason: ' + status);
+                            }
+                        });
+                    }
+                    var iw;
+                    function infoWindow(marker, map, title, address) {
+                        google.maps.event.addListener(marker, 'click', function () {
+                            var html = "<div><h3>" + title + "</h3><p>" + address + "<br></div> ";
+                            iw = new google.maps.InfoWindow({
+                                content: html,
+                                maxWidth: 350
+                            });
+                            iw.open(map, marker);
+                        });
+                        google.maps.event.addListener(marker, 'click', function () {
 
-            }
+                            // iw.close();
+                        });
 
-        </script>
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdI6hYrzRf5QMgKGj8RQsEeLE9bS-1vOQ&callback=initMap">
+                    }
 
-        </script>
+                </script>
+                <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdI6hYrzRf5QMgKGj8RQsEeLE9bS-1vOQ&callback=initMap">
 
-    {% endblock %}
+                </script>
+
+            {% endblock %}

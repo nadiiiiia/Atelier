@@ -32,7 +32,7 @@ class Event {
 
     /**
      * @var string
-     *
+     * @Assert\NotNull()
      * @ORM\Column(name="titre", type="string", length=255)
      */
     private $titre;
@@ -152,18 +152,29 @@ class Event {
      * @ORM\Column(name="images", type="array", nullable=true)
      */
     private $images;
-        /**
-     * @var boolean
+
+    /**
+     * @var int
      *
-     * @ORM\Column(name="validation", type="boolean",nullable=false, options={"default" : 0})
+     * @ORM\Column(name="validation", type="integer",nullable=false, options={"default" : 0})
      */
     private $validation;
+    
+        /**
+     * @var string
+     *
+     * @ORM\Column(name="note", type="text", nullable=true)
+     */
+    private $note;
+
+    
 
     public function __construct() {
 
         $this->dateCreation = new \DateTime("now");  // get current date and time
         $this->credits = new ArrayCollection();
         $this->nbrParticipants = 0;
+        $this->validation = 0;
     }
 
     /**
@@ -614,4 +625,62 @@ class Event {
         return $this->images;
     }
 
+
+    /**
+     * Set validation
+     *
+     * @param boolean $validation
+     *
+     * @return Event
+     */
+    public function setValidation($validation)
+    {
+        $this->validation = $validation;
+
+        return $this;
+    }
+
+    /**
+     * Get validation
+     *
+     * @return boolean
+     */
+    public function getValidation()
+    {
+        return $this->validation;
+    }
+
+    /**
+     * Add order
+     *
+     * @param \AppBundle\Entity\Credit $order
+     *
+     * @return Event
+     */
+    public function addOrder(\AppBundle\Entity\Credit $order)
+    {
+        $this->orders[] = $order;
+
+        return $this;
+    }
+
+    /**
+     * Remove order
+     *
+     * @param \AppBundle\Entity\Credit $order
+     */
+    public function removeOrder(\AppBundle\Entity\Credit $order)
+    {
+        $this->orders->removeElement($order);
+    }
+
+    /**
+     * Get orders
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOrders()
+    {
+        return $this->orders;
+    }
 }

@@ -568,11 +568,11 @@ class EventController extends Controller {
         //$deleteForm = $this->createDeleteForm($event);
         $editForm = $this->createForm('AppBundle\Form\EventType', $event);
         $editForm->handleRequest($request);
-        
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-             
 
-             
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+
+
+
             /*             * ********Traitement des dates**************** */
             // Récupérer les dates de type string 
             $form_date_deb = $editForm->get('dateDebut')->getData();
@@ -582,25 +582,24 @@ class EventController extends Controller {
             $event->setDateFin(new \DateTime($form_date_fin));
 
             /*             * ********Traitement des images**************** */
-          
 
-     $uploaded=$editForm->get('images')->getData();
+
+            $uploaded = $editForm->get('images')->getData();
             if (!empty($uploaded)) {
-            
-            $files =$uploaded;
-            $img = array();
-            foreach ($files as $file) {
-                $fileName = md5(uniqid()) . '.' . $file->guessExtension();
-                $file->move($this->getParameter('image_directory'), $fileName);
-                $img[] = $fileName;
-            }
-            $test=array('nas','hbr');
-          //   dump($test); die;
-            $event->setImages($img);
-            
-           
-            }else{
-                 dump($event); die;
+
+                $files = $uploaded;
+                $img = array();
+                foreach ($files as $file) {
+                    $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+                    $file->move($this->getParameter('image_directory'), $fileName);
+                    $img[] = $fileName;
+                }
+                $test = array('nas', 'hbr');
+                //   dump($test); die;
+                $event->setImages($img);
+            } else {
+                dump($event);
+                die;
             }
 
             $em = $this->getDoctrine()->getManager();
@@ -705,6 +704,70 @@ class EventController extends Controller {
         return $this->render('AppBundle:default:user/editDocs.html.twig', array(
                     'form' => $form->createView(),
         ));
+    }
+
+    /**
+     *
+     * @Route("/event/validation", name="validation")
+     * @param Request $request
+     * @Method({"GET", "POST"})
+     */
+    public function validationAction(Request $request) {
+
+        $eventID = $request->get('eventId');
+        $validation = $request->get('validation');
+        $remarques = $request->get('remarques');
+
+        $em = $this->getDoctrine()->getManager();
+        $event = $em->getRepository('AppBundle:Event')->find($eventID);
+        $event->setValidation($validation);
+        $event->setNote($remarques);
+        $em->persist($event);
+        $em->flush();
+
+        return $this->render('AppBundle:default:event/presentation.html.twig', array(
+                    'event' => $event,
+        ));
+
+//
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            // data is an array with "name", "email", and "message" keys
+//            $data = $form->getData();
+//            $user->setTel($data['tel']);
+//
+//            //la partie d'ajout de CIN
+//            if ($data['cin']) {
+//                $cin = $data['cin'];
+//                $cinName = 'ID_' . md5(uniqid()) . '.' . $cin->guessExtension();
+//                //dump($cin); die;
+//                $cin->move($this->getParameter('profile_directory'), $cinName);
+//                $user->setCin($cinName);
+//            }
+//            // fin ajout cin
+//            //la partie d'ajout de photo de profile
+//            if ($data['photo']) {
+//                $photo = $data['photo'];
+//                $photoName = 'avatar_' . md5(uniqid()) . '.' . $photo->guessExtension();
+//                $photo->move($this->getParameter('profile_directory'), $photoName);
+//                $user->setPhoto($photoName);
+//            }
+//            // fin ajout photo
+//            /*             * ********Traitement des certifs**************** */
+//            if ($data['certifs']) {
+//                $certifs = $data['certifs'];
+//                $cert = array();
+//                foreach ($certifs as $certif) {
+//                    $certifName = 'certif_' . md5(uniqid()) . '.' . $certif->guessExtension();
+//                    $certif->move($this->getParameter('profile_directory'), $certifName);
+//                    $cert[] = $certifName;
+//                }
+//                $user->setCertifs($cert);
+//            }
+//            $em = $this->getDoctrine()->getManager();
+//            $em->persist($user);
+//            $em->flush();
+//            return $this->redirectToRoute('profile_edit_info');
+        // }
     }
 
     /**

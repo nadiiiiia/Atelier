@@ -152,12 +152,22 @@ class Event {
      * @ORM\Column(name="images", type="array", nullable=true)
      */
     private $images;
-        /**
-     * @var boolean
+
+    /**
+     * @var int
      *
-     * @ORM\Column(name="validation", type="boolean",nullable=false, options={"default" : 0})
+     * @ORM\Column(name="validation", type="integer",nullable=false, options={"default" : 0})
      */
     private $validation;
+    
+        /**
+     * @var string
+     *
+     * @ORM\Column(name="note", type="text", nullable=true)
+     */
+    private $note;
+
+    
 
     public function __construct() {
 
@@ -619,7 +629,7 @@ class Event {
     /**
      * Set validation
      *
-     * @param boolean $validation
+     * @param int $validation
      *
      * @return Event
      */
@@ -633,7 +643,7 @@ class Event {
     /**
      * Get validation
      *
-     * @return boolean
+     * @return int
      */
     public function getValidation()
     {
@@ -672,5 +682,29 @@ class Event {
     public function getOrders()
     {
         return $this->orders;
+    }
+
+    /**
+     * Set note
+     *
+     * @param string $note
+     *
+     * @return Event
+     */
+    public function setNote($note)
+    {
+        $this->note = $note;
+
+        return $this;
+    }
+
+    /**
+     * Get note
+     *
+     * @return string
+     */
+    public function getNote()
+    {
+        return $this->note;
     }
 }
