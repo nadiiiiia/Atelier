@@ -184,9 +184,10 @@
             </div>
             <div class="col-lg-12">
                 <br><br>
+
                 <h2>Décision de l'administration </h2>
 
-                {% if is_granted('ROLE_ADMIN') and event.validation == 0 %}
+                {% if  event.validation == 0 %}
                     <br>
 
                     <div class="card">
@@ -206,7 +207,8 @@
                             <form method='post' action='{{path('validation')}}'>
 
 
-<input type="hidden" name="eventId" value="{{event.id}}"
+                                <input type="hidden" name="eventId" value="{{event.id}}">
+                                <input type="hidden" name="orgId" value="{{event.getUtilisateur.getId}}">
                                 <fieldset class="form-check">
                                     <input class="form-check-input" name="validation" type="radio" value="1" id="valider" >
                                     <label class="form-check-label" for="valider">Valider</label>
@@ -231,142 +233,205 @@
                             </form>
                         </div>
 
-                    {% endif %}
-                    {% if is_granted('ROLE_ADMIN') and event.validation == 1 %}
+
+                    {% elseif  event.validation == 1 %}
                         <br>
                         <br>
                         <div class="card">
                             <div class="card-body z-depth-4">
 
-                                <!--Header
-                                <div class="form-header cyan-darken-4-color">
-                                    <h3>
-                                       Accueil</h3>
-                                </div>-->
+                                <table class="table ">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Atelier                     
+                                            </th>
+                                            <th>
+                                                Etat
+                                            </th>
+                                        </tr>
 
-                                <!--Body-->
-                                <br>
-                                <br>
-                                <p>
-                                    Cher utilisateur,
-                                    <br>
-                                    <br>
-                                    Votre demande est en cours de traitement, l'événement sera publié sur le site après son validation.
-                                    Nous vous remercions pour votre confience.
-                                    <br><br>
-                                    Cordialement,<br>
-                                    Equipe l'Atelier
+                                    </thead>
+                                    <tbody >
+
+                                        <tr>
+                                            <td><a href="">{{ event.titre }}</a></td>
 
 
-                                </p>
-                                <button class=" btn btn-primary-atelier btn-sm pull-right waves-effect waves-light" type="button" onclick="location.href = '{{ path('homepage')}}'" >confirmer la décision</button>
-                                <br>
-                                <br>
+                                            {% if event.validation == 0 %}
+                                                <td><i class="fa fa-remove "  style="color: red" aria-hidden="true"></i></td>
+
+                                            {% elseif event.validation == 1 %}
+                                                <td><p style="color:#00C851  ">Validé</p></td>
+                                            {% elseif event.validation == 2 %}
+                                                <td><p style="color:red">Refusé</p></td>
+                                            {% endif %}
+
+
+                                        </tr>
+
+
+                                    </tbody>
+
+                                </table>
+
                             </div>
-                        {% endif %} 
-                    </div>
-                {%endif%}
+
+                        {% elseif event.validation == 2 %}
+                            <br>
+                            <br>
+                            <div class="card">
+                                <div class="card-body z-depth-4">
+
+                                    <table class="table ">
+                                        <thead>
+                                            <tr>
+
+                                                <th>
+                                                    Atelier                     
+                                                </th>
+                                                <th>
+                                                    Etat
+                                                </th>
+
+                                                <th>
+                                                    Remarques
+                                                </th>
+                                                <th>
+                                                    Action
+                                                </th>
+
+                                            </tr>
+
+                                        </thead>
+                                        <tbody >
+
+                                            <tr>
+                                                <td><a href="">{{ event.titre }}</a></td>
 
 
-                {#{%endif%}#}
-                {# gallery#}
+                                                {% if event.validation == 0 %}
+                                                    <td><i class="fa fa-remove "  style="color: red" aria-hidden="true"></i></td>
 
-                <!--Reviews-->
-                <div class="col-lg-12">
-                    <hr>
-                    <div id="map" style="height: 300px"></div>
-                    <div class="media wow fadeIn" data-wow-delay="0.2s">
-                        <!--      <h4><strong>Description</strong></h4>
-                              <p> </p>
-                          </div>-->
+                                                {% elseif event.validation == 1 %}
+                                                    <td><p style="color:#00C851  ">Validé</p></td>
+                                                {% elseif event.validation == 2 %}
+                                                    <td><p style="color:red">Refusé</p></td>
+                                                {% endif %}
+                                                <td>{{event.note}}</td>
+                                                <td> <a class="btn btn-success btn-sm" href="{{ path('mini_valid', { 'id': event.id }) }}"> Valider </a></td>
+                                            </tr>
+
+
+                                        </tbody>
+
+                                    </table>
+                                </div>
+
+                            {% endif %} 
+                        </div>
+                    {%endif%}
+
+
+                    {#      {%endif%}#}
+                    {# gallery#}
+
+                    <!--Reviews-->
+                    <div class="col-lg-12">
                         <hr>
-                        <!--Share with social media-->
+                        <div id="map" style="height: 300px"></div>
+                        <div class="media wow fadeIn" data-wow-delay="0.2s">
+                            <!--      <h4><strong>Description</strong></h4>
+                                  <p> </p>
+                              </div>-->
+                            <hr>
+                            <!--Share with social media-->
+                        </div>
+                        <!--/.Reviews-->
+
                     </div>
-                    <!--/.Reviews-->
 
-                </div>
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+                    <script type="text/javascript" src="{{asset('bundles/app/js/jquery-3.2.1.min.js')}}"></script>
+                    <script src="https://cdn.jsdelivr.net/picturefill/2.3.1/picturefill.min.js"></script>
+                    <script src="https://cdn.rawgit.com/sachinchoolur/lightgallery.js/master/dist/js/lightgallery.js"></script>
+                    <script src="https://cdn.rawgit.com/sachinchoolur/lg-pager.js/master/dist/lg-pager.js"></script>
+                    <script src="https://cdn.rawgit.com/sachinchoolur/lg-autoplay.js/master/dist/lg-autoplay.js"></script>
+                    <script src="https://cdn.rawgit.com/sachinchoolur/lg-fullscreen.js/master/dist/lg-fullscreen.js"></script>
+                    <script src="https://cdn.rawgit.com/sachinchoolur/lg-zoom.js/master/dist/lg-zoom.js"></script>
+                    <script src="https://cdn.rawgit.com/sachinchoolur/lg-hash.js/master/dist/lg-hash.js"></script>
+                    <script src="https://cdn.rawgit.com/sachinchoolur/lg-share.js/master/dist/lg-share.js"></script>
+                    <script>
+                        lightGallery(document.getElementById('mdb-lightbox-ui'));
+                        lightGallery(document.getElementById('mdb-lightbox-documents'));
+                    </script>    
+                    <script type="text/javascript">
+                        $(document).ready(function () {
 
-                <script type="text/javascript" src="{{asset('bundles/app/js/jquery-3.2.1.min.js')}}"></script>
-                <script src="https://cdn.jsdelivr.net/picturefill/2.3.1/picturefill.min.js"></script>
-                <script src="https://cdn.rawgit.com/sachinchoolur/lightgallery.js/master/dist/js/lightgallery.js"></script>
-                <script src="https://cdn.rawgit.com/sachinchoolur/lg-pager.js/master/dist/lg-pager.js"></script>
-                <script src="https://cdn.rawgit.com/sachinchoolur/lg-autoplay.js/master/dist/lg-autoplay.js"></script>
-                <script src="https://cdn.rawgit.com/sachinchoolur/lg-fullscreen.js/master/dist/lg-fullscreen.js"></script>
-                <script src="https://cdn.rawgit.com/sachinchoolur/lg-zoom.js/master/dist/lg-zoom.js"></script>
-                <script src="https://cdn.rawgit.com/sachinchoolur/lg-hash.js/master/dist/lg-hash.js"></script>
-                <script src="https://cdn.rawgit.com/sachinchoolur/lg-share.js/master/dist/lg-share.js"></script>
-                <script>
-                                    lightGallery(document.getElementById('mdb-lightbox-ui'));
-                                    lightGallery(document.getElementById('mdb-lightbox-documents'));
-                </script>    
-                <script type="text/javascript">
-                    $(document).ready(function () {
+                            window.setTimeout(function () {
+                                $(".alert").fadeTo(1000, 0).slideUp(1000, function () {
+                                    $(this).remove();
+                                });
+                            }, 1000);
 
-                        window.setTimeout(function () {
-                            $(".alert").fadeTo(1000, 0).slideUp(1000, function () {
-                                $(this).remove();
+                        });
+                    </script>
+
+
+                {% endblock %}
+
+                {% block javascripts %}
+
+                    <script type="text/javascript">
+                        function initMap() {
+                            var map = new google.maps.Map(document.getElementById('map'), {
+                                zoom: 14,
+
                             });
-                        }, 1000);
+                            var geocoder = new google.maps.Geocoder();
+                            geocodeAddress(geocoder, map);
+                        }
 
-                    });
-                </script>
-
-
-            {% endblock %}
-
-            {% block javascripts %}
-
-                <script type="text/javascript">
-                    function initMap() {
-                        var map = new google.maps.Map(document.getElementById('map'), {
-                            zoom: 14,
-
-                        });
-                        var geocoder = new google.maps.Geocoder();
-                        geocodeAddress(geocoder, map);
-                    }
-
-                    function geocodeAddress(geocoder, resultsMap) {
-                        var address = '{{event.adresse}},  ' + '{{event.ville}}';
-                        var title = '{{event.titre}}';
-                        geocoder.geocode({'address': address}, function (results, status) {
-                            if (status === 'OK') {
-                                resultsMap.setCenter(results[0].geometry.location);
-                                var marker = new google.maps.Marker({
-                                    map: resultsMap,
-                                    position: results[0].geometry.location,
-                                    title: '{{event.titre}}',
-                                    animation: google.maps.Animation.DROP,
-                                    address: '{{event.adresse}}',
-                                })
-                                infoWindow(marker, map, title, address);
-                            } else {
-                                alert('Geocode was not successful for the following reason: ' + status);
-                            }
-                        });
-                    }
-                    var iw;
-                    function infoWindow(marker, map, title, address) {
-                        google.maps.event.addListener(marker, 'click', function () {
-                            var html = "<div><h3>" + title + "</h3><p>" + address + "<br></div> ";
-                            iw = new google.maps.InfoWindow({
-                                content: html,
-                                maxWidth: 350
+                        function geocodeAddress(geocoder, resultsMap) {
+                            var address = '{{event.adresse}},  ' + '{{event.ville}}';
+                            var title = '{{event.titre}}';
+                            geocoder.geocode({'address': address}, function (results, status) {
+                                if (status === 'OK') {
+                                    resultsMap.setCenter(results[0].geometry.location);
+                                    var marker = new google.maps.Marker({
+                                        map: resultsMap,
+                                        position: results[0].geometry.location,
+                                        title: '{{event.titre}}',
+                                        animation: google.maps.Animation.DROP,
+                                        address: '{{event.adresse}}',
+                                    })
+                                    infoWindow(marker, map, title, address);
+                                } else {
+                                    alert('Geocode was not successful for the following reason: ' + status);
+                                }
                             });
-                            iw.open(map, marker);
-                        });
-                        google.maps.event.addListener(marker, 'click', function () {
+                        }
+                        var iw;
+                        function infoWindow(marker, map, title, address) {
+                            google.maps.event.addListener(marker, 'click', function () {
+                                var html = "<div><h3>" + title + "</h3><p>" + address + "<br></div> ";
+                                iw = new google.maps.InfoWindow({
+                                    content: html,
+                                    maxWidth: 350
+                                });
+                                iw.open(map, marker);
+                            });
+                            google.maps.event.addListener(marker, 'click', function () {
 
-                            // iw.close();
-                        });
+                                // iw.close();
+                            });
 
-                    }
+                        }
 
-                </script>
-                <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdI6hYrzRf5QMgKGj8RQsEeLE9bS-1vOQ&callback=initMap">
+                    </script>
+                    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdI6hYrzRf5QMgKGj8RQsEeLE9bS-1vOQ&callback=initMap">
 
-                </script>
+                    </script>
 
-            {% endblock %}
+                {% endblock %}

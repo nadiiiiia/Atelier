@@ -39,13 +39,17 @@
 
                                 <td>{{ event.category.nom }}</td>
                                 {% if event.validation == 0 %}
-                                    <td><i class="fa fa-remove "  style="color: red" aria-hidden="true"></i></td>
+                                    <td><i class="fa fa-hourglass-half"  style="color: orange" aria-hidden="true"></i></td>
 
 
                                     
                                 {% elseif event.validation == 1 %}
                                     <td><i class="fa fa-check "  style="color:#00C851;" aria-hidden="true"></i></td>
-                                    {% endif %}
+                                           
+                                {% elseif event.validation == 2 %}
+                                    <td><i class="fa fa-remove "  style="color:red;" aria-hidden="true"></i></td>
+                                   
+                                {% endif %}
                                <td> <a class="btn btn-success btn-sm" href="{{ path('presentation', { 'id': event.id }) }}"> Consulter </a></td>
 
                             </tr>

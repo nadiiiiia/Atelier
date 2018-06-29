@@ -1,0 +1,14 @@
+
+
+<h2>Etat de votre demande</h2>
+
+<p> Bonjour {{user}} </p>
+
+<p>   Nous avon le plaisir de vous informer que votre demande de création d'un atelier, a été bien acceptée.</p>
+<p>Vous pouvez consulter consulter votre atelier en quliquant sur le lien suivant:</p>
+    <a href="{{ path('presentation', { 'id': event.id }) }}">{{event.titre}}</a>
+<br>
+<br>
+            Cordialement,
+          
+            <br>Equipe l'Atelier

@@ -715,60 +715,59 @@ class EventController extends Controller {
     public function validationAction(Request $request) {
 
         $eventID = $request->get('eventId');
+        $orgId = $request->get('orgId');
         $validation = $request->get('validation');
         $remarques = $request->get('remarques');
 
         $em = $this->getDoctrine()->getManager();
         $event = $em->getRepository('AppBundle:Event')->find($eventID);
+        $user = $em->getRepository('AppBundle:User')->find($orgId);
         $event->setValidation($validation);
         $event->setNote($remarques);
         $em->persist($event);
         $em->flush();
+            $userMail = $user->getEmail();
 
-        return $this->render('AppBundle:default:event/presentation.html.twig', array(
-                    'event' => $event,
+        if ($validation == 1) {
+            $message = \Swift_Message::newInstance()
+                    ->setSubject('Etat de votre demande')
+                    ->setFrom(array('equipelatelier@gmail.com' => 'L\'Atelier'))
+                    ->setTo($userMail)
+                    ->setCharset('utf-8')
+                    ->setContentType('text/html')
+                    ->setBody($this->renderView('AppBundle:default:swiftLayout/notification_valider.html.twig', array('event' => $event, 'user' => $user->getFirstName())));
+        } else if ($validation == 2) {
+            $message = \Swift_Message::newInstance()
+                    ->setSubject('Etat de votre demande')
+                    ->setFrom(array('equipelatelier@gmail.com' => 'L\'Atelier'))
+                    ->setTo($userMail)
+                    ->setCharset('utf-8')
+                    ->setContentType('text/html')
+                    ->setBody($this->renderView('AppBundle:default:swiftLayout/notification_refuser.html.twig', array('event' => $event, 'user' => $user->getFirstName())));
+        }
+        $this->get('mailer')->send($message);
+
+        return $this->redirectToRoute('presentation', array(
+                    'id' => $eventID,
         ));
-
-//
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            // data is an array with "name", "email", and "message" keys
-//            $data = $form->getData();
-//            $user->setTel($data['tel']);
-//
-//            //la partie d'ajout de CIN
-//            if ($data['cin']) {
-//                $cin = $data['cin'];
-//                $cinName = 'ID_' . md5(uniqid()) . '.' . $cin->guessExtension();
-//                //dump($cin); die;
-//                $cin->move($this->getParameter('profile_directory'), $cinName);
-//                $user->setCin($cinName);
-//            }
-//            // fin ajout cin
-//            //la partie d'ajout de photo de profile
-//            if ($data['photo']) {
-//                $photo = $data['photo'];
-//                $photoName = 'avatar_' . md5(uniqid()) . '.' . $photo->guessExtension();
-//                $photo->move($this->getParameter('profile_directory'), $photoName);
-//                $user->setPhoto($photoName);
-//            }
-//            // fin ajout photo
-//            /*             * ********Traitement des certifs**************** */
-//            if ($data['certifs']) {
-//                $certifs = $data['certifs'];
-//                $cert = array();
-//                foreach ($certifs as $certif) {
-//                    $certifName = 'certif_' . md5(uniqid()) . '.' . $certif->guessExtension();
-//                    $certif->move($this->getParameter('profile_directory'), $certifName);
-//                    $cert[] = $certifName;
-//                }
-//                $user->setCertifs($cert);
-//            }
-//            $em = $this->getDoctrine()->getManager();
-//            $em->persist($user);
-//            $em->flush();
-//            return $this->redirectToRoute('profile_edit_info');
-        // }
     }
+        /**
+     * 
+     * @Route("/mini_valid/{id}", name="mini_valid")
+     * @param Request $request
+     * 
+     */
+    public function miniValidAction(Request $request, $id) {
+       $em = $this->getDoctrine()->getManager();
+        $event = $em->getRepository('AppBundle:Event')->find($id);
+            $event->setValidation(1);
+        $em->persist($event);
+        $em->flush();
+       return $this->redirectToRoute('presentation', array(
+                    'id' => $id,
+            ));
+    }
+
 
     /**
      * 
