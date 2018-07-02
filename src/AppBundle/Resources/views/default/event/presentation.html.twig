@@ -162,11 +162,6 @@
 
 
                 <ul id="mdb-lightbox-documents" class="list-unstyled row">
-                    <li class="col-xs-6 col-sm-4 col-md-3" data-responsive="{{asset('uploads/profiles/' ~ event.getUtilisateur.getPhoto)}}" data-src="{{asset('uploads/profiles/' ~ event.getUtilisateur.getPhoto)}}" data-sub-html="<h4>Photo de profile</h4>" data-pinterest-text="Pin it1" data-tweet-text="share on twitter 1">
-                        <a href="">
-                            <img class="img-responsive" src="{{asset('uploads/profiles/' ~ event.getUtilisateur.getPhoto)}}" style="width:282px;height:188px;" alt="Thumb-1">
-                        </a>
-                    </li>
                     <li class="col-xs-6 col-sm-4 col-md-3" data-responsive="{{asset('uploads/profiles/' ~ event.getUtilisateur.getCin)}}" data-src="{{asset('uploads/profiles/' ~ event.getUtilisateur.getCin)}}" data-sub-html="<h4>CIN</h4>" data-pinterest-text="Pin it1" data-tweet-text="share on twitter 1">
                         <a href="">
                             <img class="img-responsive" src="{{asset('uploads/profiles/' ~ event.getUtilisateur.getCin)}}" style="width:282px;height:188px;" alt="Thumb-1">
@@ -210,7 +205,7 @@
                                 <input type="hidden" name="eventId" value="{{event.id}}">
                                 <input type="hidden" name="orgId" value="{{event.getUtilisateur.getId}}">
                                 <fieldset class="form-check">
-                                    <input class="form-check-input" name="validation" type="radio" value="1" id="valider" >
+                                    <input class="form-check-input" name="validation" type="radio" value="1" id="valider" required  >
                                     <label class="form-check-label" for="valider">Valider</label>
                                 </fieldset>
 

@@ -23,6 +23,8 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Filesystem\Filesystem;
 use AppBundle\Entity\Event;
 use AppBundle\Entity\Order;
@@ -33,6 +35,10 @@ use AppBundle\Entity\Order;
  * 
  */
 class EventController extends Controller {
+
+    const VALIDATION_EN_COURS = 0;
+    const VALIDATION_VALIDATE = 1;
+    const VALIDATION_NONVALIDER = 2;
 
     /**
      * @Route("/", name="homepage")
@@ -265,6 +271,8 @@ class EventController extends Controller {
         $form = $this->createFormBuilder()
                 ->add('tel', NumberType::class, array(
                     'attr' => array('class' => 'form-control'),
+                    'invalid_message' => 'Le numéro de téléphone doit être au moins de %num% chiffres',
+                    'invalid_message_parameters' => array('%num%' => 8),
                     'label' => 'Numéro de téléphone *'
                 ))
                 ->add('cin', FileType::class, array('attr' => array(
@@ -638,9 +646,13 @@ class EventController extends Controller {
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $tel = $user->getTel();
         $form = $this->createFormBuilder()
-                ->add('tel', NumberType::class, array(
+                ->add('tel', NumberType ::class, array(
                     'attr' => array('class' => 'form-control',
-                        'value' => $tel),
+                        'value' => $tel,
+                        'minlength' => '8'
+                    ),
+                    'invalid_message' => 'Le numéro de téléphone doit être au moins de %num% chiffres',
+                    'invalid_message_parameters' => array('%num%' => 8),
                     'label' => 'Numéro de téléphone '
                 ))
                 ->add('cin', FileType::class, array('attr' => array(
@@ -726,9 +738,9 @@ class EventController extends Controller {
         $event->setNote($remarques);
         $em->persist($event);
         $em->flush();
-            $userMail = $user->getEmail();
+        $userMail = $user->getEmail();
 
-        if ($validation == 1) {
+        if ($validation == self::VALIDATION_VALIDATE) {
             $message = \Swift_Message::newInstance()
                     ->setSubject('Etat de votre demande')
                     ->setFrom(array('equipelatelier@gmail.com' => 'L\'Atelier'))
@@ -736,7 +748,7 @@ class EventController extends Controller {
                     ->setCharset('utf-8')
                     ->setContentType('text/html')
                     ->setBody($this->renderView('AppBundle:default:swiftLayout/notification_valider.html.twig', array('event' => $event, 'user' => $user->getFirstName())));
-        } else if ($validation == 2) {
+        } else if ($validation == self::VALIDATION_NONVALIDER) {
             $message = \Swift_Message::newInstance()
                     ->setSubject('Etat de votre demande')
                     ->setFrom(array('equipelatelier@gmail.com' => 'L\'Atelier'))
@@ -751,23 +763,23 @@ class EventController extends Controller {
                     'id' => $eventID,
         ));
     }
-        /**
+
+    /**
      * 
      * @Route("/mini_valid/{id}", name="mini_valid")
      * @param Request $request
      * 
      */
     public function miniValidAction(Request $request, $id) {
-       $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         $event = $em->getRepository('AppBundle:Event')->find($id);
-            $event->setValidation(1);
+        $event->setValidation(self::VALIDATION_VALIDATE);
         $em->persist($event);
         $em->flush();
-       return $this->redirectToRoute('presentation', array(
+        return $this->redirectToRoute('presentation', array(
                     'id' => $id,
-            ));
+        ));
     }
-
 
     /**
      * 
