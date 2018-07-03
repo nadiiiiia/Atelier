@@ -73,9 +73,11 @@
 
             <!--First row-->
             <div class="row wow fadeIn" data-wow-delay="0.4s">
+                {% if is_granted('ROLE_ADMIN')%}
                 <div class="col-md-12">
                     <button class=" btn btn-primary-atelier btn-sm pull-right waves-effect waves-light" type="button" onclick="location.href = '{{ path('admin_events_index')}}'" id="list_events">Liste des Ateliers</button>
                 </div>
+                {%endif%}
                 <div class="col-md-12">
 
                     <!--Product-->

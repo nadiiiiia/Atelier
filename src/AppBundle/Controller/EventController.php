@@ -25,6 +25,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Filesystem\Filesystem;
 use AppBundle\Entity\Event;
 use AppBundle\Entity\Order;
@@ -606,8 +607,8 @@ class EventController extends Controller {
                 //   dump($test); die;
                 $event->setImages($img);
             } else {
-                dump($event);
-                die;
+//                dump($event);
+//                die;
             }
 
             $em = $this->getDoctrine()->getManager();
@@ -645,6 +646,7 @@ class EventController extends Controller {
 
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $tel = $user->getTel();
+        $adresse = $user->getAdresse();
         $form = $this->createFormBuilder()
                 ->add('tel', NumberType ::class, array(
                     'attr' => array('class' => 'form-control',
@@ -671,14 +673,22 @@ class EventController extends Controller {
                     'multiple' => TRUE,
                     'label' => 'Certificats'
                 ))
+                ->add('adresse', TextType::class, array(
+                    'attr' => array('class' => 'form-control',
+                                        'value' => $adresse),
+          
+                    'label' => 'Adresse'
+                ))
                 ->getForm();
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             // data is an array with "name", "email", and "message" keys
             $data = $form->getData();
+            // dump($data); die ;
             $user->setTel($data['tel']);
-
+            $user->setAdresse($data['adresse']);
+            $update = 0;
             //la partie d'ajout de CIN
             if ($data['cin']) {
                 $cin = $data['cin'];
@@ -686,6 +696,7 @@ class EventController extends Controller {
                 //dump($cin); die;
                 $cin->move($this->getParameter('profile_directory'), $cinName);
                 $user->setCin($cinName);
+                $update++;
             }
             // fin ajout cin
             //la partie d'ajout de photo de profile
@@ -706,10 +717,19 @@ class EventController extends Controller {
                     $cert[] = $certifName;
                 }
                 $user->setCertifs($cert);
+                $update++;
+            }
+
+            if ($update != 0) {
+                // si les certifs ou cin sont nodifiés alors rendre les events refusés ==> en cours
+                $userId = $user->getId();
+                $this->resetValidationEvents($userId);
             }
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
+
+
             return $this->redirectToRoute('profile_edit_info');
         }
 
@@ -779,6 +799,15 @@ class EventController extends Controller {
         return $this->redirectToRoute('presentation', array(
                     'id' => $id,
         ));
+    }
+
+    public function resetValidationEvents($userId) {
+        $em = $this->getDoctrine()->getManager();
+        $findEvents = $em->getRepository('AppBundle:Event')->findRefusedByUser($userId);
+
+        foreach ($findEvents as $event) {
+            $event->setValidation(self::VALIDATION_EN_COURS);
+        }
     }
 
     /**

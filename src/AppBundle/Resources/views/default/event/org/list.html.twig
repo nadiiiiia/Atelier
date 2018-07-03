@@ -38,6 +38,7 @@
                                 <td><a href="{{ path('presentation', { 'id': event.id }) }}">{{ event.titre }}</a></td>
 
                                 <td>{{ event.category.nom }}</td>
+                                
                                 {% if event.validation == 0 %}
                                     <td><p style="color:orange">En Cours</p></td>
 
@@ -46,6 +47,9 @@
 
                                 {% elseif event.validation == 1 %}
                            <td> <p style="color:#00C851;">Validé</p></td>
+                           <td>                           </td>
+                                                           {% elseif event.validation == 2 %}
+                           <td> <p style="color:red;">Refusé</p></td>
                            <td>                           </td>
                                     {% endif %}
                                 </td>

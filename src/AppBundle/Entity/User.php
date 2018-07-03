@@ -72,7 +72,12 @@ class User extends BaseUser {
      *
      * @ORM\Column(type="array", name="certifs", nullable=true)
      */
-    private $certifs;
+    protected $certifs;
+    
+            /**
+     * @ORM\Column(type="string", name="adresse", nullable=true)
+     */
+    protected $adresse;
 
 
 
@@ -338,5 +343,29 @@ class User extends BaseUser {
     public function getDateNaissance()
     {
         return $this->date_naissance;
+    }
+
+    /**
+     * Set adresse
+     *
+     * @param string $adresse
+     *
+     * @return User
+     */
+    public function setAdresse($adresse)
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    /**
+     * Get adresse
+     *
+     * @return string
+     */
+    public function getAdresse()
+    {
+        return $this->adresse;
     }
 }

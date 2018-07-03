@@ -60,7 +60,7 @@ class MyFOSUBProvider extends FOSUBUserProvider
             /** @var User $user */
             $user = $this->userManager->createUser();
             $nick = $username;
- $user->setFirstname($response->getFirstName());
+            $user->setFirstname($response->getFirstName());
             $user->setLastname($response->getLastName());
             $user->setLastLogin(new \DateTime());
             $user->setEnabled(true);
@@ -84,6 +84,7 @@ class MyFOSUBProvider extends FOSUBUserProvider
         $user->setEmail($response->getEmail());
         $user->setFirstname($response->getFirstName());
         $user->setLastname($response->getLastName());
+        //$user->setPhoto($response->getProfilePicture());
         
 
         $this->userManager->updateUser($user);
