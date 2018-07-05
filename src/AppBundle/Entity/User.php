@@ -92,6 +92,7 @@ class User extends BaseUser {
         parent::__construct();
         $this->events = new ArrayCollection();
         $this->photo = 'login-avatar.jpg';
+        $this->certifs = NULL;
     }
 
     /**

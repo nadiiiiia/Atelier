@@ -21,6 +21,7 @@
         "doctrine/orm": "^2.5",
         "friendsofsymfony/jsrouting-bundle": "^2.2",
         "friendsofsymfony/user-bundle": "~2.0",
+        "google/recaptcha": "~1.1",
         "hwi/oauth-bundle": "^0.5.3",
         "incenteev/composer-parameter-handler": "^2.0",
         "jms/payment-core-bundle": "^1.3",

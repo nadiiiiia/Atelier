@@ -25,6 +25,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use FOS\UserBundle\Controller\RegistrationController as BaseController;
+use ReCaptcha\ReCaptcha; // Include the recaptcha lib
 
 /**
  * Controller managing the registration.
@@ -32,7 +34,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  * @author Christophe Coevoet <stof@notk.org>
  */
-class RegistrationController extends Controller {
+class RegistrationController extends BaseController {
 
     /**
      * @param Request $request
@@ -52,8 +54,8 @@ class RegistrationController extends Controller {
 
         $user->setEnabled(true);
         //$user->setRoles(array(User::ROLE_ORGANIZER));
-        dump($user);
-        die;
+//        dump($user);
+//        die;
 
 
 
@@ -68,10 +70,29 @@ class RegistrationController extends Controller {
         $form->setData($user);
 
         $form->handleRequest($request);
-
+//
         if ($form->isSubmitted()) {
+
             if ($form->isValid()) {
-                $event = new FormEvent($form, $request);
+                $recaptcha = new ReCaptcha('6LdFFmIUAAAAAAbV6j7zHIpKfycdZ96tH-2RrwC8');
+                $resp = $recaptcha->verify($request->request->get('g-recaptcha-response'), $request->getClientIp());
+
+                if (!$resp->isSuccess()) {
+                    // Do something if the submit wasn't valid ! Use the message to show something
+                    $message = "Le reCAPTCHA n'a pas été entré correctement. Essayez à nouveau.";
+                    $this->addFlash(
+                            'error', $message
+                    );
+                } else {
+
+                    $birthDay = $form->get('date_naissance')->getData();
+                    $user->setDateNaissance(new \DateTime($birthDay));
+                    $event = new FormEvent($form, $request);
+
+                    $birthDay = $form->get('date_naissance')->getData();
+                 
+                    $user->setDateNaissance(new \DateTime($birthDay));
+                    $event = new FormEvent($form, $request);
 
 //                $photo = $user->getPhoto();
 //
@@ -80,29 +101,30 @@ class RegistrationController extends Controller {
 //
 //                $user->setPhoto($photo);
 
-                $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
+                    $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
 
 
 
 
-                $userManager->updateUser($user);
+                    $userManager->updateUser($user);
 
 
-                if (null === $response = $event->getResponse()) {
-                    $url = $this->generateUrl('fos_user_registration_confirmed');
-                    $response = new RedirectResponse($url);
+                    if (null === $response = $event->getResponse()) {
+                        $url = $this->generateUrl('fos_user_registration_confirmed');
+                        $response = new RedirectResponse($url);
+                    }
+
+                    $dispatcher->dispatch(FOSUserEvents::REGISTRATION_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
+
+                    return $response;
                 }
 
-                $dispatcher->dispatch(FOSUserEvents::REGISTRATION_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
+                $event = new FormEvent($form, $request);
+                $dispatcher->dispatch(FOSUserEvents::REGISTRATION_FAILURE, $event);
 
-                return $response;
-            }
-
-            $event = new FormEvent($form, $request);
-            $dispatcher->dispatch(FOSUserEvents::REGISTRATION_FAILURE, $event);
-
-            if (null !== $response = $event->getResponse()) {
-                return $response;
+                if (null !== $response = $event->getResponse()) {
+                    return $response;
+                }
             }
         }
 

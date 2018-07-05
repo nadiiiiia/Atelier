@@ -29,6 +29,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Filesystem\Filesystem;
 use AppBundle\Entity\Event;
 use AppBundle\Entity\Order;
+use ReCaptcha\ReCaptcha; // Include the recaptcha lib
 
 /**
  * Event controller.
@@ -56,39 +57,39 @@ class EventController extends Controller {
                 $findEvents, $request->query->getInt('page', 1)/* page number */, 6 /* limit per page */
         );
 
-       // $events_json = 0; //$this->get('jms_serializer')->serialize($findEvents, 'json');
+        // $events_json = 0; //$this->get('jms_serializer')->serialize($findEvents, 'json');
         $filter_name = 'Tous les Ateliers';
-         $all_events = array();
-                foreach ($findEvents as $event) {
-                $event_array = array();
-                $event_array['id'] = $event->getId();
-                
-                $event_array['category'] = $event->getCategory()->getNom();
-                $event_array['titre'] = $event->getTitre();
-                $event_array['desc'] = $event->getDescription();
-                $event_array['dateDeb'] = $event->getDateDebut()->format('d/m/Y');
-                $event_array['heureDeb'] = $event->getDateDebut()->format('H:i');
-                $event_array['dateFin'] = $event->getDateFin()->format('d/m/Y');
-                $event_array['heureFin'] = $event->getDateFin()->format('H:i');
-                $event_array['prix'] = $event->getPrix();
-                $event_array['nbrMax'] = $event->getNbrMax();
-                $event_array['nbrParticipants'] = $event->getNbrParticipants();
-                $event_array['adresse'] = $event->getAdresse();
-                $event_array['codeP'] = $event->getCodeP();
-                $event_array['lng'] = $event->getLng();
-                $event_array['lat'] = $event->getLat();
-                $event_array['ville'] = $event->getVille()->getNom();
-                $event_array['region'] = $event->getRegion()->getNom();
-                $event_array['classe'] = $event->getDepartement()->getNom();
-                $event_array['validation'] = $event->getValidation();
-                $event_array['note'] = $event->getNote();
-                $event_array['images'] = $event->getImages();
-                
-                $all_events [] = $event_array;
-            }
-            $events_json =  json_encode($all_events);
-           
-       // dump($events_json);die;
+        $all_events = array();
+        foreach ($findEvents as $event) {
+            $event_array = array();
+            $event_array['id'] = $event->getId();
+
+            $event_array['category'] = $event->getCategory()->getNom();
+            $event_array['titre'] = $event->getTitre();
+            $event_array['desc'] = $event->getDescription();
+            $event_array['dateDeb'] = $event->getDateDebut()->format('d/m/Y');
+            $event_array['heureDeb'] = $event->getDateDebut()->format('H:i');
+            $event_array['dateFin'] = $event->getDateFin()->format('d/m/Y');
+            $event_array['heureFin'] = $event->getDateFin()->format('H:i');
+            $event_array['prix'] = $event->getPrix();
+            $event_array['nbrMax'] = $event->getNbrMax();
+            $event_array['nbrParticipants'] = $event->getNbrParticipants();
+            $event_array['adresse'] = $event->getAdresse();
+            $event_array['codeP'] = $event->getCodeP();
+            $event_array['lng'] = $event->getLng();
+            $event_array['lat'] = $event->getLat();
+            $event_array['ville'] = $event->getVille()->getNom();
+            $event_array['region'] = $event->getRegion()->getNom();
+            $event_array['classe'] = $event->getDepartement()->getNom();
+            $event_array['validation'] = $event->getValidation();
+            $event_array['note'] = $event->getNote();
+            $event_array['images'] = $event->getImages();
+
+            $all_events [] = $event_array;
+        }
+        $events_json = json_encode($all_events);
+
+        // dump($events_json);die;
         return $this->render('AppBundle:default:event/accueil.html.twig', array('events' => $pagination, 'filter_name' => $filter_name, 'events_json' => $events_json));
     }
 
@@ -706,62 +707,63 @@ class EventController extends Controller {
                 ))
                 ->add('adresse', TextType::class, array(
                     'attr' => array('class' => 'form-control',
-                                        'value' => $adresse),
-          
+                        'value' => $adresse),
                     'label' => 'Adresse'
                 ))
                 ->getForm();
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // data is an array with "name", "email", and "message" keys
-            $data = $form->getData();
-            // dump($data); die ;
-            $user->setTel($data['tel']);
-            $user->setAdresse($data['adresse']);
-            $update = 0;
-            //la partie d'ajout de CIN
-            if ($data['cin']) {
-                $cin = $data['cin'];
-                $cinName = 'ID_' . md5(uniqid()) . '.' . $cin->guessExtension();
-                //dump($cin); die;
-                $cin->move($this->getParameter('profile_directory'), $cinName);
-                $user->setCin($cinName);
-                $update++;
-            }
-            // fin ajout cin
-            //la partie d'ajout de photo de profile
-            if ($data['photo']) {
-                $photo = $data['photo'];
-                $photoName = 'avatar_' . md5(uniqid()) . '.' . $photo->guessExtension();
-                $photo->move($this->getParameter('profile_directory'), $photoName);
-                $user->setPhoto($photoName);
-            }
-            // fin ajout photo
-            /*             * ********Traitement des certifs**************** */
-            if ($data['certifs']) {
-                $certifs = $data['certifs'];
-                $cert = array();
-                foreach ($certifs as $certif) {
-                    $certifName = 'certif_' . md5(uniqid()) . '.' . $certif->guessExtension();
-                    $certif->move($this->getParameter('profile_directory'), $certifName);
-                    $cert[] = $certifName;
+        
+                // data is an array with "name", "email", and "message" keys
+                $data = $form->getData();
+                // dump($data); die ;
+                $user->setTel($data['tel']);
+                $user->setAdresse($data['adresse']);
+                $update = 0;
+                //la partie d'ajout de CIN
+                if ($data['cin']) {
+                    $cin = $data['cin'];
+                    $cinName = 'ID_' . md5(uniqid()) . '.' . $cin->guessExtension();
+                    //dump($cin); die;
+                    $cin->move($this->getParameter('profile_directory'), $cinName);
+                    $user->setCin($cinName);
+                    $update++;
                 }
-                $user->setCertifs($cert);
-                $update++;
-            }
+                // fin ajout cin
+                //la partie d'ajout de photo de profile
+                if ($data['photo']) {
+                    $photo = $data['photo'];
+                    $photoName = 'avatar_' . md5(uniqid()) . '.' . $photo->guessExtension();
+                    $photo->move($this->getParameter('profile_directory'), $photoName);
+                    $user->setPhoto($photoName);
+                }
+                // fin ajout photo
+                /*                 * ********Traitement des certifs**************** */
+                if ($data['certifs']) {
+                    $certifs = $data['certifs'];
+                    $cert = array();
+                    foreach ($certifs as $certif) {
+                        $certifName = 'certif_' . md5(uniqid()) . '.' . $certif->guessExtension();
+                        $certif->move($this->getParameter('profile_directory'), $certifName);
+                        $cert[] = $certifName;
+                    }
+                    $user->setCertifs($cert);
+                    $update++;
+                }
 
-            if ($update != 0) {
-                // si les certifs ou cin sont nodifiés alors rendre les events refusés ==> en cours
-                $userId = $user->getId();
-                $this->resetValidationEvents($userId);
-            }
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
+                if ($update != 0) {
+                    // si les certifs ou cin sont nodifiés alors rendre les events refusés ==> en cours
+                    $userId = $user->getId();
+                    $this->resetValidationEvents($userId);
+                }
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->flush();
 
 
-            return $this->redirectToRoute('profile_edit_info');
+                return $this->redirectToRoute('profile_edit_info');
+            
         }
 
         return $this->render('AppBundle:default:user/editDocs.html.twig', array(
