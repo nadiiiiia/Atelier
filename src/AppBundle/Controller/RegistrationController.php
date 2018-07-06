@@ -74,7 +74,9 @@ class RegistrationController extends BaseController {
         if ($form->isSubmitted()) {
 
             if ($form->isValid()) {
-                $recaptcha = new ReCaptcha('6LdFFmIUAAAAAAbV6j7zHIpKfycdZ96tH-2RrwC8');
+                $key = $this->container->getParameter('captcha_server_key');
+  
+                $recaptcha = new ReCaptcha($key);
                 $resp = $recaptcha->verify($request->request->get('g-recaptcha-response'), $request->getClientIp());
 
                 if (!$resp->isSuccess()) {

@@ -29,7 +29,7 @@
 
         <link href='http://fonts.googleapis.com/css?family=Roboto:400,500' rel='stylesheet' type='text/css'>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        
+
         <script src='https://www.google.com/recaptcha/api.js'></script>
 
 
@@ -47,6 +47,13 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav mr-auto">
+                            <li class="nav-item btn-group">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Classes
+                                </a>
+                                <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+                                    {{ render(controller('AppBundle:Departement:menu')) }}
+                                </div>
+                            </li>
 
                             <li class="nav-item btn-group">
                                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Catégories
@@ -62,13 +69,7 @@
                                     {{ render(controller('AppBundle:Region:menu')) }}
                                 </div>
                             </li>
-                            <li class="nav-item btn-group">
-                                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Départements
-                                </a>
-                                <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
-                                    {{ render(controller('AppBundle:Departement:menu')) }}
-                                </div>
-                            </li>
+
 
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Comment ça marche ?</a>
@@ -79,17 +80,17 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Contacts</a>
                             </li>
-                
+
 
                             {% if is_granted('ROLE_ORGANIZER') %}
-                                        <li class="nav-item btn-group">
-                                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mes Ateliers
-                                </a>
-                                <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
-                                   <a class="dropdown-item" href="{{ path('event_new') }}">Nouveau Atelier</a>
-                                     <a class="dropdown-item" href="{{ path('org_events_index', {'orgId': app.user.getId}) }}">Liste des Ateliers</a>
-                                </div>
-                            </li> 
+                                <li class="nav-item btn-group">
+                                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mes Ateliers
+                                    </a>
+                                    <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+                                        <a class="dropdown-item" href="{{ path('event_new') }}">Nouveau Atelier</a>
+                                        <a class="dropdown-item" href="{{ path('org_events_index', {'orgId': app.user.getId}) }}">Liste des Ateliers</a>
+                                    </div>
+                                </li> 
 
                             {% endif %}
 
@@ -312,7 +313,7 @@
                     cancelText: 'ANNULER',
                     nowButton: false,
                     switchOnClick: true,
-                   // minDate: new Date('2018-6-22'),
+                    // minDate: new Date('2018-6-22'),
                     maxDate: '+30Y',
                 });
         $('.birth-day-fr').bootstrapMaterialDatePicker

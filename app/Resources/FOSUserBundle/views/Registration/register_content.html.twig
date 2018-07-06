@@ -99,7 +99,7 @@
                 {%  include 'AppBundle:default:modals/cguModal.html.twig' %}
 
                 <br>
-                <div align="center" class="g-recaptcha" data-sitekey="6LdFFmIUAAAAAMo0ZpohpKWHoueLjYfejwLdxkhp"></div>
+                <div align="center" class="g-recaptcha" data-sitekey="{{captcha_site_key}}"></div>
                 {% for message in app.flashes('error') %}
                     <div align="center" class="flash-notice" style="color:red;">
                         {{ message }}

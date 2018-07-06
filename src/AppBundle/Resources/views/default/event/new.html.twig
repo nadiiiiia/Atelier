@@ -21,14 +21,17 @@
                     <br>
                     <!--Body-->
 
+                    <div class="md-form"> 
+                        {{form_widget(form.departement) }}
+                        <span class="error-msg"></span>
+                    </div>
                     <div class="md-form">
-
                         {{form_widget(form.category) }}
                         <span class="error-msg"></span>
                     </div>
 
                     <div class="md-form">
-                         {{ form_label(form.titre) }}
+                        {{ form_label(form.titre) }}
                         {{form_widget(form.titre) }}
                         <span class="error-msg"></span>
                     </div>
@@ -40,18 +43,18 @@
                     </div>
 
                     <div class="md-form ">
-                         {{ form_label(form.dateDebut) }}
+                        {{ form_label(form.dateDebut) }}
                         {{form_widget(form.dateDebut) }}
                         <span class="error-msg"></span>
                     </div>
                     <div class="md-form">
-                          {{ form_label(form.dateFin) }}
+                        {{ form_label(form.dateFin) }}
                         {{form_widget(form.dateFin) }}
                         <span class="error-msg"></span>
                     </div>
 
                     <div class="md-form">
-                         {{ form_label(form.prix) }}
+                        {{ form_label(form.prix) }}
                         {{form_widget(form.prix) }}
                         <span class="error-msg"></span>
                     </div>
@@ -68,25 +71,23 @@
                     </div>
 
                     <div class="md-form"> 
-                         {{ form_label(form.codeP) }}
+                        {{ form_label(form.codeP) }}
                         {{form_widget(form.codeP) }}
+                        <span class="error-msg"></span>
+                    </div>
+
+                    <div class="md-form"> 
+                        {{form_widget(form.region) }}
                         <span class="error-msg"></span>
                     </div>
                     <div class="md-form"> 
                         {{form_widget(form.ville) }}
                         <span class="error-msg"></span>
                     </div>
+
                     <div class="md-form"> 
-                        {{form_widget(form.region) }}
-                        <span class="error-msg"></span>
-                    </div>
-                    <div class="md-form"> 
-                        {{form_widget(form.departement) }}
-                        <span class="error-msg"></span>
-                    </div>
-                    <div class="md-form"> 
-                         {{ form_label(form.images) }}
-                         <br><br>
+                        {{ form_label(form.images) }}
+                        <br><br>
                         {{form_widget(form.images) }}
                         <span class="error-msg"></span>
                     </div>
@@ -125,7 +126,7 @@
     <script type="text/javascript">
 
         //   document.querySelector('#category').required = true;
-       // document.querySelector('#description').required = false;
+        // document.querySelector('#description').required = false;
         google.maps.event.addDomListener(window, 'load', intilize);
         function intilize() {
             var autocomplete = new google.maps.places.Autocomplete(document.getElementById("adresse"));
@@ -133,36 +134,36 @@
             google.maps.event.addListener(autocomplete, 'place_changed', function () {
 
                 var place = autocomplete.getPlace();
-                
-                var lat= place.geometry.location.lat();
+
+                var lat = place.geometry.location.lat();
                 var lng = place.geometry.location.lng();
-                document.getElementById("lng").value = lng ;
-                 document.getElementById("lat").value = lat ;
-                
-        });
-    }
-      {# document.getElementById("tri_btn").style.display = 'none';#}
-        
-{#      //   $("#submit_event").click(function () {
-        var date_debut = document.getElementById("dateDebut").value;
-         alert(date_debut);
-        var date_fin = format_date($("#dateFin").val());
-        if (!validateDate(date_debut, date_fin)) {
-            alert('error !!')
-            $("#dateDebut").addClass("has-error").after($(".error-msg").css('display', 'block'));
-            return;
-        } else {
-            $("#dateDebut").removeClass("has-error").after($(".error-msg").css('display', 'none'));
+                document.getElementById("lng").value = lng;
+                document.getElementById("lat").value = lat;
+
+            });
         }
-     //    });
+        {# document.getElementById("tri_btn").style.display = 'none';#}
+
+        {#      //   $("#submit_event").click(function () {
+                var date_debut = document.getElementById("dateDebut").value;
+                 alert(date_debut);
+                var date_fin = format_date($("#dateFin").val());
+                if (!validateDate(date_debut, date_fin)) {
+                    alert('error !!')
+                    $("#dateDebut").addClass("has-error").after($(".error-msg").css('display', 'block'));
+                    return;
+                } else {
+                    $("#dateDebut").removeClass("has-error").after($(".error-msg").css('display', 'none'));
+                }
+             //    });
          
-             function validateDate(dateDebut, dateFin) {
-        if (dateDebut > dateFin) {
-            return false;
-        } else {
-            return true;
-        }
-    }#}
+                     function validateDate(dateDebut, dateFin) {
+                if (dateDebut > dateFin) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }#}
 
     </script>
 

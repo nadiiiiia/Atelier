@@ -22,7 +22,12 @@ class EventType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                
+                ->add('departement', EntityType::class, array(
+                    'class' => 'AppBundle:Departement',
+                    'placeholder' => 'Choisir une classe',
+                    'choice_label' => 'nom',
+                    'attr' => ['class' => 'mdb-select select-dropdown']
+                ))
                 ->add('category', EntityType::class, array(
                     // looks for choices from this entity
                     'class' => 'AppBundle:Category',
@@ -67,9 +72,7 @@ class EventType extends AbstractType {
                     'label' => 'Adresse'
                 ))
                 ->add('lng', HiddenType::class)
-                
                 ->add('lat', HiddenType::class)
-                
                 ->add('codeP', TextType::class, array(
                     'attr' => array('class' => 'form-control'),
                     'label' => 'Code Postal'
@@ -88,18 +91,11 @@ class EventType extends AbstractType {
                     'choice_label' => 'nom',
                     'attr' => ['class' => 'mdb-select select-dropdown']
                 ))
-                ->add('departement', EntityType::class, array(
-                    'class' => 'AppBundle:Departement',
-                    'placeholder' => 'Choisir un departement',
-                    'choice_label' => 'nom',
-                    'attr' => ['class' => 'mdb-select select-dropdown']
-                ))
-
                 ->add('images', FileType::class, array('attr' => array(
-                    'accept' => 'image/*' // pour n'accepter que les images
+                        'accept' => 'image/*' // pour n'accepter que les images
                     ),
                     'multiple' => true,
-                     'label' => 'Images de l\'événement'
+                    'label' => 'Images de l\'événement'
         ));
     }
 

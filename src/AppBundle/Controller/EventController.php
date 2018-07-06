@@ -85,11 +85,11 @@ class EventController extends Controller {
             $event_array['note'] = $event->getNote();
             $event_array['images'] = $event->getImages();
 
-            $all_events [] = $event_array;
+            $all_events ["event_".$event->getId()] = $event_array;
         }
         $events_json = json_encode($all_events);
 
-        // dump($events_json);die;
+  
         return $this->render('AppBundle:default:event/accueil.html.twig', array('events' => $pagination, 'filter_name' => $filter_name, 'events_json' => $events_json));
     }
 
