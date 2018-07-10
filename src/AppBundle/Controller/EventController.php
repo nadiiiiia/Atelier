@@ -769,14 +769,11 @@ class EventController extends Controller {
 
             // data is an array with "name", "email", and "message" keys
             $data = $form->getData();
-            //dump($data['cin']->file->guessExtension()); die ;
-            // dump($this->getParameter('profile_directory')); die ;
-            //   $user->setCin($data['cin']);
             $user->setTel($data['tel']);
             $user->setAdresse($data['adresse']);
             $update = 0;
             //la partie d'ajout de CIN
-            if ($data['cin']) {
+            if ($data['cin']->file != null) {
                 $cin_titre = $data['cin']->titre;
                 $cin_file = $data['cin']->file;
                 $cinName = 'ID_' . md5(uniqid()) . '.' . $cin_file->guessExtension();

@@ -16,7 +16,7 @@
 <div class="md-form"> 
     {{ form_label(form.cin.titre, "Titre de l'identifiant") }}
     <br><br>
-    {{form_widget(form.cin.titre) }}
+    {{form_widget(form.cin.titre, {value : app.user.getCin.getTitre}) }}
     <span class="error-msg"></span>
 </div>
 <div class="md-form"> 
@@ -25,7 +25,7 @@
     <span class="error-msg"></span>
 </div>
 <div class="md-form"> 
-    {% if  app.user.getPhoto %}
+    {% if  app.user.getCin %}
 
         <div class="avatar text-left"><img src="{{asset('uploads/profiles/' ~ app.user.getCin.getPath)}}" class="img-responsive"  height="70" width="70">
         </div>

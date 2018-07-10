@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="atl_image")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ImageRepository")
- * @ORM\HasLifeCycleCallbacks
+ * @ORM\HasLifecycleCallbacks()
  */
 class Image {
 
@@ -37,11 +37,7 @@ class Image {
      * @ORM\Column(name="path", type="string", length=255, nullable=true)
      */
     public $path;
-        /**
-     * @var string
-     *
-     * @ORM\Column(name="file",type="string", length=255, nullable=true)
-     */
+ 
     public $file;
 
     public function getUploadRootDir() {
