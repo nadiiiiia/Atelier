@@ -94,7 +94,8 @@ class EventController extends Controller {
 
         return $this->render('AppBundle:default:event/accueil.html.twig', array('events' => $pagination, 'filter_name' => $filter_name, 'events_json' => $events_json));
     }
-        /**
+
+    /**
      * @Route("/events_json", name="events_json")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -104,7 +105,7 @@ class EventController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $findEvents = $em->getRepository('AppBundle:Event')->findAllCurrent();
 
-     
+
         $filter_name = 'Tous les Ateliers';
         $all_events = array();
         foreach ($findEvents as $event) {
@@ -130,14 +131,18 @@ class EventController extends Controller {
             $event_array['classe'] = $event->getDepartement()->getNom();
             $event_array['validation'] = $event->getValidation();
             $event_array['note'] = $event->getNote();
-            $event_array['images'] = $event->getImages();
+            $images = array();
+            foreach ($event->getImages() as $image) {
+                $images [] = '/images/' . $image;
+            }
+            $event_array['images'] = $images;
 
             $all_events ["event_" . $event->getId()] = $event_array;
         }
         $all_events;
 
 
-        return  new JsonResponse($all_events);
+        return new JsonResponse($all_events);
     }
 
     /**
