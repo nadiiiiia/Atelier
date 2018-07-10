@@ -27,7 +27,7 @@
 <div class="md-form"> 
     {% if  app.user.getPhoto %}
 
-        <div class="avatar text-left"><img src="{{asset('uploads/profiles/' ~ app.user.getCin)}}" class="img-responsive"  height="70" width="70">
+        <div class="avatar text-left"><img src="{{asset('uploads/profiles/' ~ app.user.getCin.getPath)}}" class="img-responsive"  height="70" width="70">
         </div>
 
     {% endif %}
@@ -71,5 +71,9 @@
     <input class="btn btn-primary-inverse btn-md waves-effect waves-light" id="submit_event" type="submit" value="{{ 'profile.edit.submit'|trans }}" />
     <br><br>
 </div>
-
+    <script>
+            document.querySelector('#form_cin_titre').required = false;
+            document.querySelector('#form_cin_file').required = false;
+            
+    </script>
 {{ form_end(form) }}

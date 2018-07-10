@@ -40,13 +40,13 @@ class User extends BaseUser {
      * @ORM\Column(type="string", name="google_id", nullable=true)
      */
     protected $googleId;
-    
+
     /**
      * @ORM\Column(type="string", name="twitter_id", nullable=true)
      */
     protected $twitterId;
-    
-        /**
+
+    /**
      * @ORM\Column(type="string", name="tel", nullable=true)
      */
     protected $tel;
@@ -56,30 +56,33 @@ class User extends BaseUser {
      *
      * @ORM\Column(name="date_naissance", type="datetime", nullable=true)
      */
-    protected $date_naissance;    
-        /**
-     * @ORM\Column(type="string", name="cin", nullable=true)
+    protected $date_naissance;
+
+    /**
+     * @var Image
+     * Assert\Valid()
+     * Assert\Type(type="AppBundle\Entity\Image")
+     * --liaison unidirectionelle entre user et Image
+     * @ORM\OneToOne(targetEntity="Image", cascade={"persist"})
      */
     protected $cin;
-    
-        /**
+
+    /**
      * @ORM\Column(type="string", name="photo", nullable=true)
      */
     protected $photo;
-    
+
     /**
      * @var array
      *
      * @ORM\Column(type="array", name="certifs", nullable=true)
      */
     protected $certifs;
-    
-            /**
+
+    /**
      * @ORM\Column(type="string", name="adresse", nullable=true)
      */
     protected $adresse;
-
-
 
     /**
      *
@@ -126,8 +129,6 @@ class User extends BaseUser {
         return $this->events;
     }
 
-
-
     /**
      * Set firstName
      *
@@ -135,8 +136,7 @@ class User extends BaseUser {
      *
      * @return User
      */
-    public function setFirstName($firstName)
-    {
+    public function setFirstName($firstName) {
         $this->first_name = $firstName;
 
         return $this;
@@ -147,8 +147,7 @@ class User extends BaseUser {
      *
      * @return string
      */
-    public function getFirstName()
-    {
+    public function getFirstName() {
         return $this->first_name;
     }
 
@@ -159,8 +158,7 @@ class User extends BaseUser {
      *
      * @return User
      */
-    public function setLastName($lastName)
-    {
+    public function setLastName($lastName) {
         $this->last_name = $lastName;
 
         return $this;
@@ -171,60 +169,51 @@ class User extends BaseUser {
      *
      * @return string
      */
-    public function getLastName()
-    {
+    public function getLastName() {
         return $this->last_name;
     }
-    
-    
+
     /**
      * @return mixed
      */
-    public function getFacebookId()
-    {
+    public function getFacebookId() {
         return $this->facebookId;
     }
 
     /**
      * @param mixed $facebookId
      */
-    public function setFacebookId($facebookId)
-    {
+    public function setFacebookId($facebookId) {
         $this->facebookId = $facebookId;
     }
 
     /**
      * @return mixed
      */
-    public function getGoogleId()
-    {
+    public function getGoogleId() {
         return $this->googleId;
     }
 
     /**
      * @param mixed $googleId
      */
-    public function setGoogleId($googleId)
-    {
+    public function setGoogleId($googleId) {
         $this->googleId = $googleId;
     }
-    
+
     /**
      * @return mixed
      */
-    public function getTwitterId()
-    {
+    public function getTwitterId() {
         return $this->twitterId;
     }
 
     /**
      * @param mixed $twitterId
      */
-    public function setTwitterId($twitterId)
-    {
+    public function setTwitterId($twitterId) {
         $this->twitterId = $twitterId;
     }
-
 
     /**
      * Set tel
@@ -233,8 +222,7 @@ class User extends BaseUser {
      *
      * @return User
      */
-    public function setTel($tel)
-    {
+    public function setTel($tel) {
         $this->tel = $tel;
 
         return $this;
@@ -245,34 +233,10 @@ class User extends BaseUser {
      *
      * @return string
      */
-    public function getTel()
-    {
+    public function getTel() {
         return $this->tel;
     }
 
-    /**
-     * Set cin
-     *
-     * @param string $cin
-     *
-     * @return User
-     */
-    public function setCin($cin)
-    {
-        $this->cin = $cin;
-
-        return $this;
-    }
-
-    /**
-     * Get cin
-     *
-     * @return string
-     */
-    public function getCin()
-    {
-        return $this->cin;
-    }
 
     /**
      * Set photo
@@ -281,8 +245,7 @@ class User extends BaseUser {
      *
      * @return User
      */
-    public function setPhoto($photo)
-    {
+    public function setPhoto($photo) {
         $this->photo = $photo;
 
         return $this;
@@ -293,8 +256,7 @@ class User extends BaseUser {
      *
      * @return string
      */
-    public function getPhoto()
-    {
+    public function getPhoto() {
         return $this->photo;
     }
 
@@ -305,8 +267,7 @@ class User extends BaseUser {
      *
      * @return User
      */
-    public function setCertifs($certifs)
-    {
+    public function setCertifs($certifs) {
         $this->certifs = $certifs;
 
         return $this;
@@ -317,8 +278,7 @@ class User extends BaseUser {
      *
      * @return array
      */
-    public function getCertifs()
-    {
+    public function getCertifs() {
         return $this->certifs;
     }
 
@@ -329,8 +289,7 @@ class User extends BaseUser {
      *
      * @return User
      */
-    public function setDateNaissance($dateNaissance)
-    {
+    public function setDateNaissance($dateNaissance) {
         $this->date_naissance = $dateNaissance;
 
         return $this;
@@ -341,8 +300,7 @@ class User extends BaseUser {
      *
      * @return \DateTime
      */
-    public function getDateNaissance()
-    {
+    public function getDateNaissance() {
         return $this->date_naissance;
     }
 
@@ -353,8 +311,7 @@ class User extends BaseUser {
      *
      * @return User
      */
-    public function setAdresse($adresse)
-    {
+    public function setAdresse($adresse) {
         $this->adresse = $adresse;
 
         return $this;
@@ -365,8 +322,32 @@ class User extends BaseUser {
      *
      * @return string
      */
-    public function getAdresse()
-    {
+    public function getAdresse() {
         return $this->adresse;
+    }
+
+
+    /**
+     * Set cin
+     *
+     * @param \AppBundle\Entity\Image $cin
+     *
+     * @return User
+     */
+    public function setCin(\AppBundle\Entity\Image $cin = null)
+    {
+        $this->cin = $cin;
+
+        return $this;
+    }
+
+    /**
+     * Get cin
+     *
+     * @return \AppBundle\Entity\Image
+     */
+    public function getCin()
+    {
+        return $this->cin;
     }
 }

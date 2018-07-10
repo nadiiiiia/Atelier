@@ -30,6 +30,8 @@ use Symfony\Component\Filesystem\Filesystem;
 use AppBundle\Entity\Event;
 use AppBundle\Entity\Order;
 use ReCaptcha\ReCaptcha; // Include the recaptcha lib
+use AppBundle\Entity\Image;
+use AppBundle\Form\ImageType;
 
 /**
  * Event controller.
@@ -85,11 +87,11 @@ class EventController extends Controller {
             $event_array['note'] = $event->getNote();
             $event_array['images'] = $event->getImages();
 
-            $all_events ["event_".$event->getId()] = $event_array;
+            $all_events ["event_" . $event->getId()] = $event_array;
         }
         $events_json = json_encode($all_events);
 
-  
+
         return $this->render('AppBundle:default:event/accueil.html.twig', array('events' => $pagination, 'filter_name' => $filter_name, 'events_json' => $events_json));
     }
 
@@ -689,7 +691,7 @@ class EventController extends Controller {
                     'invalid_message_parameters' => array('%num%' => 8),
                     'label' => 'Numéro de téléphone '
                 ))
-                ->add('cin', FileType::class, array('attr' => array(
+                ->add('cin', ImageType::class, array('attr' => array(
                         'accept' => 'image/*' // pour n'accepter que les images
                     ),
                     'label' => 'Identifiant '
@@ -714,56 +716,61 @@ class EventController extends Controller {
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-        
-                // data is an array with "name", "email", and "message" keys
-                $data = $form->getData();
-                // dump($data); die ;
-                $user->setTel($data['tel']);
-                $user->setAdresse($data['adresse']);
-                $update = 0;
-                //la partie d'ajout de CIN
-                if ($data['cin']) {
-                    $cin = $data['cin'];
-                    $cinName = 'ID_' . md5(uniqid()) . '.' . $cin->guessExtension();
-                    //dump($cin); die;
-                    $cin->move($this->getParameter('profile_directory'), $cinName);
-                    $user->setCin($cinName);
-                    $update++;
-                }
-                // fin ajout cin
-                //la partie d'ajout de photo de profile
-                if ($data['photo']) {
-                    $photo = $data['photo'];
-                    $photoName = 'avatar_' . md5(uniqid()) . '.' . $photo->guessExtension();
-                    $photo->move($this->getParameter('profile_directory'), $photoName);
-                    $user->setPhoto($photoName);
-                }
-                // fin ajout photo
-                /*                 * ********Traitement des certifs**************** */
-                if ($data['certifs']) {
-                    $certifs = $data['certifs'];
-                    $cert = array();
-                    foreach ($certifs as $certif) {
-                        $certifName = 'certif_' . md5(uniqid()) . '.' . $certif->guessExtension();
-                        $certif->move($this->getParameter('profile_directory'), $certifName);
-                        $cert[] = $certifName;
-                    }
-                    $user->setCertifs($cert);
-                    $update++;
-                }
 
-                if ($update != 0) {
-                    // si les certifs ou cin sont nodifiés alors rendre les events refusés ==> en cours
-                    $userId = $user->getId();
-                    $this->resetValidationEvents($userId);
+            // data is an array with "name", "email", and "message" keys
+            $data = $form->getData();
+            //dump($data['cin']->file->guessExtension()); die ;
+            // dump($this->getParameter('profile_directory')); die ;
+            //   $user->setCin($data['cin']);
+            $user->setTel($data['tel']);
+            $user->setAdresse($data['adresse']);
+            $update = 0;
+            //la partie d'ajout de CIN
+            if ($data['cin']) {
+                $cin_titre = $data['cin']->titre;
+                $cin_file = $data['cin']->file;
+                $cinName = 'ID_' . md5(uniqid()) . '.' . $cin_file->guessExtension();
+                $cin_file->move($this->getParameter('profile_directory'), $cinName);
+                $image = new Image();
+
+                $image->setTitre($cin_titre);
+                $image->setPath($cinName);
+                $user->setCin($image);
+                $update++;
+            }
+            // fin ajout cin
+            //la partie d'ajout de photo de profile
+            if ($data['photo']) {
+                $photo = $data['photo'];
+                $photoName = 'avatar_' . md5(uniqid()) . '.' . $photo->guessExtension();
+                $photo->move($this->getParameter('profile_directory'), $photoName);
+                $user->setPhoto($photoName);
+            }
+            // fin ajout photo
+            /*             * ********Traitement des certifs**************** */
+            if ($data['certifs']) {
+                $certifs = $data['certifs'];
+                $cert = array();
+                foreach ($certifs as $certif) {
+                    $certifName = 'certif_' . md5(uniqid()) . '.' . $certif->guessExtension();
+                    $certif->move($this->getParameter('profile_directory'), $certifName);
+                    $cert[] = $certifName;
                 }
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($user);
-                $em->flush();
+                $user->setCertifs($cert);
+                $update++;
+            }
+
+            if ($update != 0) {
+                // si les certifs ou cin sont nodifiés alors rendre les events refusés ==> en cours
+                $userId = $user->getId();
+                $this->resetValidationEvents($userId);
+            }
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
 
 
-                return $this->redirectToRoute('profile_edit_info');
-            
+            return $this->redirectToRoute('profile_edit_info');
         }
 
         return $this->render('AppBundle:default:user/editDocs.html.twig', array(

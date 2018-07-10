@@ -37,6 +37,11 @@ class Image {
      * @ORM\Column(name="path", type="string", length=255, nullable=true)
      */
     public $path;
+        /**
+     * @var string
+     *
+     * @ORM\Column(name="file",type="string", length=255, nullable=true)
+     */
     public $file;
 
     public function getUploadRootDir() {
@@ -75,16 +80,12 @@ class Image {
                }
            }
     }
-     /**
-      * ORM/PreRemove()
-      */
+    
     public function preRemoveUpload(){
         $this->tempFile = $this->getAbsolutePath();
     }
     
-    /**
-     * ORM/PostRemove()
-     */
+  
     public function removeUpload(){
         if(file_exists($this->tempFile)){
             unlink($this->tempFile);
