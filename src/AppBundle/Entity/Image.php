@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="atl_image")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ImageRepository")
- * @ORM\hasLifeCycleCallbacks
+ * @ORM\HasLifeCycleCallbacks
  */
 class Image {
 
@@ -76,14 +76,14 @@ class Image {
            }
     }
      /**
-      * @ORM/PreRemove()
+      * ORM/PreRemove()
       */
     public function preRemoveUpload(){
         $this->tempFile = $this->getAbsolutePath();
     }
     
     /**
-     * @ORM/PostRemove()
+     * ORM/PostRemove()
      */
     public function removeUpload(){
         if(file_exists($this->tempFile)){
