@@ -360,7 +360,7 @@ class EventController extends Controller {
                     'invalid_message_parameters' => array('%num%' => 8),
                     'label' => 'Numéro de téléphone *'
                 ))
-                ->add('cin', FileType::class, array('attr' => array(
+                ->add('cin', ImageType::class, array('attr' => array(
                         'accept' => 'image/*' // pour n'accepter que les images
                     ),
                     'label' => 'Identifiant *'
@@ -383,13 +383,17 @@ class EventController extends Controller {
             $data = $form->getData();
             $user->setTel($data['tel']);
 
-            //la partie d'ajout de CIN
-            if ($data['cin']) {
-                $cin = $data['cin'];
-                $cinName = 'ID_' . md5(uniqid()) . '.' . $cin->guessExtension();
-                //dump($cin); die;
-                $cin->move($this->getParameter('profile_directory'), $cinName);
-                $user->setCin($cinName);
+     //la partie d'ajout de CIN
+            if ($data['cin']->file != null) {
+                $cin_titre = $data['cin']->titre;
+                $cin_file = $data['cin']->file;
+                $cinName = 'ID_' . md5(uniqid()) . '.' . $cin_file->guessExtension();
+                $cin_file->move($this->getParameter('profile_directory'), $cinName);
+                $image = new Image();
+
+                $image->setTitre($cin_titre);
+                $image->setPath($cinName);
+                $user->setCin($image);
             }
             // fin ajout cin
             //la partie d'ajout de photo de profile
@@ -417,7 +421,7 @@ class EventController extends Controller {
             return $this->redirectToRoute('to_validate');
         }
 
-        return $this->render('AppBundle:default:event/org_info.html.twig', array(
+        return $this->render('AppBundle:default:event/org/org_info.html.twig', array(
                     'form' => $form->createView(),
         ));
     }

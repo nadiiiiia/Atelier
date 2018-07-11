@@ -3,12 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/Atelier__/app/config/services.yml</file>
+            <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Form/EventType.php</file>
             <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Controller/RegistrationController.php</file>
-            <file>file:/C:/xampp/htdocs/Atelier__/app/Resources/FOSUserBundle/views/Security/login.html.twig</file>
             <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Entity/User.php</file>
+            <file>file:/C:/xampp/htdocs/Atelier__/app/AppKernel.php</file>
             <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Entity/Image.php</file>
             <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Controller/EventController.php</file>
+            <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Resources/views/default/event/new.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Resources/views/default/event/accueil.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Atelier__/app/config/parameters.yml</file>
             <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Resources/views/default/user/editDocs_content.html.twig</file>
         </group>
     </open-files>

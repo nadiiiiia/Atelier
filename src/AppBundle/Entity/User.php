@@ -73,9 +73,9 @@ class User extends BaseUser {
     protected $photo;
 
     /**
-     * @var array
-     *
-     * @ORM\Column(type="array", name="certifs", nullable=true)
+     * --Many User have Many certifs.
+     * @ORM\ManyToMany(targetEntity="Image")
+     * @ORM\JoinTable(name="atl_users_certifs")
      */
     protected $certifs;
 
@@ -95,7 +95,7 @@ class User extends BaseUser {
         parent::__construct();
         $this->events = new ArrayCollection();
         $this->photo = 'login-avatar.jpg';
-        $this->certifs = NULL;
+        $this->certifs = new ArrayCollection();
     }
 
     /**

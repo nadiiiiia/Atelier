@@ -16,11 +16,16 @@
 <div class="md-form"> 
     {{ form_label(form.cin.titre, "Titre de l'identifiant") }}
     <br><br>
-    {{form_widget(form.cin.titre, {value : app.user.getCin.getTitre}) }}
+    {% if app.user.cin is not null %}
+        {% set cin_titre = app.user.getCin.getTitre %}
+    {%else%}
+        {% set cin_titre = '' %}
+    {%endif%}
+    {{form_widget(form.cin.titre, {value : cin_titre}) }}
     <span class="error-msg"></span>
 </div>
 <div class="md-form"> 
-   
+
     {{form_widget(form.cin.file) }}
     <span class="error-msg"></span>
 </div>
@@ -71,9 +76,9 @@
     <input class="btn btn-primary-inverse btn-md waves-effect waves-light" id="submit_event" type="submit" value="{{ 'profile.edit.submit'|trans }}" />
     <br><br>
 </div>
-    <script>
-            document.querySelector('#form_cin_titre').required = false;
-            document.querySelector('#form_cin_file').required = false;
-            
-    </script>
+<script>
+    document.querySelector('#form_cin_titre').required = false;
+    document.querySelector('#form_cin_file').required = false;
+
+</script>
 {{ form_end(form) }}

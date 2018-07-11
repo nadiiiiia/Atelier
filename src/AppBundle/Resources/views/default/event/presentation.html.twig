@@ -74,9 +74,9 @@
             <!--First row-->
             <div class="row wow fadeIn" data-wow-delay="0.4s">
                 {% if is_granted('ROLE_ADMIN')%}
-                <div class="col-md-12">
-                    <button class=" btn btn-primary-atelier btn-sm pull-right waves-effect waves-light" type="button" onclick="location.href = '{{ path('admin_events_index')}}'" id="list_events">Liste des Ateliers</button>
-                </div>
+                    <div class="col-md-12">
+                        <button class=" btn btn-primary-atelier btn-sm pull-right waves-effect waves-light" type="button" onclick="location.href = '{{ path('admin_events_index')}}'" id="list_events">Liste des Ateliers</button>
+                    </div>
                 {%endif%}
                 <div class="col-md-12">
 
@@ -161,14 +161,15 @@
             <div class="col-lg-12">
                 <br><br>
                 <h2>Documents de l'organisateur {{event.getUtilisateur.getUsername}} </h2>
-
-
+                <br>
+                {% if event.getUtilisateur.getCin is not null %}
+                    <h4>  {{event.getUtilisateur.getCin.getTitre}}</h4>
+                     <img class="img-responsive" src="{{asset('uploads/profiles/' ~ event.getUtilisateur.getCin.getPath)}}" style="width:282px;height:188px;" alt="Thumb-1">
+          
+                {%endif%}
+            <br>
                 <ul id="mdb-lightbox-documents" class="list-unstyled row">
-                    <li class="col-xs-6 col-sm-4 col-md-3" data-responsive="{{asset('uploads/profiles/' ~ event.getUtilisateur.getCin)}}" data-src="{{asset('uploads/profiles/' ~ event.getUtilisateur.getCin)}}" data-sub-html="<h4>CIN</h4>" data-pinterest-text="Pin it1" data-tweet-text="share on twitter 1">
-                        <a href="">
-                            <img class="img-responsive" src="{{asset('uploads/profiles/' ~ event.getUtilisateur.getCin)}}" style="width:282px;height:188px;" alt="Thumb-1">
-                        </a>
-                    </li>
+
                     {% for certif in event.getUtilisateur.getCertifs %} 
 
                         <li class="col-xs-6 col-sm-4 col-md-3" data-responsive="{{asset('uploads/profiles/' ~ certif)}}" data-src="{{asset('uploads/profiles/' ~ certif)}}" data-sub-html="<h4>certificats</h4>" data-pinterest-text="Pin it1" data-tweet-text="share on twitter 1">
@@ -360,8 +361,8 @@
                     <script src="https://cdn.rawgit.com/sachinchoolur/lg-hash.js/master/dist/lg-hash.js"></script>
                     <script src="https://cdn.rawgit.com/sachinchoolur/lg-share.js/master/dist/lg-share.js"></script>
                     <script>
-                        lightGallery(document.getElementById('mdb-lightbox-ui'));
-                        lightGallery(document.getElementById('mdb-lightbox-documents'));
+                            lightGallery(document.getElementById('mdb-lightbox-ui'));
+                            lightGallery(document.getElementById('mdb-lightbox-documents'));
                     </script>    
                     <script type="text/javascript">
                         $(document).ready(function () {
