@@ -26,12 +26,14 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Filesystem\Filesystem;
 use AppBundle\Entity\Event;
 use AppBundle\Entity\Order;
 use ReCaptcha\ReCaptcha; // Include the recaptcha lib
 use AppBundle\Entity\Image;
 use AppBundle\Form\ImageType;
+use AppBundle\Form\CertifType;
 
 /**
  * Event controller.
@@ -61,88 +63,8 @@ class EventController extends Controller {
 
         // $events_json = 0; //$this->get('jms_serializer')->serialize($findEvents, 'json');
         $filter_name = 'Tous les Ateliers';
-        $all_events = array();
-        foreach ($findEvents as $event) {
-            $event_array = array();
-            $event_array['id'] = $event->getId();
 
-            $event_array['category'] = $event->getCategory()->getNom();
-            $event_array['titre'] = $event->getTitre();
-            $event_array['desc'] = $event->getDescription();
-            $event_array['dateDeb'] = $event->getDateDebut()->format('d/m/Y');
-            $event_array['heureDeb'] = $event->getDateDebut()->format('H:i');
-            $event_array['dateFin'] = $event->getDateFin()->format('d/m/Y');
-            $event_array['heureFin'] = $event->getDateFin()->format('H:i');
-            $event_array['prix'] = $event->getPrix();
-            $event_array['nbrMax'] = $event->getNbrMax();
-            $event_array['nbrParticipants'] = $event->getNbrParticipants();
-            $event_array['adresse'] = $event->getAdresse();
-            $event_array['codeP'] = $event->getCodeP();
-            $event_array['lng'] = $event->getLng();
-            $event_array['lat'] = $event->getLat();
-            $event_array['ville'] = $event->getVille()->getNom();
-            $event_array['region'] = $event->getRegion()->getNom();
-            $event_array['classe'] = $event->getDepartement()->getNom();
-            $event_array['validation'] = $event->getValidation();
-            $event_array['note'] = $event->getNote();
-            $event_array['images'] = $event->getImages();
-
-            $all_events ["event_" . $event->getId()] = $event_array;
-        }
-        $events_json = json_encode($all_events);
-
-
-        return $this->render('AppBundle:default:event/accueil.html.twig', array('events' => $pagination, 'filter_name' => $filter_name, 'events_json' => $events_json));
-    }
-
-    /**
-     * @Route("/events_json", name="events_json")
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function eventsJsonAction(Request $request) {
-
-        $em = $this->getDoctrine()->getManager();
-        $findEvents = $em->getRepository('AppBundle:Event')->findAllCurrent();
-
-
-        $filter_name = 'Tous les Ateliers';
-        $all_events = array();
-        foreach ($findEvents as $event) {
-            $event_array = array();
-            $event_array['id'] = $event->getId();
-
-            $event_array['category'] = $event->getCategory()->getNom();
-            $event_array['titre'] = $event->getTitre();
-            $event_array['desc'] = $event->getDescription();
-            $event_array['dateDeb'] = $event->getDateDebut()->format('d/m/Y');
-            $event_array['heureDeb'] = $event->getDateDebut()->format('H:i');
-            $event_array['dateFin'] = $event->getDateFin()->format('d/m/Y');
-            $event_array['heureFin'] = $event->getDateFin()->format('H:i');
-            $event_array['prix'] = $event->getPrix();
-            $event_array['nbrMax'] = $event->getNbrMax();
-            $event_array['nbrParticipants'] = $event->getNbrParticipants();
-            $event_array['adresse'] = $event->getAdresse();
-            $event_array['codeP'] = $event->getCodeP();
-            $event_array['lng'] = $event->getLng();
-            $event_array['lat'] = $event->getLat();
-            $event_array['ville'] = $event->getVille()->getNom();
-            $event_array['region'] = $event->getRegion()->getNom();
-            $event_array['classe'] = $event->getDepartement()->getNom();
-            $event_array['validation'] = $event->getValidation();
-            $event_array['note'] = $event->getNote();
-            $images = array();
-            foreach ($event->getImages() as $image) {
-                $images [] = '/images/' . $image;
-            }
-            $event_array['images'] = $images;
-
-            $all_events ["event_" . $event->getId()] = $event_array;
-        }
-        $all_events;
-
-
-        return new JsonResponse($all_events);
+        return $this->render('AppBundle:default:event/accueil.html.twig', array('events' => $pagination, 'filter_name' => $filter_name));
     }
 
     /**
@@ -383,7 +305,7 @@ class EventController extends Controller {
             $data = $form->getData();
             $user->setTel($data['tel']);
 
-     //la partie d'ajout de CIN
+            //la partie d'ajout de CIN
             if ($data['cin']->file != null) {
                 $cin_titre = $data['cin']->titre;
                 $cin_file = $data['cin']->file;
@@ -731,7 +653,7 @@ class EventController extends Controller {
      * @Method({"GET", "POST"})
      */
     public function editProfileAction(Request $request) {
-
+//dump($request);die;
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $tel = $user->getTel();
         $adresse = $user->getAdresse();
@@ -755,11 +677,12 @@ class EventController extends Controller {
                     ),
                     'label' => 'Photo de profile '
                 ))
-                ->add('certifs', FileType::class, array('attr' => array(
-                        'accept' => 'image/*' // pour n'accepter que les images
-                    ),
-                    'multiple' => TRUE,
-                    'label' => 'Certificats'
+                ->add('certifs', CollectionType::class, array(
+                    'entry_type' => CertifType::class,
+                    'entry_options' => array('label' => false),
+                    'allow_add' => true,
+                    'prototype' => true,
+                     'by_reference' => false,
                 ))
                 ->add('adresse', TextType::class, array(
                     'attr' => array('class' => 'form-control',
@@ -773,6 +696,7 @@ class EventController extends Controller {
 
             // data is an array with "name", "email", and "message" keys
             $data = $form->getData();
+            dump($data);die;
             $user->setTel($data['tel']);
             $user->setAdresse($data['adresse']);
             $update = 0;
@@ -801,23 +725,32 @@ class EventController extends Controller {
             /*             * ********Traitement des certifs**************** */
             if ($data['certifs']) {
                 $certifs = $data['certifs'];
+                //dump($certifs); die;
                 $cert = array();
                 foreach ($certifs as $certif) {
-                    $certifName = 'certif_' . md5(uniqid()) . '.' . $certif->guessExtension();
-                    $certif->move($this->getParameter('profile_directory'), $certifName);
-                    $cert[] = $certifName;
+                    if ($certif->file != null) {
+                        $certif_titre = $certif->titre;
+                        $certif_file = $certif->file;
+                        $certifName = 'CERTIF_' . md5(uniqid()) . '.' . $certif_file->guessExtension();
+                        $certif_file->move($this->getParameter('profile_directory'), $certifName);
+                        $certif = new Certif();
+
+                        $certif->setTitre($certif_titre);
+                        $certif->setPath($certifName);
+                        $user->$getCertifs()->add($certif);
+                    }
                 }
-                $user->setCertifs($cert);
                 $update++;
             }
 
             if ($update != 0) {
-                // si les certifs ou cin sont nodifiés alors rendre les events refusés ==> en cours
+                // si les certifs ou cin sont odifiés alors rendre les events refusés ==> en cours
                 $userId = $user->getId();
                 $this->resetValidationEvents($userId);
             }
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
+            //$em->persist($certif);
             $em->flush();
 
 

@@ -7,6 +7,7 @@ namespace AppBundle\Entity;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -73,9 +74,8 @@ class User extends BaseUser {
     protected $photo;
 
     /**
-     * --Many User have Many certifs.
-     * @ORM\ManyToMany(targetEntity="Image")
-     * @ORM\JoinTable(name="atl_users_certifs")
+     * @ORM\OneToMany(targetEntity="Certif", mappedBy="user", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=true)
      */
     protected $certifs;
 
@@ -237,7 +237,6 @@ class User extends BaseUser {
         return $this->tel;
     }
 
-
     /**
      * Set photo
      *
@@ -260,27 +259,6 @@ class User extends BaseUser {
         return $this->photo;
     }
 
-    /**
-     * Set certifs
-     *
-     * @param array $certifs
-     *
-     * @return User
-     */
-    public function setCertifs($certifs) {
-        $this->certifs = $certifs;
-
-        return $this;
-    }
-
-    /**
-     * Get certifs
-     *
-     * @return array
-     */
-    public function getCertifs() {
-        return $this->certifs;
-    }
 
     /**
      * Set dateNaissance
@@ -326,7 +304,6 @@ class User extends BaseUser {
         return $this->adresse;
     }
 
-
     /**
      * Set cin
      *
@@ -334,8 +311,7 @@ class User extends BaseUser {
      *
      * @return User
      */
-    public function setCin(\AppBundle\Entity\Image $cin = null)
-    {
+    public function setCin(\AppBundle\Entity\Image $cin = null) {
         $this->cin = $cin;
 
         return $this;
@@ -346,8 +322,42 @@ class User extends BaseUser {
      *
      * @return \AppBundle\Entity\Image
      */
-    public function getCin()
-    {
+    public function getCin() {
         return $this->cin;
+    }
+
+
+    /**
+     * Add certif
+     *
+     * @param \AppBundle\Entity\Certif $certif
+     *
+     * @return User
+     */
+    public function addCertif(\AppBundle\Entity\Certif $certif)
+    {
+        $this->certifs[] = $certif;
+
+        return $this;
+    }
+
+    /**
+     * Remove certif
+     *
+     * @param \AppBundle\Entity\Certif $certif
+     */
+    public function removeCertif(\AppBundle\Entity\Certif $certif)
+    {
+        $this->certifs->removeElement($certif);
+    }
+
+    /**
+     * Get certifs
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCertifs()
+    {
+        return $this->certifs;
     }
 }
