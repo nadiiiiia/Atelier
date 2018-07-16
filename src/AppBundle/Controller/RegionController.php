@@ -17,7 +17,6 @@ class RegionController extends Controller
 
         return $this->render('AppBundle:default:region/menu.html.twig', array(
             'regions' => $regions,
-            'regions_json' => $regions_json
         ));
     }
 }

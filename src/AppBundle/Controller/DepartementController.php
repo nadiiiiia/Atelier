@@ -17,7 +17,6 @@ class DepartementController extends Controller
 
         return $this->render('AppBundle:default:departement/menu.html.twig', array(
             'departements' => $departements,
-            'departements_json' => $departements_json,
         ));
     }
 }

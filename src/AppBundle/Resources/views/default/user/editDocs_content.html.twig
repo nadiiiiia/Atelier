@@ -54,7 +54,7 @@
     {% endif %}
 </div>
 <h3>Certificats</h3>
-<div class="certifs" data-prototype="{{ form_widget(form.certifs.vars.prototype)|e('html_attr') }}">
+<div class="certifs" id="certifs" data-prototype="{{ form_widget(form.certifs.vars.prototype)|e('html_attr') }}">
      <br> <br>
     {# iterate over each existing tag and render its only field: name #}
 {#   {{form_widget(form.certifs) }}#}
@@ -94,7 +94,7 @@
 
     jQuery(document).ready(function () {
         // Get the ul that holds the collection of tags
-        $collectionHolder = $('div.certifs');
+        $collectionHolder = $('#certifs');
 
         // add the "add a certif" anchor and div to the certifs div
         $collectionHolder.append($newLinkDiv);

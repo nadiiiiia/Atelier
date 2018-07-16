@@ -17,7 +17,6 @@ class CategoryController extends Controller
 
         return $this->render('AppBundle:default:category/menu.html.twig', array(
             'categories' => $categories,
-             'categories_json' => $categories_json
         ));
     }
     

@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use AppBundle\Entity\Certif;
 
 class CertifType extends AbstractType {
@@ -27,15 +28,15 @@ class CertifType extends AbstractType {
 
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults(array(
-            'data_class' => Certif::class
-        ));
+            'data_class' => 'AppBundle\Entity\Certif'
+            ));
     }
 
     /**
      * {@inheritdoc}
      */
     public function getBlockPrefix() {
-        return 'appbundle_certif';
+        return 'certif';
     }
 
 }

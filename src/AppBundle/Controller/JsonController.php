@@ -95,11 +95,14 @@ class JsonController extends Controller {
         foreach ($regions as $region) {
             $regions_array[] = $region->getNom();
         }
+         $navbar_1 = array('titre'=>'classes', 'elements'=>$classe_array);
+         $navbar_2 = array('titre'=>'categories', 'elements'=>$category_array);
+          $navbar_3 = array('titre'=>'regions', 'elements'=>$regions_array);
         
          $navbar_array = array(
-            'classes' => $classe_array,
-            'categories' => $category_array,
-             'regions' => $regions_array,
+            'nav_1' => $navbar_1,
+            'nav_2' => $navbar_2,
+             'nav_3' => $navbar_3,
         );
           return new JsonResponse($navbar_array);
     }
