@@ -96,7 +96,7 @@ class JsonController extends Controller {
             $regions_array[] = $region->getNom();
         }
          $navbar_1 = array('titre'=>'classes', 'elements'=>$classe_array);
-         $navbar_2 = array('titre'=>'categories', 'elements'=>$category_array);
+         $navbar_2 = array('titre'=>'catégories', 'elements'=>$category_array);
           $navbar_3 = array('titre'=>'regions', 'elements'=>$regions_array);
         
          $navbar_array = array(
