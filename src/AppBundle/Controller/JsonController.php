@@ -19,18 +19,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class JsonController extends Controller {
 
-    /**
-     * @Route("/json", name="events_json")
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function eventsJsonAction(Request $request) {
-
-        $em = $this->getDoctrine()->getManager();
-        $findEvents = $em->getRepository('AppBundle:Event')->findAllCurrent();
-
+    public function fetchArreyAction($events) {
         $all_events = array();
-        foreach ($findEvents as $event) {
+        foreach ($events as $event) {
             $event_array = array();
             $event_array['id'] = $event->getId();
 
@@ -64,10 +55,21 @@ class JsonController extends Controller {
 
             $all_events ["event_" . $event->getId()] = $event_array;
         }
-        $all_events;
+        return $all_events;
+    }
 
+    /**
+     * @Route("/json", name="events_json")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function eventsJsonAction(Request $request) {
 
-        return new JsonResponse($all_events);
+        $em = $this->getDoctrine()->getManager();
+        $findEvents = $em->getRepository('AppBundle:Event')->findAllCurrent();
+
+        $events = $this->fetchArreyAction($findEvents);
+        return new JsonResponse($events);
     }
 
     /**
@@ -87,24 +89,97 @@ class JsonController extends Controller {
 
 
         foreach ($classes as $classe) {
-            $classe_array[] = $classe->getNom();
+            $classe_array[$classe->getId()] = $classe->getNom();
         }
         foreach ($categories as $category) {
-            $category_array[] = $category->getNom();
+            $category_array[$category->getId()] = $category->getNom();
         }
         foreach ($regions as $region) {
-            $regions_array[] = $region->getNom();
+            $regions_array[$region->getId()] = $region->getNom();
         }
-         $navbar_1 = array('titre'=>'classes', 'elements'=>$classe_array);
-         $navbar_2 = array('titre'=>'catégories', 'elements'=>$category_array);
-          $navbar_3 = array('titre'=>'regions', 'elements'=>$regions_array);
-        
-         $navbar_array = array(
+        $navbar_1 = array('titre' => 'classes', 'elements' => $classe_array);
+        $navbar_2 = array('titre' => 'catégories', 'elements' => $category_array);
+        $navbar_3 = array('titre' => 'regions', 'elements' => $regions_array);
+
+        $navbar_array = array(
             'nav_1' => $navbar_1,
             'nav_2' => $navbar_2,
-             'nav_3' => $navbar_3,
+            'nav_3' => $navbar_3,
         );
-          return new JsonResponse($navbar_array);
+        return new JsonResponse($navbar_array);
+    }
+
+    /**
+     * @Route("filter_json/{type}/{value}", name="filterJsonEvents")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function filterJsonAction($type, $value, Request $request) { // exemple: type = category / value= 1 (informatique)
+        //dump($type,$value);die;
+        if ($type == 'classes') {
+            $type = 'departement';
+        }
+        if ($type == 'catégories') {
+            $type = 'category';
+        }
+        if ($type == 'regions') {
+            $type = 'region';
+        }
+        $em = $this->getDoctrine()->getManager();
+        $findEvents = $em->getRepository('AppBundle:Event')->findBy([$type => $value]);
+
+        $events = $this->fetchArreyAction($findEvents);
+        return new JsonResponse($events);
+    }
+
+    /**
+     * @Route("/json_price_min", name="json_sortMin")
+     * @param Request $request
+     */
+    public function sortMinJsonAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $findEvents = $em->getRepository('AppBundle:Event')->sortByMinPrice();
+
+        $events = $this->fetchArreyAction($findEvents);
+        return new JsonResponse($events);
+    }
+
+    /**
+     * @Route("/json_price_max", name="json_sortMax")
+     * @param Request $request
+     */
+    public function sortMaxJsonAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $findEvents = $em->getRepository('AppBundle:Event')->sortByMaxPrice();
+
+        $events = $this->fetchArreyAction($findEvents);
+        return new JsonResponse($events);
+    }
+
+    /**
+     * @Route("/json_max_participants", name="sortMaxParticipants_json")
+     * @param Request $request
+     */
+    public function sortMaxParticipantsjsonAction(Request $request) {
+        //dump($type,$value);die;
+        $em = $this->getDoctrine()->getManager();
+        $findEvents = $em->getRepository('AppBundle:Event')->sortByParticipants();
+
+        $events = $this->fetchArreyAction($findEvents);
+        return new JsonResponse($events);
+    }
+
+    /**
+     * @Route("/json_near_me_{lat}_{lng}", options={"expose"=true}, name="json_near_me")
+     * @param Request $request
+     */
+    public function eventsNearMeAction($lat, $lng, Request $request) {
+
+        $em = $this->getDoctrine()->getManager();
+        $findEvents = $em->getRepository('AppBundle:Event')->sortByNearest($lat, $lng);
+
+        $events = $this->fetchArreyAction($findEvents);
+        return new JsonResponse($events);
     }
 
 }

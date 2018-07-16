@@ -68,11 +68,11 @@ class EventController extends Controller {
     }
 
     /**
-     * @Route("tri/{type}/{value}", name="triEvents")
+     * @Route("filter/{type}/{value}", name="filterEvents")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function triAction($type, $value, Request $request) {
+    public function filterAction($type, $value, Request $request) { // exemple: type = category / value= 1 (informatique)
         //dump($type,$value);die;
         $em = $this->getDoctrine()->getManager();
         $findEvents = $em->getRepository('AppBundle:Event')->findBy([$type => $value]);
@@ -144,7 +144,7 @@ class EventController extends Controller {
      * @Route("/max_participants", name="sortMaxParticipants")
      * @param Request $request
      */
-    public function sortMaxParticipants(Request $request) {
+    public function sortMaxParticipantsAction(Request $request) {
         //dump($type,$value);die;
         $em = $this->getDoctrine()->getManager();
         $findEvents = $em->getRepository('AppBundle:Event')->sortByParticipants();
@@ -163,7 +163,7 @@ class EventController extends Controller {
      * @Route("/near_me_{lat}_{lng}", options={"expose"=true}, name="near_me")
      * @param Request $request
      */
-    public function eventsNearMe($lat, $lng, Request $request) {
+    public function eventsNearMeAction($lat, $lng, Request $request) {
 
         $em = $this->getDoctrine()->getManager();
         $findEvents = $em->getRepository('AppBundle:Event')->sortByNearest($lat, $lng);

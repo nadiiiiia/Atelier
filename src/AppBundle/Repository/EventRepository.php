@@ -117,7 +117,7 @@ class EventRepository extends \Doctrine\ORM\EntityRepository {
 
         $query = $this
                 ->createQueryBuilder('u')
-                ->select('u.id, u.titre, u.description, u.dateDebut, u.prix, u.nbrMax, u.nbrParticipants, u.image')
+                ->select('u')
                 ->addSelect(
                         '( 3959 * acos(cos(radians(' . floatval($lat) . '))' .
                         '* cos( radians( u.lat ) )' .
@@ -132,6 +132,7 @@ class EventRepository extends \Doctrine\ORM\EntityRepository {
                 //  ->orderBy('distance', 'ASC')
                 //->setMaxResults(100)
                 ->getQuery();
+        dump($query->getResult());
         return $query->getResult();
     }
 

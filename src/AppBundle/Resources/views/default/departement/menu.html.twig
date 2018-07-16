@@ -1,5 +1,5 @@
 {% for departement in departements %}
         
-    <a class="dropdown-item" href="{{path('triEvents',{ 'type': 'departement','value' : departement.id } )}}">{{ departement.nom }}</a>
+    <a class="dropdown-item" href="{{path('filterEvents',{ 'type': 'departement','value' : departement.id } )}}">{{ departement.nom }}</a>
    
 {% endfor %}
