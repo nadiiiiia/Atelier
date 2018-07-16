@@ -5,10 +5,11 @@
         <group>
             <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Entity/User.php</file>
             <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Entity/Certif.php</file>
-            <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Entity/Category.php</file>
-            <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Resources/views/default/event/presentation.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Resources/views/default/modals/cguModal.html.twig</file>
             <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Form/CertifType.php</file>
+            <file>file:/C:/xampp/htdocs/Atelier__/SQL/query.sql</file>
             <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Controller/EventController.php</file>
+            <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Resources/views/default/order/show.html.twig</file>
             <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Entity/Event.php</file>
             <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Resources/views/default/user/editDocs_content.html.twig</file>
         </group>

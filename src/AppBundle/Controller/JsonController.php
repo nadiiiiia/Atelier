@@ -24,13 +24,11 @@ class JsonController extends Controller {
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-  public function eventsJsonAction(Request $request) {
+    public function eventsJsonAction(Request $request) {
 
         $em = $this->getDoctrine()->getManager();
         $findEvents = $em->getRepository('AppBundle:Event')->findAllCurrent();
 
-
-        $filter_name = 'Tous les Ateliers';
         $all_events = array();
         foreach ($findEvents as $event) {
             $event_array = array();
@@ -56,7 +54,7 @@ class JsonController extends Controller {
             $event_array['classe'] = $event->getDepartement()->getNom();
             $event_array['validation'] = $event->getValidation();
             $event_array['note'] = $event->getNote();
-            $event_array['organizer'] = $event->getUtilisateur()->getFirstName().' '.$event->getUtilisateur()->getLastName();
+            $event_array['organizer'] = $event->getUtilisateur()->getFirstName() . ' ' . $event->getUtilisateur()->getLastName();
 
             $images = array();
             foreach ($event->getImages() as $image) {
@@ -72,5 +70,38 @@ class JsonController extends Controller {
         return new JsonResponse($all_events);
     }
 
+    /**
+     * @Route("/json_navbar", name="json_navbar")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function navbarJsonAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $classes = $em->getRepository('AppBundle:Departement')->findAll();
+        $categories = $em->getRepository('AppBundle:Category')->findAll();
+        $regions = $em->getRepository('AppBundle:Region')->findAll();
+
+        $classe_array = array();
+        $category_array = array();
+        $regions_array = array();
+
+
+        foreach ($classes as $classe) {
+            $classe_array[] = $classe->getNom();
+        }
+        foreach ($categories as $category) {
+            $category_array[] = $category->getNom();
+        }
+        foreach ($regions as $region) {
+            $regions_array[] = $region->getNom();
+        }
+        
+         $navbar_array = array(
+            'classes' => $classe_array,
+            'categories' => $category_array,
+             'regions' => $regions_array,
+        );
+          return new JsonResponse($navbar_array);
+    }
 
 }
