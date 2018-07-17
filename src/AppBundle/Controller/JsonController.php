@@ -178,13 +178,13 @@ class JsonController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $findEvents = $em->getRepository('AppBundle:Event')->sortByNearest($lat, $lng);
 
-               $all_events = array();
+        $all_events = array();
         foreach ($findEvents as $event_array) {
             $event = $event_array[0];
-            $distance =  $event_array['distance'];
-            
+            $distance = $event_array['distance'];
+
             $event_array = array();
-            
+
             $event_array['id'] = $event->getId();
             $event_array['category'] = $event->getCategory()->getNom();
             $event_array['titre'] = $event->getTitre();
@@ -207,7 +207,7 @@ class JsonController extends Controller {
             $event_array['validation'] = $event->getValidation();
             $event_array['note'] = $event->getNote();
             $event_array['organizer'] = $event->getUtilisateur()->getFirstName() . ' ' . $event->getUtilisateur()->getLastName();
-             $event_array['distance'] = $distance;
+            $event_array['distance'] = $distance;
             $images = array();
             foreach ($event->getImages() as $image) {
                 $images [] = '/images/' . $image;
@@ -218,6 +218,7 @@ class JsonController extends Controller {
         }
         return new JsonResponse($all_events);
     }
+
     /**
      * @Route("/json_recherche/{motcle}", name="json_event_recherche")
      * @param Request $request
@@ -228,6 +229,39 @@ class JsonController extends Controller {
         //dump($motcle);die;
         $findEvents = $em->getRepository('AppBundle:Event')->findEventByTitle($motcle);
 
- $events = $this->fetchArrayAction($findEvents);
-        return new JsonResponse($events); }
+        $events = $this->fetchArrayAction($findEvents);
+        return new JsonResponse($events);
+    }
+
+    /**
+     * @Route("/json_login", name="json_login")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function loginReactAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $login = $request->get('username');
+        $pass = $request->get('password');
+        dump($login);
+        dump($pass);
+        die();
+        $events = $this->fetchArrayAction($findEvents);
+        return new JsonResponse($events);
+    }
+
+    /**
+     * @Route("/csrf", name="json_login")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function genetateCsrf(Request $request) {
+        /** @var \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface $csrf */
+        $csrf = $this->get('security.csrf.token_manager');
+        $intention = '_token';
+        $token = $csrf->refreshToken($intention);
+  //      dump($token->getValue());die;
+
+        return new JsonResponse($token->getValue());
+    }
+
 }
