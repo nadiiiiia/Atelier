@@ -218,5 +218,16 @@ class JsonController extends Controller {
         }
         return new JsonResponse($all_events);
     }
+    /**
+     * @Route("/json_recherche/{motcle}", name="json_event_recherche")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function rechercheAction($motcle, Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        //dump($motcle);die;
+        $findEvents = $em->getRepository('AppBundle:Event')->findEventByTitle($motcle);
 
+ $events = $this->fetchArrayAction($findEvents);
+        return new JsonResponse($events); }
 }

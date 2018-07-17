@@ -87,7 +87,7 @@
                                     <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mes Ateliers
                                     </a>
                                     <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
-                                        <a class="dropdown-item" href="{{ path('event_new') }}">Nouveau Atelier</a>
+                                        <a class="dropdown-item" href="{{ path('event_new') }}">Nouvel Atelier</a>
                                         <a class="dropdown-item" href="{{ path('org_events_index', {'orgId': app.user.getId}) }}">Liste des Ateliers</a>
                                     </div>
                                 </li> 
@@ -106,7 +106,7 @@
 
                             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                                 <li class="nav-item"  style="padding-left: .5rem; padding-top: .5rem;">
-                                    <span style="color:white;"> Bienvenu  </span>
+                                    <span style="color:white;"> Bienvenue  </span>
                                 </li>
                                 <li class="nav-item" style="padding-right: .5rem; padding-left: .5rem; padding-top: .5rem;">
                                     <a href="{{ path('fos_user_profile_show') }}" title="Mon Profile" style="color:white;">{{ app.user.getFirstName}} |</a> 

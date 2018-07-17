@@ -167,9 +167,7 @@ class EventController extends Controller {
 
         $em = $this->getDoctrine()->getManager();
         $findEvents = $em->getRepository('AppBundle:Event')->sortByNearest($lat, $lng);
-        //dump($findEvents); die;
-       
-
+      
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
                 $findEvents, $request->query->getInt('page', 1)/* page number */, 6 /* limit per page */
@@ -291,7 +289,7 @@ class EventController extends Controller {
                 ->add('photo', FileType::class, array('attr' => array(
                         'accept' => 'image/*' // pour n'accepter que les images
                     ),
-                    'label' => 'Photo de profile *'
+                    'label' => 'Photo de profil *'
                 ))
                 ->add('certifs', FileType::class, array('attr' => array(
                         'accept' => 'image/*' // pour n'accepter que les images
