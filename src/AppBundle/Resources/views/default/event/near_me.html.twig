@@ -1,0 +1,167 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  {#  {{ dump(events)}}#}
+    <main>
+        {% if is_granted('ROLE_ADMIN') %}
+            <div class="list_event">
+                <button class=" btn btn-primary-atelier btn-md pull-right waves-effect waves-light" type="button" onclick="location.href = '{{ path('admin_events_index')}}'" id="list_events">Liste des Ateliers </button>
+            </div>
+        {% else %}
+            {{ include('elements/tri_btn.html.twig') }}
+        {% endif %}
+
+        <!--Main layout-->
+        <div class="container">
+
+            <!--Page heading-->
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="h1-responsive">{{filter_name}}  {#le titre#}
+                        <!-- <small class="text-muted">recipes for launches and desserts </small> -->
+                    </h1>
+                </div>
+            </div>
+            <!--/.Page heading-->
+            <hr>
+
+            <!--row-->
+            <div class="row mt-5 wow">
+                <!--column-->
+                {% for array_event in events %}
+                    {% set event = array_event[0] %}
+                    {% set distance = array_event.distance %}
+                  
+                    <div class="col-lg-4 wow fadeIn" data-wow-delay="0.2s">
+                        <!--Card-->
+                        <div class="card" id="card_{{event.id}}" onclick="location.href = '{{ path('presentation',{'id': event.id})}}';">
+
+                            <!--Card image-->
+
+                            <div class="view overlay hm-white-slight z-depth-1">
+
+                                {% if event.images != null %}
+                                    <img src="{{asset('uploads/images/' ~ event.images[0])}}" class="img-fluid" alt="" style="width:339.99px;height:226px;">
+                                {% endif %}
+
+                                <a>
+                                    <div class="mask waves-effect waves-light"></div>
+                                </a>
+                            </div>
+
+                            <!--/.Card image-->
+
+                            <!--Card content-->
+                            <div class="card-body text-center">
+                                <!--Category & Title-->
+                                <h5>{{event.category.nom}}</h5>
+                                <h4 class="card-title"><strong><a href="{{ path('presentation',{'id': event.id})}}" class="">{{event.titre}}</a></strong></h4>
+
+                                <!--Description-->
+                                <p class="card-text">{#{{event.description|raw }}#}
+                                    {%if event.description | length < 35 %}
+                                        {{event.description|raw }}
+                                    {% else %}
+                                        {{ event.description|slice(0, 35) }} <a href="{{ path('presentation',{'id': event.id})}}" class=""> ... </a>
+                                    {% endif %}
+                                </p>
+
+
+
+                                <div class=" progress "  style="margin-bottom: 0rem;"  >
+                                    <div id="{{event.id}}" class="progress-bar bg-success progress-bar-striped" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                    {#   <span id="percent">50%</span>#}
+                                </div>
+                                <div  align="center" class="percent_val" ><p><font size="2" id="percent_{{event.id}}" ></font></p></div>
+
+                                <div  align="center" class="nbr_eventClient" ><p><font size="2" id="eventClient_{{event.id}}" > ({{event.nbrParticipants}}/{{event.nbrMax}}) Participants</font></p></div>
+
+
+                            </div>
+                            <!--/.Card content-->
+
+                            <!--Card footer-->
+                            <div class="card-data" style="background: #929FBA;">
+                                <ul class="list-unstyled">
+                                    <li class="ml-0">{{event.prix}} €</li>
+                                    <li class="ml-5">
+                                        <i class="fa fa-clock-o ml-0 pl-0"></i> {{event.dateDebut|date("d/m/Y") }}</li>
+                                </ul>
+                            </div>
+                            <!--/.Card footer-->
+                        </div>
+                        <!--/.Card-->
+
+
+                    </div>
+
+                    <script type="text/javascript">
+
+                        progressBar({{event.id}},{{event.nbrParticipants}} , {{event.nbrMax}});
+                                function progressBar(id, actual, max) {
+                                    var progressBar = document.getElementById(id);
+                                    var percent = ((100 * parseFloat(actual)) / parseFloat(max));
+                                    var percentVal = percent.toFixed();
+                                    progressBar.style.width = percentVal + '%';
+
+                                    var eventClients = document.getElementById('eventClient_{{event.id}}');
+
+
+                                    if (actual < max) {
+                                        progressBar.classList.remove('bg-success');
+                                        progressBar.classList.remove('bg-danger');
+                                        progressBar.classList.add('bg-warning');
+                                    } else if (actual == max) {
+                                        progressBar.classList.remove('bg-warning');
+                                        progressBar.classList.remove('bg-danger');
+                                        progressBar.classList.add('bg-success');
+                                        eventClients.innerHTML = '<b>COMPLET</b>';
+                                    }
+
+                                    var percent_val = document.getElementById('percent_{{event.id}}');
+                                    percent_val.innerHTML = percentVal + '%'; // afficher la pourcentage sous progressbar
+
+
+                                }
+
+                    </script>
+                {% endfor %}
+                <!--/. column-->
+
+
+            </div>
+            <!--/.row-->
+
+
+            <hr>
+            <!--Pagination-->
+            <nav class="row flex-center wow fadeIn" data-wow-delay="0.2s">
+                <div class="navigation">
+                    {{ knp_pagination_render(events) }}
+                </div>
+            </nav>
+            <!--/.Pagination-->
+
+
+        </div>
+        <!--/.Main layout-->
+    </main>
+
+    {#<script type="text/javascript" src="{{asset('bundles/app/js/progressBar.js')}}"></script>#}
+    <script type="text/javascript">
+
+
+
+
+
+
+    </script>
+{% endblock %}
+
+
+{% block javascripts %}
+
+
+
+{% endblock %}
+

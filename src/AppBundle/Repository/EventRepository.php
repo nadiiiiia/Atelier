@@ -132,7 +132,7 @@ class EventRepository extends \Doctrine\ORM\EntityRepository {
                 //  ->orderBy('distance', 'ASC')
                 //->setMaxResults(100)
                 ->getQuery();
-        dump($query->getResult());
+      
         return $query->getResult();
     }
 

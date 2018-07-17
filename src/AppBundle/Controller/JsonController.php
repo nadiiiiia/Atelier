@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class JsonController extends Controller {
 
-    public function fetchArreyAction($events) {
+    public function fetchArrayAction($events) {
         $all_events = array();
         foreach ($events as $event) {
             $event_array = array();
@@ -68,7 +68,7 @@ class JsonController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $findEvents = $em->getRepository('AppBundle:Event')->findAllCurrent();
 
-        $events = $this->fetchArreyAction($findEvents);
+        $events = $this->fetchArrayAction($findEvents);
         return new JsonResponse($events);
     }
 
@@ -128,7 +128,7 @@ class JsonController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $findEvents = $em->getRepository('AppBundle:Event')->findBy([$type => $value]);
 
-        $events = $this->fetchArreyAction($findEvents);
+        $events = $this->fetchArrayAction($findEvents);
         return new JsonResponse($events);
     }
 
@@ -140,7 +140,7 @@ class JsonController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $findEvents = $em->getRepository('AppBundle:Event')->sortByMinPrice();
 
-        $events = $this->fetchArreyAction($findEvents);
+        $events = $this->fetchArrayAction($findEvents);
         return new JsonResponse($events);
     }
 
@@ -152,7 +152,7 @@ class JsonController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $findEvents = $em->getRepository('AppBundle:Event')->sortByMaxPrice();
 
-        $events = $this->fetchArreyAction($findEvents);
+        $events = $this->fetchArrayAction($findEvents);
         return new JsonResponse($events);
     }
 
@@ -165,7 +165,7 @@ class JsonController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $findEvents = $em->getRepository('AppBundle:Event')->sortByParticipants();
 
-        $events = $this->fetchArreyAction($findEvents);
+        $events = $this->fetchArrayAction($findEvents);
         return new JsonResponse($events);
     }
 
@@ -178,8 +178,45 @@ class JsonController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $findEvents = $em->getRepository('AppBundle:Event')->sortByNearest($lat, $lng);
 
-        $events = $this->fetchArreyAction($findEvents);
-        return new JsonResponse($events);
+               $all_events = array();
+        foreach ($findEvents as $event_array) {
+            $event = $event_array[0];
+            $distance =  $event_array['distance'];
+            
+            $event_array = array();
+            
+            $event_array['id'] = $event->getId();
+            $event_array['category'] = $event->getCategory()->getNom();
+            $event_array['titre'] = $event->getTitre();
+            $event_array['desc'] = $event->getDescription();
+            $event_array['dateDeb'] = $event->getDateDebut()->format('d/m/Y');
+            $event_array['heureDeb'] = $event->getDateDebut()->format('H:i');
+            $event_array['dateFin'] = $event->getDateFin()->format('d/m/Y');
+            $event_array['heureFin'] = $event->getDateFin()->format('H:i');
+            $event_array['prix'] = $event->getPrix();
+            $event_array['nbrMax'] = $event->getNbrMax();
+            $event_array['nbrParticipants'] = $event->getNbrParticipants();
+            $event_array['dispo'] = $event_array['nbrMax'] - $event_array['nbrParticipants'];
+            $event_array['adresse'] = $event->getAdresse();
+            $event_array['codeP'] = $event->getCodeP();
+            $event_array['lng'] = $event->getLng();
+            $event_array['lat'] = $event->getLat();
+            $event_array['ville'] = $event->getVille()->getNom();
+            $event_array['region'] = $event->getRegion()->getNom();
+            $event_array['classe'] = $event->getDepartement()->getNom();
+            $event_array['validation'] = $event->getValidation();
+            $event_array['note'] = $event->getNote();
+            $event_array['organizer'] = $event->getUtilisateur()->getFirstName() . ' ' . $event->getUtilisateur()->getLastName();
+             $event_array['distance'] = $distance;
+            $images = array();
+            foreach ($event->getImages() as $image) {
+                $images [] = '/images/' . $image;
+            }
+            $event_array['images'] = $images;
+
+            $all_events ["event_" . $event->getId()] = $event_array;
+        }
+        return new JsonResponse($all_events);
     }
 
 }

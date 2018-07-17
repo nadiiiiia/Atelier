@@ -167,15 +167,16 @@ class EventController extends Controller {
 
         $em = $this->getDoctrine()->getManager();
         $findEvents = $em->getRepository('AppBundle:Event')->sortByNearest($lat, $lng);
+        //dump($findEvents); die;
+       
 
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
                 $findEvents, $request->query->getInt('page', 1)/* page number */, 6 /* limit per page */
         );
 
-        $events_json = 0; //$this->get('jms_serializer')->serialize($findEvents, 'json');
         $filter_name = 'Tri par plus proches';
-        return $this->render('AppBundle:default:event/accueil.html.twig', array('events' => $pagination, 'filter_name' => $filter_name, 'events_json' => $events_json));
+        return $this->render('AppBundle:default:event/near_me.html.twig', array('events' => $pagination, 'filter_name' => $filter_name));
     }
 
     /**
