@@ -193,6 +193,7 @@ fos_user:
             type: AppBundle\Form\RegistrationType         
     service:                               
         mailer: fos_user.mailer.twig_swift  
+        
 
 
 knp_paginator:

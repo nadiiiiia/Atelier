@@ -234,23 +234,143 @@ class JsonController extends Controller {
     }
 
     /**
+     * @Route("/json_users", name="json_users")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function usersReactAction(Request $request) {
+
+        // dump($request);die;
+        $login = $request->get('username');
+        $pass = $request->get('password'); //'$2y$13$KL/hHBxdU4kZka2gZJZddOoz0gN03CUZuUWXoSIinarKpTVegSkLS';
+
+        $userManager = $this->get('fos_user.user_manager');
+        $users = $userManager->findUsers();
+
+        $all_users = array();
+        foreach ($users as $user) {
+            $user_array = array();
+            $user_array['id'] = $user->getId();
+            $user_array['first_name'] = $user->getFirstName();
+            $user_array['Last_name'] = $user->getLastName();
+            $user_array['username'] = $user->getUsername();
+            $user_array['password'] = $user->getPassword();
+            $user_array['email'] = $user->getEmail();
+            $roles = $user->getRoles();
+            $user_array['roles'] = $roles[0];
+            $all_users ["user_" . $user->getId()] = $user_array;
+        }
+//     dump($user_array);
+//        die();
+
+
+        return new JsonResponse($all_users);
+    }
+
+    /**
      * @Route("/json_login", name="json_login")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function loginReactAction(Request $request) {
-        $em = $this->getDoctrine()->getManager();
+
+        // dump($request);die;
         $login = $request->get('username');
-        $pass = $request->get('password');
-        dump($login);
-        dump($pass);
-        die();
-        $events = $this->fetchArrayAction($findEvents);
-        return new JsonResponse($events);
+        $pass = $request->get('password'); //'$2y$13$KL/hHBxdU4kZka2gZJZddOoz0gN03CUZuUWXoSIinarKpTVegSkLS';
+
+        $userManager = $this->get('fos_user.user_manager');
+        $user = $userManager->findUserByUsernameOrEmail($login);
+
+        $user_array = array();
+
+        $user_array['id'] = $user->getId();
+        $user_array['first_name'] = $user->getFirstName();
+        $user_array['Last_name'] = $user->getLastName();
+        $user_array['username'] = $user->getUsername();
+        $user_array['password'] = $user->getPassword();
+        $user_array['email'] = $user->getEmail();
+        $roles = $user->getRoles();
+        $user_array['roles'] = $roles[0];
+
+//     dump($user_array);
+//        die();
+
+
+        return new JsonResponse($user_array);
     }
 
     /**
-     * @Route("/csrf", name="json_login")
+     * @Route("/json_login_test", name="json_login_test")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function loginTestReactAction(Request $request) {
+
+//        $login = 'admin'; //$request->get('username');
+//        $pass = '000000'; //$request->get('password'); //'$2y$13$KL/hHBxdU4kZka2gZJZddOoz0gN03CUZuUWXoSIinarKpTVegSkLS';
+
+        $username = 'admin';//$request->request->get('username');
+        $password =  '000000';//$request->request->get('password');
+
+        if(is_null($username) || is_null($password)) {
+            return new Response(
+              'Please verify all your inputs.',
+              Response::HTTP_UNAUTHORIZED,
+              array('Content-type' => 'application/json')
+            );
+        }
+
+        $user_manager = $this->get('fos_user.user_manager');
+        $factory = $this->get('security.encoder_factory');
+
+        $user = $user_manager->findUserByUsernameOrEmail($username);
+        $encoder = $factory->getEncoder($user);
+        $salt = $user->getSalt();
+
+        if($encoder->isPasswordValid($user->getPassword(), $password, $salt)) {
+            $response = new Response(
+              'Welcome '. $user->getUsername(),
+              Response::HTTP_OK,
+              array('Content-type' => 'application/json')
+            );
+        } else {
+            $response = new Response(
+              'Username or Password not valid.',
+              Response::HTTP_UNAUTHORIZED,
+              array('Content-type' => 'application/json')
+            );
+        }
+
+//        $userManager = $this->get('fos_user.user_manager');
+//        $user_login = $userManager->findUserByUsernameOrEmail($login);
+//       
+//        $enc_pass =   $user_login->getPlainPassword();
+//        dump($enc_pass);
+//        die();
+//        if ($user_login) {
+//            $reponse = $userManager->findUserBy(array('email' => $user->getEmail(), 'password' => $pass));
+//        }
+//
+//        $user_array = array();
+//
+//        $user_array['id'] = $user->getId();
+//        $user_array['first_name'] = $user->getFirstName();
+//        $user_array['Last_name'] = $user->getLastName();
+//        $user_array['username'] = $user->getUsername();
+//        $user_array['email'] = $user->getEmail();
+//        $user_array['password'] = $user->getPassword();
+//        $roles = $user->getRoles();
+//        $user_array['roles'] = $roles[0];
+//
+////     dump($user_array);
+////        die();
+//
+//
+//        return new JsonResponse($user_array);
+//    }
+
+    /**
+     * @Route("/csrf", name="json_csrf")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -259,7 +379,7 @@ class JsonController extends Controller {
         $csrf = $this->get('security.csrf.token_manager');
         $intention = '_token';
         $token = $csrf->refreshToken($intention);
-  //      dump($token->getValue());die;
+        //      dump($token->getValue());die;
 
         return new JsonResponse($token->getValue());
     }
