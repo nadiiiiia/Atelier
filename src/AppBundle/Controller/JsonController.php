@@ -10,14 +10,20 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\ParameterBag;
+use FOS\RestBundle\Controller\Annotations as Rest;
+use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\View\View;
 
 /**
  * Event controller.
  *
  * 
  */
-class JsonController extends Controller {
+class JsonController extends FOSRestController {
+    
 
     public function fetchArrayAction($events) {
         $all_events = array();
@@ -303,43 +309,60 @@ class JsonController extends Controller {
      * @Route("/json_login_test", name="json_login_test")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\Post("/json_login_test")
      */
     public function loginTestReactAction(Request $request) {
 
-//        $login = 'admin'; //$request->get('username');
-//        $pass = '000000'; //$request->get('password'); //'$2y$13$KL/hHBxdU4kZka2gZJZddOoz0gN03CUZuUWXoSIinarKpTVegSkLS';
 
-        $username = 'admin';//$request->request->get('username');
-        $password =  '000000';//$request->request->get('password');
-
+       $username = $request->get('username');
+        $password = $request->get('password');
+      
+ 
         if(is_null($username) || is_null($password)) {
-            return new Response(
-              'Please verify all your inputs.',
-              Response::HTTP_UNAUTHORIZED,
-              array('Content-type' => 'application/json')
+            return new JsonResponse(
+                 
+              'Please verify all your inputs.' 
+//              JsonResponse::HTTP_UNAUTHORIZED,
+//              array('Content-type' => 'application/json')
             );
         }
-
+        
         $user_manager = $this->get('fos_user.user_manager');
         $factory = $this->get('security.encoder_factory');
 
         $user = $user_manager->findUserByUsernameOrEmail($username);
         $encoder = $factory->getEncoder($user);
         $salt = $user->getSalt();
+        
+        $user_array = array();
+
+        $user_array['id'] = $user->getId();
+        $user_array['first_name'] = $user->getFirstName();
+        $user_array['Last_name'] = $user->getLastName();
+        $user_array['username'] = $user->getUsername();
+        $user_array['password'] = $user->getPassword();
+        $user_array['email'] = $user->getEmail();
+        $roles = $user->getRoles();
+        $user_array['roles'] = $roles[0];
 
         if($encoder->isPasswordValid($user->getPassword(), $password, $salt)) {
-            $response = new Response(
-              'Welcome '. $user->getUsername(),
-              Response::HTTP_OK,
-              array('Content-type' => 'application/json')
+            $response = new JsonResponse(
+              $user_array
+//              Response::HTTP_OK,
+//              array('Content-type' => 'application/json')
+                 //$user_array   
             );
         } else {
-            $response = new Response(
-              'Username or Password not valid.',
-              Response::HTTP_UNAUTHORIZED,
-              array('Content-type' => 'application/json')
+            $response = new JsonResponse(
+//              'Username or Password not valid.',
+//              Response::HTTP_UNAUTHORIZED,
+//              array('Content-type' => 'application/json')
+                    'login or password not valid !'
             );
         }
+        
+        return $response;
+    }
 
 //        $userManager = $this->get('fos_user.user_manager');
 //        $user_login = $userManager->findUserByUsernameOrEmail($login);

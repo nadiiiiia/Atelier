@@ -262,3 +262,15 @@ jms_payment_paypal:
     notify_url: https://example.com/notify-url
     cancel_url: http://dsc-power.com/Atelier/web/
     useraction: commit
+    
+# FOSRest Configuration
+fos_rest:
+    body_listener: true
+#    format_listener:
+#        rules:
+#            - { path: '^/', priorities: ['json'], fallback_format: json, prefer_extension: false }
+    param_fetcher_listener: true
+    view:
+        view_response_listener: 'force'
+        formats:
+            json: true
