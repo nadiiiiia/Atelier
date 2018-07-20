@@ -17,9 +17,11 @@ class CertifType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder->add('titre')
                 ->add('file', FileType::class, array('attr' => array(
+                    'data_class' => null,
                         'accept' => 'image/*' // pour n'accepter que les images
                     ),
-        ));
+        ))
+        ;
     }
 
 /**

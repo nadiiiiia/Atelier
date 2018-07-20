@@ -28,15 +28,15 @@ class Ville
      */
     private $nom;
     
-//     /**
-//     * @ORM\OneToMany(targetEntity="Event", mappedBy="ville", cascade={"persist", "remove"})
-//     * @ORM\JoinColumn(nullable=true)
-//     */
-//    private $events;
-//    
-//    public function __construct() {
-//        $this->events = new ArrayCollection();
-//    }
+     /**
+     * @ORM\OneToMany(targetEntity="Event", mappedBy="ville", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $events;
+    
+    public function __construct() {
+        $this->events = new ArrayCollection();
+    }
 
 
     /**
@@ -72,5 +72,8 @@ class Ville
     {
         return $this->nom;
     }
+	    
+    public function __toString() {
+        return $this->getNom();
+    }
 }
-

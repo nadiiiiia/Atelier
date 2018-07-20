@@ -23,10 +23,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\TelType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Filesystem\Filesystem;
 use AppBundle\Entity\Event;
 use AppBundle\Entity\Order;
@@ -34,6 +30,8 @@ use ReCaptcha\ReCaptcha; // Include the recaptcha lib
 use AppBundle\Entity\Image;
 use AppBundle\Form\ImageType;
 use AppBundle\Form\CertifType;
+use AppBundle\Entity\Certif;
+
 
 /**
  * Event controller.
@@ -654,48 +652,21 @@ class EventController extends Controller {
     public function editProfileAction(Request $request) {
 //dump($request);die;
         $user = $this->get('security.token_storage')->getToken()->getUser();
+            $certif1 = new Certif();
+        $certif1->setTitre('certif1');
+        $user->getCertifs()->add($certif1);
+        $certif2 = new Certif();
+        $certif2->setTitre('certif2');
+        $user->getCertifs()->add($certif2);
         $tel = $user->getTel();
         $adresse = $user->getAdresse();
-        $form = $this->createFormBuilder()
-                ->add('tel', NumberType ::class, array(
-                    'attr' => array('class' => 'form-control',
-                        'value' => $tel,
-                        'minlength' => '8'
-                    ),
-                    'invalid_message' => 'Le numéro de téléphone doit être au moins de %num% chiffres',
-                    'invalid_message_parameters' => array('%num%' => 8),
-                    'label' => 'Numéro de téléphone '
-                ))
-                ->add('cin', ImageType::class, array('attr' => array(
-                        'accept' => 'image/*' // pour n'accepter que les images
-                    ),
-                    'label' => 'Identifiant '
-                ))
-                ->add('photo', FileType::class, array('attr' => array(
-                        'accept' => 'image/*' // pour n'accepter que les images
-                    ),
-                    'label' => 'Photo de profile '
-                ))
-                ->add('certifs', CollectionType::class, array(
-                    'entry_type' => CertifType::class,
-                    'entry_options' => array('label' => false),
-                    'allow_add' => true,
-                    'prototype' => true,
-                     'by_reference' => false,
-                ))
-                ->add('adresse', TextType::class, array(
-                    'attr' => array('class' => 'form-control',
-                        'value' => $adresse),
-                    'label' => 'Adresse'
-                ))
-                ->getForm();
+        $form = $this->createForm('AppBundle\Form\UserType', $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             // data is an array with "name", "email", and "message" keys
             $data = $form->getData();
-            dump($data);die;
             $user->setTel($data['tel']);
             $user->setAdresse($data['adresse']);
             $update = 0;
@@ -722,25 +693,32 @@ class EventController extends Controller {
             }
             // fin ajout photo
             /*             * ********Traitement des certifs**************** */
-            if ($data['certifs']) {
-                $certifs = $data['certifs'];
-                //dump($certifs); die;
-                $cert = array();
-                foreach ($certifs as $certif) {
-                    if ($certif->file != null) {
-                        $certif_titre = $certif->titre;
-                        $certif_file = $certif->file;
-                        $certifName = 'CERTIF_' . md5(uniqid()) . '.' . $certif_file->guessExtension();
-                        $certif_file->move($this->getParameter('profile_directory'), $certifName);
-                        $certif = new Certif();
-
-                        $certif->setTitre($certif_titre);
-                        $certif->setPath($certifName);
-                        $user->$getCertifs()->add($certif);
-                    }
-                }
-                $update++;
-            }
+//            if ($data['certifs']) {
+//                $certifs = $data['certifs'];
+//                //dump($certifs); die;
+//                $cert = array();
+//                foreach ($certifs as $certif) {
+//                    if ($certif->file != null) {
+//                        $certif_titre = $certif->titre;
+//                        $certif_file = $certif->file;
+//                        $certifName = 'CERTIF_' . md5(uniqid()) . '.' . $certif_file->guessExtension();
+//                        $certif_file->move($this->getParameter('profile_directory'), $certifName);
+//                        $certif = new Certif();
+//
+//                        $certif->setTitre($certif_titre);
+//                        $certif->setPath($certifName);
+//                        $user->$getCertifs()->add($certif);
+//                    }
+//                }
+//                $update++;
+//            }
+//                        if ($data->getCertifs()) {
+//                $certifs = $data->getCertifs();
+//
+//                foreach ($certifs as $certif) {
+//                    $user->addCertif($certif);
+//                }
+//            }
 
             if ($update != 0) {
                 // si les certifs ou cin sont odifiés alors rendre les events refusés ==> en cours

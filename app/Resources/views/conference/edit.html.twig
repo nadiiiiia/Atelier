@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Conference edit</h1>
+
+    {{ form_start(edit_form) }}
+        {{ form_widget(edit_form.name) }}
+        
+              <h3>Speakers</h3>
+    <div class="speakers" data-prototype="{{ form_widget(edit_form.speakers.vars.prototype)|e('html_attr') }}">
+        {# iterate over each existing tag and render its only field: name #}
+        {% for speaker in edit_form.speakers %}
+            <div>{{ form_row(speaker.name) }}</div>
+        {% endfor %}
+    </div>
+        <input type="submit" value="Edit" />
+    {{ form_end(edit_form) }}
+
+    <ul>
+        <li>
+            <a href="{{ path('conference_index') }}">Back to the list</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+            
+                       <script type="text/javascript" src="{{asset('bundles/app/js/jquery-3.2.1.min.js')}}"></script>
+            <script>
+                
+                var $collectionHolder;
+
+// setup an "add a speaker" link
+var $addSpeakerButton = $('<button type="button" class="add_Speaker_link">Add a Speaker</button>');
+var $newLinkDiv = $('<div></div>').append($addSpeakerButton);
+
+jQuery(document).ready(function() {
+    // Get the div that holds the collection of speakers
+    $collectionHolder = $('div.speakers');
+
+    // add the "add a speaker" anchor and div to the speakers div
+    $collectionHolder.append($newLinkDiv);
+
+    // count the current form inputs we have (e.g. 2), use that as the new
+    // index when inserting a new item (e.g. 2)
+    $addSpeakerButton.data('index', $collectionHolder.find(':input').length);
+
+    $addSpeakerButton.on('click', function(e) {
+        // add a new tag form (see next code block)
+        addSpeakerForm($collectionHolder, $newLinkDiv);
+    });
+});
+
+function addSpeakerForm($collectionHolder, $newLinkDiv) {
+    // Get the data-prototype explained earlier
+    var prototype = $collectionHolder.data('prototype');
+
+    // get the new index
+    var index = $collectionHolder.data('index');
+
+    var newForm = prototype;
+    // You need this only if you didn't set 'label' => false in your tags field in TaskType
+    // Replace '__name__label__' in the prototype's HTML to
+    // instead be a number based on how many items we have
+    // newForm = newForm.replace(/__name__label__/g, index);
+
+    // Replace '__name__' in the prototype's HTML to
+    // instead be a number based on how many items we have
+    newForm = newForm.replace(/__name__/g, index);
+
+    // increase the index with one for the next item
+    $collectionHolder.data('index', index + 1);
+
+    // Display the form in the page in an li, before the "Add a tag" link li
+    var $newFormDiv = $('<div></div>').append(newForm);
+    $newLinkDiv.before($newFormDiv);
+}
+            </script>
+{% endblock %}

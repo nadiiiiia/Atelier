@@ -1,6 +1,6 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-{{ form_start(form, { 'action': path('profile_edit_info'), 'attr': { 'class': 'fos_user_profile_edit' } }) }}
+{{ form_start(form, { 'action': path('profile_edit_info',  'attr': {'enctype': 'multipart/form-data'})}) }}
 {#  {{ form_widget(form) }}#}
 <div class="md-form"> 
     {{ form_label(form.tel) }}
@@ -53,20 +53,15 @@
         </div>
     {% endif %}
 </div>
-<h3>Certificats</h3>
-<div class="certifs" id="certifs" data-prototype="{{ form_widget(form.certifs.vars.prototype)|e('html_attr') }}">
-     <br> <br>
-    {# iterate over each existing tag and render its only field: name #}
-{#   {{form_widget(form.certifs) }}#}
-    {% for certif in form.certifs %}
-        <div class="md-form">{{ form_label(certif.titre) }}
-            {{ form_widget(certif.titre) }}</div>
-        <div class="md-form">
-            {{ form_label(certif.file) }}
-            <br> <br>
-            {{ form_widget(certif.file) }}</div>
-    {% endfor %}
-</div>
+
+  <h3>Certifs</h3>
+    <ul class="certifs">
+        {# iterate over each existing tag and render its only field: name #}
+        {% for certif in form.certifs %}
+            <li>{{ form_row(certif.titre) }}</li>
+        {% endfor %}
+    </ul>
+{{ form_end(form) }}
 
 
 
@@ -78,7 +73,7 @@
 
 {{ form_end(form) }}
 
-<script type="text/javascript" src="{{asset('bundles/app/js/jquery-3.2.1.min.js')}}"></script>
+{#<script type="text/javascript" src="{{asset('bundles/app/js/jquery-3.2.1.min.js')}}"></script>
 <script>
     document.querySelector('#form_cin_titre').required = false;
     document.querySelector('#form_cin_file').required = false;
@@ -129,4 +124,4 @@
             var $newFormDiv = $('<div></div>').append(newForm);
             $newLinkDiv.before($newFormDiv);
         }
-</script>
+</script>#}

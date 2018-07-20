@@ -629,7 +629,7 @@ class Event {
     /**
      * Set validation
      *
-     * @param boolean $validation
+     * @param int $validation
      *
      * @return Event
      */
@@ -643,7 +643,7 @@ class Event {
     /**
      * Get validation
      *
-     * @return boolean
+     * @return int
      */
     public function getValidation()
     {
@@ -682,5 +682,29 @@ class Event {
     public function getOrders()
     {
         return $this->orders;
+    }
+
+    /**
+     * Set note
+     *
+     * @param string $note
+     *
+     * @return Event
+     */
+    public function setNote($note)
+    {
+        $this->note = $note;
+
+        return $this;
+    }
+
+    /**
+     * Get note
+     *
+     * @return string
+     */
+    public function getNote()
+    {
+        return $this->note;
     }
 }

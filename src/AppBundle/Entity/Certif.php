@@ -21,30 +21,28 @@ class Certif {
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="titre", type="string", length=255, nullable=true)
      */
-    public $titre;
+    protected $titre;
+
+//    /**
+//     * @var string
+//     *
+//     * @ORM\Column(name="path", type="string", length=255, nullable=true)
+//     */
+//     public $path;
+// 
+//    public $file;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="path", type="string", length=255, nullable=true)
-     */
-     public $path;
- 
-    public $file;
-
-    /**
-     * @Assert\NotNull()
      * @ORM\ManyToOne(targetEntity="User", inversedBy="certifs", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
      */
-    private $user;
+    protected $user;
 
     /**
      * Get id
@@ -121,8 +119,8 @@ class Certif {
         return $this->user;
     }
 
-    public function __toString() {
-        return $this->getTitre();
-    }
+//    public function __toString() {
+//        return $this->getTitre();
+//    }
 
 }

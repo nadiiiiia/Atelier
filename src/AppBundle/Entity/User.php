@@ -75,7 +75,6 @@ class User extends BaseUser {
 
     /**
      * @ORM\OneToMany(targetEntity="Certif", mappedBy="user", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=true)
      */
     protected $certifs;
 

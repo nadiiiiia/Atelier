@@ -337,6 +337,7 @@ class User extends BaseUser {
     public function addCertif(\AppBundle\Entity\Certif $certif)
     {
         $this->certifs[] = $certif;
+        $certif->setUser($this);
 
         return $this;
     }

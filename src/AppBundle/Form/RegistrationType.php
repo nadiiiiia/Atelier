@@ -27,12 +27,6 @@ class RegistrationType extends AbstractType {
                     'attr' => array('class' => 'form-control birth-day-fr floating-label'),
                     'label' => 'Date de naissance'
                 ))
-//                ->add('photo', FileType::class, array('attr' => array(
-//                        'accept' => 'image/*', // pour n'accepter que les images
-//                    ),
-//                    'label' => 'Photo de profile ',
-//                    'data_class' => null
-//                ))
                 ->add('roles', CollectionType::class, array(
                     'entry_type' => ChoiceType::class,
                     'entry_options' => array(
