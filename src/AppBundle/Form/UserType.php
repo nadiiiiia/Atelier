@@ -59,7 +59,8 @@ class UserType extends AbstractType {
                 ))
                 ->add('certifs', CollectionType::class, array(
                     'entry_type' => CertifType::class,
-                    'entry_options' => array('label' => false),
+                    'label' => false,
+                   // 'entry_options' => array('label' => false),
                     'allow_add' => true,
 //                    'prototype' => true,
 //                     'by_reference' => false,
