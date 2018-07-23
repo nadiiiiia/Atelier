@@ -16,22 +16,22 @@ class CertifType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder->add('titre')
-                ->add('file', FileType::class, array('attr' => array(
+                ->add('file', FileType::class, array(
                     'data_class' => null,
+                    'attr' => array(
                         'accept' => 'image/*' // pour n'accepter que les images
                     ),
-        ))
+                ))
         ;
     }
 
-/**
+    /**
      * {@inheritdoc}
      */
-
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Certif'
-            ));
+        ));
     }
 
     /**

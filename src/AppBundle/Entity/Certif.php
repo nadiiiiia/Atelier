@@ -30,14 +30,14 @@ class Certif {
      */
     protected $titre;
 
-//    /**
-//     * @var string
-//     *
-//     * @ORM\Column(name="path", type="string", length=255, nullable=true)
-//     */
-//     public $path;
-// 
-//    public $file;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="path", type="string", length=255, nullable=true)
+     */
+     public $path;
+ 
+    public $file;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="certifs", cascade={"persist"})

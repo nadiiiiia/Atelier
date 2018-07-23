@@ -49,7 +49,10 @@ class UserType extends AbstractType {
                     ),
                     'label' => 'Identifiant '
                 ))
-                ->add('photo', FileType::class, array('attr' => array(
+                ->add('photo', FileType::class, array(
+                'data_class' => null,
+                'attr' => array(
+                    
                         'accept' => 'image/*' // pour n'accepter que les images
                     ),
                     'label' => 'Photo de profile '
@@ -57,7 +60,7 @@ class UserType extends AbstractType {
                 ->add('certifs', CollectionType::class, array(
                     'entry_type' => CertifType::class,
                     'entry_options' => array('label' => false),
-                        // 'allow_add' => true,
+                    'allow_add' => true,
 //                    'prototype' => true,
 //                     'by_reference' => false,
                 ))

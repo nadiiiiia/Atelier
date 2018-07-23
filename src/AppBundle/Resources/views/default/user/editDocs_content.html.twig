@@ -1,10 +1,25 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-{{ form_start(form, { 'action': path('profile_edit_info',  'attr': {'enctype': 'multipart/form-data'})}) }}
+{{ form_start(form, { 'action': path('profile_edit_info')}) }}
 {#  {{ form_widget(form) }}#}
+<div class="md-form"> 
+    {{ form_label(form.first_name) }}
+    {{form_widget(form.first_name) }}
+    <span class="error-msg"> {{form_errors(form.tel) }}</span>
+</div>
+<div class="md-form"> 
+    {{ form_label(form.last_name) }}
+    {{form_widget(form.last_name) }}
+    <div class="md-form"> 
+    {{ form_label(form.date_naissance) }}
+    {{form_widget(form.date_naissance) }}
+    <span class="error-msg"> {{form_errors(form.tel) }}</span>
+</div>
 <div class="md-form"> 
     {{ form_label(form.tel) }}
     {{form_widget(form.tel) }}
+    <span class="error-msg"> {{form_errors(form.tel) }}</span>
+</div>
     <span class="error-msg"> {{form_errors(form.tel) }}</span>
 </div>
 <div class="md-form">
@@ -54,15 +69,14 @@
     {% endif %}
 </div>
 
-  <h3>Certifs</h3>
-    <ul class="certifs">
-        {# iterate over each existing tag and render its only field: name #}
-        {% for certif in form.certifs %}
-            <li>{{ form_row(certif.titre) }}</li>
-        {% endfor %}
-    </ul>
-{{ form_end(form) }}
-
+<h3>Certifs</h3>
+<div class="certifs" data-prototype="{{ form_widget(form.certifs.vars.prototype)|e('html_attr') }}">
+    {# iterate over each existing tag and render its only field: name #}
+    {% for certif in form.certifs %}
+        <div>{{ form_row(certif.titre) }}</div>
+        <div>{{ form_row(certif.file) }}</div>
+    {% endfor %}
+</div>
 
 
 <div class="text-right">
@@ -73,55 +87,61 @@
 
 {{ form_end(form) }}
 
-{#<script type="text/javascript" src="{{asset('bundles/app/js/jquery-3.2.1.min.js')}}"></script>
+
 <script>
-    document.querySelector('#form_cin_titre').required = false;
-    document.querySelector('#form_cin_file').required = false;
+    document.querySelector('#user_cin_titre').required = false;
+    document.querySelector('#user_cin_file').required = false;
+    document.querySelector('#user_photo').required = false;
 
 </script>
-
+<script type="text/javascript" src="{{asset('bundles/app/js/jquery-3.2.1.min.js')}}"></script>
 <script>
+
     var $collectionHolder;
 
 // setup an "add a certif" link
-    var $addCertifButton = $('<button type="button" class="add_certif_link">Ajouter Certif</button>');
+    var $addCertifButton = $('<button type="button" class="add_Certif_link">Ajouter Certif</button>');
     var $newLinkDiv = $('<div></div>').append($addCertifButton);
 
     jQuery(document).ready(function () {
-        // Get the ul that holds the collection of tags
-        $collectionHolder = $('#certifs');
+        // Get the div that holds the collection of speakers
+        $collectionHolder = $('div.certifs');
 
-        // add the "add a certif" anchor and div to the certifs div
+        // add the "add a speaker" anchor and div to the speakers div
         $collectionHolder.append($newLinkDiv);
 
         // count the current form inputs we have (e.g. 2), use that as the new
         // index when inserting a new item (e.g. 2)
-        $collectionHolder.data('index', $collectionHolder.find(':input').length);
+        $addCertifButton.data('index', $collectionHolder.find(':input').length);
 
         $addCertifButton.on('click', function (e) {
-            // add a new certif form (see next code block)
+            // add a new tag form (see next code block)
             addCertifForm($collectionHolder, $newLinkDiv);
         });
     });
 
     function addCertifForm($collectionHolder, $newLinkDiv) {
-    // Get the data-prototype explained earlier
-    var prototype = $collectionHolder.data('prototype');
-            // get the new index
-            var index = $collectionHolder.data('index');
-            var newForm = prototype;
-            // You need this only if you didn't set 'label' => false in your tags field in TaskType
-            // Replace '__name__label__' in the prototype's HTML to
-            // instead be a number based on how many items we have
-            // newForm = newForm.replace(/__name__label__/g, index);
+        // Get the data-prototype explained earlier
+        var prototype = $collectionHolder.data('prototype');
 
-            // Replace '__name__' in the prototype's HTML to
-            // instead be a number based on how many items we have
-            newForm = newForm.replace(/__name__/g, index);
-            // increase the index with one for the next item
-            $collectionHolder.data('index', index + 1);
-            // Display the form in the page in an li, before the "Add a tag" link li
-            var $newFormDiv = $('<div></div>').append(newForm);
-            $newLinkDiv.before($newFormDiv);
-        }
-</script>#}
+        // get the new index
+        var index = $collectionHolder.data('index');
+
+        var newForm = prototype;
+        // You need this only if you didn't set 'label' => false in your tags field in TaskType
+        // Replace '__name__label__' in the prototype's HTML to
+        // instead be a number based on how many items we have
+        // newForm = newForm.replace(/__name__label__/g, index);
+
+        // Replace '__name__' in the prototype's HTML to
+        // instead be a number based on how many items we have
+        newForm = newForm.replace(/__name__/g, index);
+
+        // increase the index with one for the next item
+        $collectionHolder.data('index', index + 1);
+
+        // Display the form in the page in an li, before the "Add a tag" link li
+        var $newFormDiv = $('<div></div>').append(newForm);
+        $newLinkDiv.before($newFormDiv);
+    }
+</script>

@@ -3,19 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/xampp/htdocs/Atelier__/app/config/services.yml</file>
+            <file>file:/C:/xampp/htdocs/Atelier__/app/Resources/views/conference/new.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Atelier__/app/config/config.yml</file>
             <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Form/CertifType.php</file>
             <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Controller/EventController.php</file>
+            <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Form/RegistrationType.php</file>
             <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Resources/views/default/user/editDocs_content.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Controller/JsonController.php</file>
+            <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Entity/Conference.php</file>
             <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Entity/User.php</file>
             <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Entity/Certif.php</file>
-            <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Resources/views/default/modals/cguModal.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Controller/DepartementController.php</file>
-            <file>file:/C:/xampp/htdocs/Atelier__/SQL/query.sql</file>
-            <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Controller/RegionController.php</file>
-            <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Resources/views/default/order/show.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Entity/Event.php</file>
-            <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Controller/CategoryController.php</file>
+            <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Form/UserType.php</file>
+            <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Form/ConferenceType.php</file>
+            <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Entity/Speaker.php</file>
         </group>
     </open-files>
 </project-private>

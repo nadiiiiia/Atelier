@@ -32,7 +32,6 @@ use AppBundle\Form\ImageType;
 use AppBundle\Form\CertifType;
 use AppBundle\Entity\Certif;
 
-
 /**
  * Event controller.
  *
@@ -165,7 +164,7 @@ class EventController extends Controller {
 
         $em = $this->getDoctrine()->getManager();
         $findEvents = $em->getRepository('AppBundle:Event')->sortByNearest($lat, $lng);
-      
+
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
                 $findEvents, $request->query->getInt('page', 1)/* page number */, 6 /* limit per page */
@@ -652,12 +651,7 @@ class EventController extends Controller {
     public function editProfileAction(Request $request) {
 //dump($request);die;
         $user = $this->get('security.token_storage')->getToken()->getUser();
-            $certif1 = new Certif();
-        $certif1->setTitre('certif1');
-        $user->getCertifs()->add($certif1);
-        $certif2 = new Certif();
-        $certif2->setTitre('certif2');
-        $user->getCertifs()->add($certif2);
+
         $tel = $user->getTel();
         $adresse = $user->getAdresse();
         $form = $this->createForm('AppBundle\Form\UserType', $user);
@@ -667,13 +661,18 @@ class EventController extends Controller {
 
             // data is an array with "name", "email", and "message" keys
             $data = $form->getData();
-            $user->setTel($data['tel']);
-            $user->setAdresse($data['adresse']);
+            //  dump($data); die;
+            // Récupérer les dates de type string 
+            $form_birthday = $form->get('date_naissance')->getData();
+            // convertir string to objet DateTime
+            $user->setDateNaissance(new \DateTime($form_birthday));
+
             $update = 0;
             //la partie d'ajout de CIN
-            if ($data['cin']->file != null) {
-                $cin_titre = $data['cin']->titre;
-                $cin_file = $data['cin']->file;
+            if ($data->getCin()->file != null) {
+                $cin_titre = $data->getCin()->getTitre();
+                $cin_file = $data->getCin()->file;
+                //   dump($cin_file); die;
                 $cinName = 'ID_' . md5(uniqid()) . '.' . $cin_file->guessExtension();
                 $cin_file->move($this->getParameter('profile_directory'), $cinName);
                 $image = new Image();
@@ -685,8 +684,8 @@ class EventController extends Controller {
             }
             // fin ajout cin
             //la partie d'ajout de photo de profile
-            if ($data['photo']) {
-                $photo = $data['photo'];
+            if ($data->getPhoto()) {
+                $photo = $data->getPhoto();
                 $photoName = 'avatar_' . md5(uniqid()) . '.' . $photo->guessExtension();
                 $photo->move($this->getParameter('profile_directory'), $photoName);
                 $user->setPhoto($photoName);
@@ -712,26 +711,41 @@ class EventController extends Controller {
 //                }
 //                $update++;
 //            }
-//                        if ($data->getCertifs()) {
-//                $certifs = $data->getCertifs();
-//
+            if ($data->getCertifs()) {
+                $certifs = $data->getCertifs();
+
 //                foreach ($certifs as $certif) {
 //                    $user->addCertif($certif);
 //                }
-//            }
+
+                foreach ($certifs as $certif) {
+                    if ($certif->file != null) {
+                        $certif_titre = $certif->getTitre();
+                        $certif_file = $certif->file;
+                        $certifName = 'CERTIF_' . md5(uniqid()) . '.' . $certif_file->guessExtension();
+                        $certif_file->move($this->getParameter('profile_directory'), $certifName);
+                        $certif->setPath($certifName);
+
+                        $user->addCertif($certif);
+                    }
+                }
+                $update++;
+            }
+
 
             if ($update != 0) {
                 // si les certifs ou cin sont odifiés alors rendre les events refusés ==> en cours
                 $userId = $user->getId();
                 $this->resetValidationEvents($userId);
             }
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            //$em->persist($certif);
-            $em->flush();
+            $this->getDoctrine()->getManager()->flush();
 
 
             return $this->redirectToRoute('profile_edit_info');
+        }
+        if ($user->getDateNaissance()) {
+            $form_birthday = $user->getDateNaissance()->format('Y-m-d ');
+            $form->get('date_naissance')->setData($form_birthday);
         }
 
         return $this->render('AppBundle:default:user/editDocs.html.twig', array(

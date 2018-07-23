@@ -6,7 +6,8 @@
     {{ form_start(form) }}
        {{ form_row(form.name) }}
         <h3>Speakers</h3>
-    <div class="speakers" >
+    <div class="speakers" data-prototype="{{ form_widget(form.speakers.vars.prototype)|e('html_attr') }}">
+        {# iterate over each existing tag and render its only field: name #}
         {# iterate over each existing tag and render its only field: name #}
         {% for speaker in form.speakers %}
             <div>{{ form_row(speaker.name) }}</div>
@@ -20,7 +21,7 @@
             <a href="{{ path('conference_index') }}">Back to the list</a>
         </li>
     </ul>
-         {#   <script type="text/javascript" src="{{asset('bundles/app/js/jquery-3.2.1.min.js')}}"></script>
+          <script type="text/javascript" src="{{asset('bundles/app/js/jquery-3.2.1.min.js')}}"></script>
             <script>
                 
                 var $collectionHolder;
@@ -70,5 +71,5 @@ function addSpeakerForm($collectionHolder, $newLinkDiv) {
     var $newFormDiv = $('<div></div>').append(newForm);
     $newLinkDiv.before($newFormDiv);
 }
-            </script>#}
+            </script>
 {% endblock %}
