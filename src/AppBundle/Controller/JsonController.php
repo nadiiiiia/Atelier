@@ -15,7 +15,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
-use FOS\RestBundle\View\View;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\Exception\BadCredentialsException;
+
 
 /**
  * Event controller.
@@ -23,7 +25,6 @@ use FOS\RestBundle\View\View;
  * 
  */
 class JsonController extends FOSRestController {
-    
 
     public function fetchArrayAction($events) {
         $all_events = array();
@@ -314,83 +315,66 @@ class JsonController extends FOSRestController {
     public function loginTestReactAction(Request $request) {
 
 
-       $username = $request->get('username');
+        $username = $request->get('username');
         $password = $request->get('password');
-      
- 
-        if(is_null($username) || is_null($password)) {
+
+
+        if (is_null($username) || is_null($password)) {
             return new JsonResponse(
-                 
-              'Please verify all your inputs.' 
+                    'Please verify all your inputs.'
 //              JsonResponse::HTTP_UNAUTHORIZED,
 //              array('Content-type' => 'application/json')
             );
         }
-        
+
         $user_manager = $this->get('fos_user.user_manager');
         $factory = $this->get('security.encoder_factory');
 
         $user = $user_manager->findUserByUsernameOrEmail($username);
         $encoder = $factory->getEncoder($user);
         $salt = $user->getSalt();
-        
+      
+         /** @var \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface $csrf */
+        $csrf = $this->get('security.csrf.token_manager');
+        $intention = '_token';
+        $token = $csrf->refreshToken($intention);
+
         $user_array = array();
 
         $user_array['id'] = $user->getId();
         $user_array['first_name'] = $user->getFirstName();
         $user_array['Last_name'] = $user->getLastName();
         $user_array['username'] = $user->getUsername();
-        $user_array['password'] = $user->getPassword();
+       //$user_array['password'] = $user->getPassword();
         $user_array['email'] = $user->getEmail();
+        $user_array['token'] = $token->getValue();
         $roles = $user->getRoles();
         $user_array['roles'] = $roles[0];
 
-        if($encoder->isPasswordValid($user->getPassword(), $password, $salt)) {
+         $error_array = array();
+
+        $error_array['login'] = 'login or password not valid !';
+
+
+        if ($encoder->isPasswordValid($user->getPassword(), $password, $salt)) {
             $response = new JsonResponse(
-              $user_array
+                    $user_array
 //              Response::HTTP_OK,
 //              array('Content-type' => 'application/json')
-                 //$user_array   
             );
         } else {
             $response = new JsonResponse(
 //              'Username or Password not valid.',
-//              Response::HTTP_UNAUTHORIZED,
+                    //Response::HTTP_UNAUTHORIZED,
 //              array('Content-type' => 'application/json')
+
                     'login or password not valid !'
             );
         }
-        
+
         return $response;
     }
 
-//        $userManager = $this->get('fos_user.user_manager');
-//        $user_login = $userManager->findUserByUsernameOrEmail($login);
-//       
-//        $enc_pass =   $user_login->getPlainPassword();
-//        dump($enc_pass);
-//        die();
-//        if ($user_login) {
-//            $reponse = $userManager->findUserBy(array('email' => $user->getEmail(), 'password' => $pass));
-//        }
-//
-//        $user_array = array();
-//
-//        $user_array['id'] = $user->getId();
-//        $user_array['first_name'] = $user->getFirstName();
-//        $user_array['Last_name'] = $user->getLastName();
-//        $user_array['username'] = $user->getUsername();
-//        $user_array['email'] = $user->getEmail();
-//        $user_array['password'] = $user->getPassword();
-//        $roles = $user->getRoles();
-//        $user_array['roles'] = $roles[0];
-//
-////     dump($user_array);
-////        die();
-//
-//
-//        return new JsonResponse($user_array);
-//    }
 
     /**
      * @Route("/csrf", name="json_csrf")
@@ -402,9 +386,8 @@ class JsonController extends FOSRestController {
         $csrf = $this->get('security.csrf.token_manager');
         $intention = '_token';
         $token = $csrf->refreshToken($intention);
-        //      dump($token->getValue());die;
 
-        return new JsonResponse($token->getValue());
+        return new Response($token->getValue());
     }
 
 }
