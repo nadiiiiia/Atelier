@@ -23,7 +23,6 @@ use FOS\RestBundle\View\View;
  * 
  */
 class JsonController extends FOSRestController {
-    
 
     public function fetchArrayAction($events) {
         $all_events = array();
@@ -73,6 +72,21 @@ class JsonController extends FOSRestController {
 
         $em = $this->getDoctrine()->getManager();
         $findEvents = $em->getRepository('AppBundle:Event')->findAllCurrent();
+
+        $events = $this->fetchArrayAction($findEvents);
+        return new JsonResponse($events);
+    }
+    
+// récupérer tous les événement (en cours-validé-refusé)
+    /**
+     * @Route("/json_all_stats", name="events_json_stats")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function eventsJsonStatsAction(Request $request) {
+
+        $em = $this->getDoctrine()->getManager();
+        $findEvents = $em->getRepository('AppBundle:Event')->findAllStats();
 
         $events = $this->fetchArrayAction($findEvents);
         return new JsonResponse($events);
@@ -314,26 +328,25 @@ class JsonController extends FOSRestController {
     public function loginTestReactAction(Request $request) {
 
 
-       $username = $request->get('username');
+        $username = $request->get('username');
         $password = $request->get('password');
-      
- 
-        if(is_null($username) || is_null($password)) {
+
+
+        if (is_null($username) || is_null($password)) {
             return new JsonResponse(
-                 
-              'Please verify all your inputs.' 
+                    'Please verify all your inputs.'
 //              JsonResponse::HTTP_UNAUTHORIZED,
 //              array('Content-type' => 'application/json')
             );
         }
-        
+
         $user_manager = $this->get('fos_user.user_manager');
         $factory = $this->get('security.encoder_factory');
 
         $user = $user_manager->findUserByUsernameOrEmail($username);
         $encoder = $factory->getEncoder($user);
         $salt = $user->getSalt();
-        
+
         $user_array = array();
 
         $user_array['id'] = $user->getId();
@@ -345,12 +358,12 @@ class JsonController extends FOSRestController {
         $roles = $user->getRoles();
         $user_array['roles'] = $roles[0];
 
-        if($encoder->isPasswordValid($user->getPassword(), $password, $salt)) {
+        if ($encoder->isPasswordValid($user->getPassword(), $password, $salt)) {
             $response = new JsonResponse(
-              $user_array
+                    $user_array
 //              Response::HTTP_OK,
 //              array('Content-type' => 'application/json')
-                 //$user_array   
+                    //$user_array   
             );
         } else {
             $response = new JsonResponse(
@@ -360,7 +373,7 @@ class JsonController extends FOSRestController {
                     'login or password not valid !'
             );
         }
-        
+
         return $response;
     }
 

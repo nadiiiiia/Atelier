@@ -21,6 +21,17 @@ class EventRepository extends \Doctrine\ORM\EntityRepository {
 
         return $query->getResult();
     }
+    
+        public function findAllStats() {
+        $query = $this->createQueryBuilder('u')
+                ->select('u')
+               // ->where('u.dateDebut > :currentDate')
+               // ->setParameter('currentDate', new \DateTime("now"))
+                ->orderBy('u.dateCreation', 'DESC') // pour afficher les events recemment ajoutés au début
+                ->getQuery();
+
+        return $query->getResult();
+    }
 
     public function findByNonValide() {
         $query = $this->createQueryBuilder('u')
@@ -39,9 +50,8 @@ class EventRepository extends \Doctrine\ORM\EntityRepository {
                 ->select('u')
                 ->where('u.utilisateur = :userId')
                 ->andWhere('u.validation = 2')
-//                ->andWhere('u.dateDebut > :currentDate')
-                ->setParameter('userId', $id)
-//                ->setParameter('currentDate', new \DateTime("now"))
+                ->andWhere('u.dateDebut > :currentDate')
+                ->setParameters(array('userId'=> $id, 'currentDate' => new \DateTime("now")))
                 ->orderBy('u.dateCreation', 'DESC') // pour afficher les events recemment ajoutés au début
                 ->getQuery();
 
@@ -63,7 +73,8 @@ class EventRepository extends \Doctrine\ORM\EntityRepository {
         $query = $this->createQueryBuilder('u')
                 ->select('u')
                 ->where('u.utilisateur = :orgId')
-                ->setParameter('orgId', $id)
+                ->andWhere('u.dateDebut > :currentDate')
+                ->setParameters(array('orgId' => $id, 'currentDate' => new \DateTime("now")))
                 ->orderBy('u.dateCreation', 'DESC') // pour afficher les events recemment ajoutés au début
                 ->getQuery();
 
@@ -74,8 +85,9 @@ class EventRepository extends \Doctrine\ORM\EntityRepository {
         $query = $this->createQueryBuilder('u')
                 ->select('u')
                 ->where('u.titre like :titre')
+                ->andWhere('u.dateDebut > :currentDate')
                 ->orderBy('u.titre', 'ASC')
-                ->setParameter('titre', '%' . $motcle . '%')
+                ->setParameters(array('titre' => '%' . $motcle . '%', 'currentDate' => new \DateTime("now")))
                 ->getQuery();
 
         return $query->getResult();
@@ -84,7 +96,9 @@ class EventRepository extends \Doctrine\ORM\EntityRepository {
     public function sortByMinPrice() {
         $query = $this->createQueryBuilder('u')
                 ->select('u')
+                ->where('u.dateDebut > :currentDate')
                 ->orderBy('u.prix', 'ASC')
+                ->setParameter('currentDate', new \DateTime("now"))
                 ->getQuery();
 
         return $query->getResult();
@@ -93,7 +107,9 @@ class EventRepository extends \Doctrine\ORM\EntityRepository {
     public function sortByMaxPrice() {
         $query = $this->createQueryBuilder('u')
                 ->select('u')
+                ->where('u.dateDebut > :currentDate')
                 ->orderBy('u.prix', 'DESC')
+                 ->setParameter('currentDate', new \DateTime("now"))
                 ->getQuery();
 
         return $query->getResult();
@@ -102,7 +118,9 @@ class EventRepository extends \Doctrine\ORM\EntityRepository {
     public function sortByParticipants() {
         $query = $this->createQueryBuilder('u')
                 ->select('u')
+                ->where('u.dateDebut > :currentDate')
                 ->orderBy('u.nbrParticipants', 'DESC')
+                 ->setParameter('currentDate', new \DateTime("now"))
                 ->getQuery();
 
         return $query->getResult();
@@ -126,12 +144,15 @@ class EventRepository extends \Doctrine\ORM\EntityRepository {
                         '+ sin( radians(' . floatval($lat) . ') )' .
                         '* sin( radians( u.lat ) ) ) ) as distance'
                 )
+                 ->where('u.dateDebut > :currentDate')
                 ->orderBy('distance', 'ASC')
+                ->setParameter('currentDate', new \DateTime("now"))
                 //->having('distance <= 30 ')
                 //    ->setParameter('radius', 30)
                 //  ->orderBy('distance', 'ASC')
                 //->setMaxResults(100)
                 ->getQuery();
+               
       
         return $query->getResult();
     }
