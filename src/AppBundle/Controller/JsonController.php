@@ -18,7 +18,6 @@ use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 
-
 /**
  * Event controller.
  *
@@ -54,12 +53,15 @@ class JsonController extends FOSRestController {
             $event_array['note'] = $event->getNote();
             $event_array['organizer'] = $event->getUtilisateur()->getFirstName() . ' ' . $event->getUtilisateur()->getLastName();
 
-            $images = array();
-            foreach ($event->getImages() as $image) {
-                $images [] = '/images/' . $image;
+            if ($event->getImages()) {
+                $images = array();
+                foreach ($event->getImages() as $image) {
+                    $images [] = '/images/' . $image;
+                }
+                $event_array['images'] = $images;
+            } else {
+                $event_array['images'] = null;
             }
-            $event_array['images'] = $images;
-
             $all_events ["event_" . $event->getId()] = $event_array;
         }
         return $all_events;
@@ -78,7 +80,7 @@ class JsonController extends FOSRestController {
         $events = $this->fetchArrayAction($findEvents);
         return new JsonResponse($events);
     }
-    
+
 // récupérer tous les événement (en cours-validé-refusé)
     /**
      * @Route("/json_all_stats", name="events_json_stats")
@@ -321,7 +323,7 @@ class JsonController extends FOSRestController {
         return new JsonResponse($user_array);
     }
 
-      /**
+    /**
      * @Route("/json_login_test", name="json_login_test")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -348,8 +350,8 @@ class JsonController extends FOSRestController {
         $user = $user_manager->findUserByUsernameOrEmail($username);
         $encoder = $factory->getEncoder($user);
         $salt = $user->getSalt();
-      
-         /** @var \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface $csrf */
+
+        /** @var \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface $csrf */
         $csrf = $this->get('security.csrf.token_manager');
         $intention = '_token';
         $token = $csrf->refreshToken($intention);
@@ -360,13 +362,13 @@ class JsonController extends FOSRestController {
         $user_array['first_name'] = $user->getFirstName();
         $user_array['Last_name'] = $user->getLastName();
         $user_array['username'] = $user->getUsername();
-       //$user_array['password'] = $user->getPassword();
+        //$user_array['password'] = $user->getPassword();
         $user_array['email'] = $user->getEmail();
         $user_array['token'] = $token->getValue();
         $roles = $user->getRoles();
         $user_array['roles'] = $roles[0];
 
-         $error_array = array();
+        $error_array = array();
 
         $error_array['login'] = 'login or password not valid !';
 
@@ -389,7 +391,6 @@ class JsonController extends FOSRestController {
 
         return $response;
     }
-
 
     /**
      * @Route("/csrf", name="json_csrf")
