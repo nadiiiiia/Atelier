@@ -319,7 +319,7 @@ class JsonController extends FOSRestController {
         return new JsonResponse($user_array);
     }
 
-      /**
+    /**
      * @Route("/json_login_test", name="json_login_test")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -346,11 +346,6 @@ class JsonController extends FOSRestController {
         $user = $user_manager->findUserByUsernameOrEmail($username);
         $encoder = $factory->getEncoder($user);
         $salt = $user->getSalt();
-      
-         /** @var \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface $csrf */
-        $csrf = $this->get('security.csrf.token_manager');
-        $intention = '_token';
-        $token = $csrf->refreshToken($intention);
 
         $user_array = array();
 
@@ -358,29 +353,23 @@ class JsonController extends FOSRestController {
         $user_array['first_name'] = $user->getFirstName();
         $user_array['Last_name'] = $user->getLastName();
         $user_array['username'] = $user->getUsername();
-       //$user_array['password'] = $user->getPassword();
+        $user_array['password'] = $user->getPassword();
         $user_array['email'] = $user->getEmail();
-        $user_array['token'] = $token->getValue();
         $roles = $user->getRoles();
         $user_array['roles'] = $roles[0];
-
-         $error_array = array();
-
-        $error_array['login'] = 'login or password not valid !';
-
 
         if ($encoder->isPasswordValid($user->getPassword(), $password, $salt)) {
             $response = new JsonResponse(
                     $user_array
 //              Response::HTTP_OK,
 //              array('Content-type' => 'application/json')
+                    //$user_array   
             );
         } else {
             $response = new JsonResponse(
 //              'Username or Password not valid.',
-                    //Response::HTTP_UNAUTHORIZED,
+//              Response::HTTP_UNAUTHORIZED,
 //              array('Content-type' => 'application/json')
-
                     'login or password not valid !'
             );
         }
