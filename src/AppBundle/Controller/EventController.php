@@ -24,6 +24,7 @@ use Symfony\Component\Security\Http\Util\TargetPathTrait;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use AppBundle\Entity\Event;
 use AppBundle\Entity\Order;
 use ReCaptcha\ReCaptcha; // Include the recaptcha lib
@@ -271,9 +272,10 @@ class EventController extends Controller {
      */
     public function orgInfoAction(Request $request) {
         $user = $this->get('security.token_storage')->getToken()->getUser();
+        $tel = $user->getTel();
         $form = $this->createFormBuilder()
                 ->add('tel', NumberType::class, array(
-                    'attr' => array('class' => 'form-control'),
+                    'attr' => array('class' => 'form-control', 'value' => $tel),
                     'invalid_message' => 'Le numéro de téléphone doit être au moins de %num% chiffres',
                     'invalid_message_parameters' => array('%num%' => 8),
                     'label' => 'Numéro de téléphone *'
@@ -288,11 +290,13 @@ class EventController extends Controller {
                     ),
                     'label' => 'Photo de profil *'
                 ))
-                ->add('certifs', FileType::class, array('attr' => array(
-                        'accept' => 'image/*' // pour n'accepter que les images
-                    ),
-                    'multiple' => TRUE,
-                    'label' => 'Certificats'
+                ->add('certifs', CollectionType::class, array(
+                    'entry_type' => CertifType::class,
+                    'label' => false,
+                    // 'entry_options' => array('label' => false),
+                    'allow_add' => true,
+//                    'prototype' => true,
+//                     'by_reference' => false,
                 ))
                 ->getForm();
         $form->handleRequest($request);
@@ -323,15 +327,21 @@ class EventController extends Controller {
             }
             // fin ajout photo
             /*             * ********Traitement des certifs**************** */
+
             if ($data['certifs']) {
                 $certifs = $data['certifs'];
-                $cert = array();
+
                 foreach ($certifs as $certif) {
-                    $certifName = 'certif_' . md5(uniqid()) . '.' . $certif->guessExtension();
-                    $certif->move($this->getParameter('profile_directory'), $certifName);
-                    $cert[] = $certifName;
+                    if ($certif->file != null) {
+                        $certif_titre = $certif->getTitre();
+                        $certif_file = $certif->file;
+                        $certifName = 'CERTIF_' . md5(uniqid()) . '.' . $certif_file->guessExtension();
+                        $certif_file->move($this->getParameter('profile_directory'), $certifName);
+                        $certif->setPath($certifName);
+
+                        $user->addCertif($certif);
+                    }
                 }
-                $user->setCertifs($cert);
             }
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);

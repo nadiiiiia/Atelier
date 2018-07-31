@@ -129,7 +129,11 @@
         // document.querySelector('#description').required = false;
         google.maps.event.addDomListener(window, 'load', intilize);
         function intilize() {
-            var autocomplete = new google.maps.places.Autocomplete(document.getElementById("adresse"));
+            var options = {
+                componentRestrictions: {country: "fr"}
+            };
+            var input = document.getElementById("adresse");
+            var autocomplete = new google.maps.places.Autocomplete(input, options);
 
             google.maps.event.addListener(autocomplete, 'place_changed', function () {
 

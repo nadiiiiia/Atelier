@@ -52,7 +52,7 @@ class RegistrationController extends BaseController {
 
         $user = $userManager->createUser();
 
-        //$user->setEnabled(true);
+        //$user->setEnabled(false);
         //$user->setRoles(array(User::ROLE_ORGANIZER));
 //        dump($user);
 //        die;

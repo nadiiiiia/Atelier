@@ -30,7 +30,6 @@ class JsonController extends FOSRestController {
         foreach ($events as $event) {
             $event_array = array();
             $event_array['id'] = $event->getId();
-
             $event_array['category'] = $event->getCategory()->getNom();
             $event_array['titre'] = $event->getTitre();
             $event_array['desc'] = $event->getDescription();
@@ -58,10 +57,10 @@ class JsonController extends FOSRestController {
                 foreach ($event->getImages() as $image) {
                     $images [] = '/images/' . $image;
                 }
-                $event_array['images'] = $images;
             } else {
-                $event_array['images'] = null;
+                $images = null;
             }
+            $event_array['images'] = $images;
             $all_events ["event_" . $event->getId()] = $event_array;
         }
         return $all_events;
@@ -232,9 +231,15 @@ class JsonController extends FOSRestController {
             $event_array['note'] = $event->getNote();
             $event_array['organizer'] = $event->getUtilisateur()->getFirstName() . ' ' . $event->getUtilisateur()->getLastName();
             $event_array['distance'] = $distance;
-            $images = array();
-            foreach ($event->getImages() as $image) {
-                $images [] = '/images/' . $image;
+
+            if ($event->getImages()) {
+                $images = array();
+                foreach ($event->getImages() as $image) {
+                    $images [] = '/images/' . $image;
+                }
+                $event_array['images'] = $images;
+            } else {
+                $images = null;
             }
             $event_array['images'] = $images;
 
