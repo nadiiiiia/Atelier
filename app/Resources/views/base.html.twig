@@ -294,6 +294,8 @@
 <script type="text/javascript">
     $(document).ready(function ()
     {
+        var endDate = new Date();
+        endDate.setFullYear(endDate.getFullYear() + 3);
         
         $('.date-deb-fr').bootstrapMaterialDatePicker
                 ({
@@ -304,7 +306,7 @@
                     nowButton: false,
                     switchOnClick: true,
                     minDate: new Date(),
-                    maxDate: '+30Y',
+                    maxDate: endDate,
                 });
 
         $('.date-fin-fr').bootstrapMaterialDatePicker
@@ -316,11 +318,11 @@
                     nowButton: false,
                     switchOnClick: true,
                     minDate: new Date(),
-                    maxDate: '+30Y',
+                    maxDate: endDate,
                 });
 
         var minAge = 18;
-        var maxAge = 90;
+        var maxAge = 85;
         var maxDate = new Date();
         var minDate = new Date();
         maxDate.setFullYear(maxDate.getFullYear() - minAge);
