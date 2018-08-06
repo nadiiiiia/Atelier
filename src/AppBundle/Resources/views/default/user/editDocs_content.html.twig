@@ -11,15 +11,15 @@
     {{ form_label(form.last_name) }}
     {{form_widget(form.last_name) }}
     <div class="md-form"> 
-    {{ form_label(form.date_naissance) }}
-    {{form_widget(form.date_naissance) }}
-    <span class="error-msg"> {{form_errors(form.tel) }}</span>
-</div>
-<div class="md-form"> 
-    {{ form_label(form.tel) }}
-    {{form_widget(form.tel) }}
-    <span class="error-msg"> {{form_errors(form.tel) }}</span>
-</div>
+        {{ form_label(form.date_naissance) }}
+        {{form_widget(form.date_naissance) }}
+        <span class="error-msg"> {{form_errors(form.tel) }}</span>
+    </div>
+    <div class="md-form"> 
+        {{ form_label(form.tel) }}
+        {{form_widget(form.tel) }}
+        <span class="error-msg"> {{form_errors(form.tel) }}</span>
+    </div>
     <span class="error-msg"> {{form_errors(form.tel) }}</span>
 </div>
 <div class="md-form">
@@ -73,8 +73,13 @@
 <div class="certifs" data-prototype="{{ form_widget(form.certifs.vars.prototype)|e('html_attr') }}">
     {# iterate over each existing tag and render its only field: name #}
     {% for certif in form.certifs %}
-        <div>{{ form_row(certif.titre) }}</div>
-        <div>{{ form_row(certif.file) }}</div>
+        <div>
+
+            {{ form_row(certif.titre) }}
+            <br>
+            {{ form_row(certif.file) }}
+
+        </div>
     {% endfor %}
 </div>
 
@@ -92,8 +97,8 @@
     document.querySelector('#user_cin_titre').required = false;
     document.querySelector('#user_cin_file').required = false;
     document.querySelector('#user_photo').required = false;
-    
- 
+
+
 
 </script>
 <script type="text/javascript" src="{{asset('bundles/app/js/jquery-3.2.1.min.js')}}"></script>
@@ -112,6 +117,11 @@
 
         // add the "add a speaker" anchor and div to the speakers div
         $collectionHolder.append($newLinkDiv);
+
+        // add a delete link to all of the existing tag form li elements
+        $collectionHolder.find('div.certif').each(function () {
+            addCertifFormDeleteLink($(this));
+        });
 
         // count the current form inputs we have (e.g. 2), use that as the new
         // index when inserting a new item (e.g. 2)
@@ -146,5 +156,18 @@
         // Display the form in the page in an li, before the "Add a tag" link li
         var $newFormDiv = $('<div></div>').append(newForm);
         $newLinkDiv.before($newFormDiv);
+
+        // add a delete link to the new form
+        addCertifFormDeleteLink($newFormDiv);
+    }
+
+    function addCertifFormDeleteLink($certifFormDiv) {
+        var $removeFormButton = $('<button type="button">Supprimer</button>');
+        $certifFormDiv.append($removeFormButton);
+
+        $removeFormButton.on('click', function (e) {
+            // remove the li for the tag form
+            $certifFormDiv.remove();
+        });
     }
 </script>

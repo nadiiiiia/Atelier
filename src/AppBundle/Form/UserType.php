@@ -62,8 +62,7 @@ class UserType extends AbstractType {
                     'label' => false,
                    // 'entry_options' => array('label' => false),
                     'allow_add' => true,
-//                    'prototype' => true,
-//                     'by_reference' => false,
+                    'allow_delete' => true,
                 ))
                 ->add('adresse', TextType::class, array(
                     'attr' => array('class' => 'form-control'),

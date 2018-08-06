@@ -294,7 +294,7 @@
 <script type="text/javascript">
     $(document).ready(function ()
     {
-
+        
         $('.date-deb-fr').bootstrapMaterialDatePicker
                 ({
                     format: 'YYYY-MM-DD HH:mm:ss',
@@ -302,7 +302,9 @@
                     weekStart: 1,
                     cancelText: 'ANNULER',
                     nowButton: false,
-                    switchOnClick: true
+                    switchOnClick: true,
+                    minDate: new Date(),
+                    maxDate: '+30Y',
                 });
 
         $('.date-fin-fr').bootstrapMaterialDatePicker
@@ -313,9 +315,16 @@
                     cancelText: 'ANNULER',
                     nowButton: false,
                     switchOnClick: true,
-                    // minDate: new Date('2018-6-22'),
+                    minDate: new Date(),
                     maxDate: '+30Y',
                 });
+
+        var minAge = 18;
+        var maxAge = 90;
+        var maxDate = new Date();
+        var minDate = new Date();
+        maxDate.setFullYear(maxDate.getFullYear() - minAge);
+        minDate.setFullYear(minDate.getFullYear() - maxAge);
         $('.birth-day-fr').bootstrapMaterialDatePicker
                 ({
                     format: 'YYYY-MM-DD',
@@ -324,6 +333,8 @@
                     cancelText: 'ANNULER',
                     nowButton: false,
                     switchOnClick: true,
+                    minDate: minDate,
+                    maxDate: maxDate,
                     time: false
                 });
 

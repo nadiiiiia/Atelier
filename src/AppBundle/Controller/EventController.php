@@ -81,21 +81,25 @@ class EventController extends Controller {
         );
 
 
-        $events_json = 0; //$this->get('jms_serializer')->serialize($findEvents, 'json');
-
 
         switch ($type) {
             case "region":
                 $filter_name = $findEvents[0]->getRegion();
-                return $this->render('AppBundle:default:event/accueil.html.twig', array('events' => $pagination, 'filter_name' => $filter_name, 'events_json' => $events_json));
+                return $this->render('AppBundle:default:event/accueil.html.twig', array('events' => $pagination, 'filter_name' => $filter_name));
                 break;
             case "departement":
-                $filter_name = $findEvents[0]->getDepartement();
-                return $this->render('AppBundle:default:event/accueil.html.twig', array('events' => $pagination, 'filter_name' => $filter_name, 'events_json' => $events_json));
+                $departement = $em->getRepository('AppBundle:Departement')->find($value);
+                if (!$departement)
+                    throw $this->createNotFoundException('La page n\'existe pas');
+                $filter_name = $departement->getNom(); // pour extraire le nom de la categorie
+                return $this->render('AppBundle:default:event/accueil.html.twig', array('events' => $pagination, 'filter_name' => $filter_name));
                 break;
             case "category":
-                $filter_name = $findEvents[0]->getCategory();
-                return $this->render('AppBundle:default:event/accueil.html.twig', array('events' => $pagination, 'filter_name' => $filter_name, 'events_json' => $events_json));
+                   $category = $em->getRepository('AppBundle:Category')->find($value);
+                if (!$category)
+                    throw $this->createNotFoundException('La page n\'existe pas');
+                $filter_name = $category->getNom();
+                return $this->render('AppBundle:default:event/accueil.html.twig', array('events' => $pagination, 'filter_name' => $filter_name));
                 break;
         }
     }
