@@ -89,15 +89,16 @@ class EventController extends Controller {
                 break;
             case "departement":
                 $departement = $em->getRepository('AppBundle:Departement')->find($value);
-                if (!$departement)
-                    throw $this->createNotFoundException('La page n\'existe pas');
+               
                 $filter_name = $departement->getNom(); // pour extraire le nom de la categorie
                 return $this->render('AppBundle:default:event/accueil.html.twig', array('events' => $pagination, 'filter_name' => $filter_name));
                 break;
             case "category":
+                // $uri = $request->getUri();
+                $uri=$request->headers->get('referer');
+             //   dump($uri);die;
                    $category = $em->getRepository('AppBundle:Category')->find($value);
-                if (!$category)
-                    throw $this->createNotFoundException('La page n\'existe pas');
+            
                 $filter_name = $category->getNom();
                 return $this->render('AppBundle:default:event/accueil.html.twig', array('events' => $pagination, 'filter_name' => $filter_name));
                 break;

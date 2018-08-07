@@ -41,7 +41,13 @@ class Category {
      * @ORM\JoinColumn(nullable=true)
      */
     private $events;
-    
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Departement", inversedBy="categories")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $departement;
+
 //    /**
 //     * @ORM\OneToMany(targetEntity="Image", mappedBy="category", cascade={"persist"})
 //     * @ORM\JoinColumn(nullable=true)
@@ -105,7 +111,6 @@ class Category {
     public function getDescription() {
         return $this->description;
     }
-	
 
     /**
      * Add event
@@ -114,8 +119,7 @@ class Category {
      *
      * @return Category
      */
-    public function addEvent(\AppBundle\Entity\Event $event)
-    {
+    public function addEvent(\AppBundle\Entity\Event $event) {
         $this->events[] = $event;
 
         return $this;
@@ -126,8 +130,7 @@ class Category {
      *
      * @param \AppBundle\Entity\Event $event
      */
-    public function removeEvent(\AppBundle\Entity\Event $event)
-    {
+    public function removeEvent(\AppBundle\Entity\Event $event) {
         $this->events->removeElement($event);
     }
 
@@ -136,13 +139,36 @@ class Category {
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getEvents()
-    {
+    public function getEvents() {
         return $this->events;
     }
-    
-    	    
+
     public function __toString() {
         return $this->getNom();
+    }
+
+
+    /**
+     * Set departement
+     *
+     * @param \AppBundle\Entity\Departement $departement
+     *
+     * @return Category
+     */
+    public function setDepartement(\AppBundle\Entity\Departement $departement)
+    {
+        $this->departement = $departement;
+
+        return $this;
+    }
+
+    /**
+     * Get departement
+     *
+     * @return \AppBundle\Entity\Departement
+     */
+    public function getDepartement()
+    {
+        return $this->departement;
     }
 }

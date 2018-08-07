@@ -41,8 +41,15 @@ class Departement
      */
     private $events;
     
+        /**
+     * @ORM\OneToMany(targetEntity="Category", mappedBy="departement")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $categories;
+    
     public function __construct() {
         $this->events = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     /**
@@ -139,5 +146,39 @@ class Departement
 	    
     public function __toString() {
         return $this->getNom();
+    }
+
+    /**
+     * Add category
+     *
+     * @param \AppBundle\Entity\Category $category
+     *
+     * @return Departement
+     */
+    public function addCategory(\AppBundle\Entity\Category $category)
+    {
+        $this->categories[] = $category;
+
+        return $this;
+    }
+
+    /**
+     * Remove category
+     *
+     * @param \AppBundle\Entity\Category $category
+     */
+    public function removeCategory(\AppBundle\Entity\Category $category)
+    {
+        $this->categories->removeElement($category);
+    }
+
+    /**
+     * Get categories
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCategories()
+    {
+        return $this->categories;
     }
 }

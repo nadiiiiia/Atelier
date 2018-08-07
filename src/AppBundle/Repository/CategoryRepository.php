@@ -10,4 +10,16 @@ namespace AppBundle\Repository;
  */
 class CategoryRepository extends \Doctrine\ORM\EntityRepository
 {
+        public function findByClass($classe) {
+        $query = $this->createQueryBuilder('u')
+                ->select('u')
+                ->where('u.classe = :classe')
+                ->andWhere('u.dateDebut > :currentDate')
+                ->setParameters(array('classe' => $classe, 'currentDate' => new \DateTime("now")))
+                ->orderBy('u.dateCreation', 'DESC') // pour afficher les events recemment ajoutés au début
+                ->setParameter('currentDate', new \DateTime("now"))
+                ->getQuery();
+
+        return $query->getResult();
+    }
 }
