@@ -5,23 +5,24 @@
 <div class="md-form"> 
     {{ form_label(form.first_name) }}
     {{form_widget(form.first_name) }}
-    <span class="error-msg"> {{form_errors(form.tel) }}</span>
+    <span class="error-msg"> {{form_errors(form.first_name) }}</span>
 </div>
 <div class="md-form"> 
     {{ form_label(form.last_name) }}
     {{form_widget(form.last_name) }}
+    <span class="error-msg"> {{form_errors(form.last_name) }}</span>
+    </div>
     <div class="md-form"> 
         {{ form_label(form.date_naissance) }}
         {{form_widget(form.date_naissance) }}
-        <span class="error-msg"> {{form_errors(form.tel) }}</span>
+        <span class="error-msg"> {{form_errors(form.date_naissance) }}</span>
     </div>
     <div class="md-form"> 
         {{ form_label(form.tel) }}
         {{form_widget(form.tel) }}
         <span class="error-msg"> {{form_errors(form.tel) }}</span>
     </div>
-    <span class="error-msg"> {{form_errors(form.tel) }}</span>
-</div>
+
 <div class="md-form">
     {{ form_label(form.adresse) }}
     {{form_widget(form.adresse) }}
@@ -97,6 +98,10 @@
     document.querySelector('#user_cin_titre').required = false;
     document.querySelector('#user_cin_file').required = false;
     document.querySelector('#user_photo').required = false;
+    document.querySelector('#user_adresse').required = false;
+    document.querySelector('#user_first_name').required = false;
+    document.querySelector('#user_last_name').required = false;
+    document.querySelector('#user_date_naissance').required = false;
 
 
 

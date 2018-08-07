@@ -23,11 +23,14 @@ class User extends BaseUser {
     protected $id;
 
     /**
+     * 
+     * @Assert\NotBlank()
      * @ORM\Column(type="string", nullable=true)
      */
     protected $first_name;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="string", nullable=true)
      */
     protected $last_name;

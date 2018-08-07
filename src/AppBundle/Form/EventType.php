@@ -31,7 +31,7 @@ class EventType extends AbstractType {
                 ->add('category', EntityType::class, array(
                     // looks for choices from this entity
                     'class' => 'AppBundle:Category',
-                    'empty_data' => 'NULL',
+                    'empty_data' => 'Choisir une Catégorie',
                     'required' => true,
                     'placeholder' => 'Choisir une Catégorie',
                     'choice_label' => 'nom',
