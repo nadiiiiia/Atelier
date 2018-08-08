@@ -17,8 +17,12 @@
 
             <div class="card">
                 <div class="card-body z-depth-3">
-                    {% if error %}
-                        <div class="error-msg alert alert-danger" role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}    </div>
+                    {% if app.session.flashBag.has('login_error') %}
+                        <div class="error-msg alert alert-danger" role="alert">
+                            {% for message in app.session.flashBag.get('login_error') %}
+                                {{ message }} 
+                             {% endfor %}
+                            </div>
                     {% endif %}
 
 
@@ -30,7 +34,7 @@
                     <h3 class="text-center">{{ 'security.login.submit'|trans }}</h3>
                     <br>
                     <!--Body-->
-                    <form action="{{ path("fos_user_security_check") }}" method="post" >
+                    <form action="{{ path("checkLogin") }}" method="post" >
 
                         {#{% set referer = app.request.get('referer') %}#}
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
@@ -54,6 +58,12 @@
                                 {{ message }}
                             </div>
                         {% endfor %}#}
+                              <div align="center" class="g-recaptcha" data-sitekey="{{captcha_site_key}}"></div>
+                {% for message in app.flashes('error') %}
+                    <div align="center" class="flash-notice" style="color:red;">
+                        {{ message }}
+                    </div>
+                {% endfor %}
 
                         <div class="text-center">
                             <input type="submit" id="_submit" name="_submit" value="Connexion" class="btn btn-primary-inverse btn-md waves-effect waves-light" />

@@ -57,5 +57,6 @@ services:
             - '@fos_user.user_manager'
             - { facebook: facebookId, google: googleId, twitter: twitterId }
             - '@doctrine'
+            
 
             
