@@ -13,34 +13,57 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Doctrine\ORM\EntityRepository;
-use AppBundle\Entity\Event;
+
+// 1. Include Required Namespaces
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormEvents;
+use Doctrine\ORM\EntityManagerInterface;
+// Your Entity
+use AppBundle\Entity\Departement;
 
 class EventType extends AbstractType {
+    
+        private $em;
+    
+    /**
+     * The Type requires the EntityManager as argument in the constructor. It is autowired
+     * in Symfony 3.
+     * 
+     * @param EntityManagerInterface $em
+     */
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+    
 
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
+             // 2. Remove the dependent select from the original buildForm as this will be
+        // dinamically added later and the trigger as well
         $builder
-                ->add('departement', EntityType::class, array(
-                    'class' => 'AppBundle:Departement',
-                    'placeholder' => 'Choisir une classe',
-                    'choice_label' => 'nom',
-                    'attr' => ['class' => 'mdb-select select-dropdown']
-                ))
-                ->add('category', EntityType::class, array(
-                    // looks for choices from this entity
-                    'class' => 'AppBundle:Category',
-                    'empty_data' => 'Choisir une Catégorie',
-                    'required' => true,
-                    'placeholder' => 'Choisir une Catégorie',
-                    'choice_label' => 'nom',
-                    'attr' => ['class' => 'mdb-select select-dropdown',
-                        'id' => 'categoty']
-                        // used to render a select box, check boxes or radios
-                        // 'multiple' => true,
-                        // 'expanded' => true,
-                ))
+//                ->add('departement', EntityType::class, array(
+//                    'class' => 'AppBundle:Departement',
+//                    'placeholder' => 'Choisir une classe',
+//                    'choice_label' => 'nom',
+//                    'attr' => ['class' => 'mdb-select select-dropdown']
+//                ))
+//                ->add('category', EntityType::class, array(
+//                    // looks for choices from this entity
+//                    'class' => 'AppBundle:Category',
+//                    'empty_data' => 'Choisir une Catégorie',
+//                    'required' => true,
+//                    'placeholder' => 'Choisir une Catégorie',
+//                    'choice_label' => 'nom',
+//                    'attr' => ['class' => 'mdb-select select-dropdown',
+//                        'id' => 'categoty']
+//                        // used to render a select box, check boxes or radios
+//                        // 'multiple' => true,
+//                        // 'expanded' => true,
+//                ))
                 ->add('titre', TextType::class, array(
                     'attr' => array('class' => 'form-control'),
                     'label' => 'Titre'
@@ -97,8 +120,67 @@ class EventType extends AbstractType {
                     'multiple' => true,
                     'label' => 'Images de l\'événement'
         ));
+
+                // 3. Add 2 event listeners for the form
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'));
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, array($this, 'onPreSubmit'));
     }
 
+        protected function addElements(FormInterface $form, Departement $departement = null) {
+        // 4. Add the province element
+        $form->add('departement', EntityType::class, array(
+            'required' => true,
+           // 'data' => $departement,
+            'placeholder' => 'Choisir une classe',
+            'class' => 'AppBundle:Departement',
+            'attr' => ['class' => 'mdb-select select-dropdown']
+        ));
+        
+        // Categories empty, unless there is a selected departement (Edit View)
+        $categories = array();
+        
+        // If there is a department stored in the Event entity, load the categories of it
+        if ($departement) {
+            // Fetch Neighborhoods of the City if there's a selected city
+            $repoCategory = $this->em->getRepository('AppBundle:Category');
+            
+            $categories = $repoCategory->createQueryBuilder("q")
+                ->where("q.departement = :departementid")
+                ->setParameter("departementid", $departement->getId())
+                ->getQuery()
+                ->getResult();
+        }
+        
+        // Add the categories field with the properly data
+        $form->add('category', EntityType::class, array(
+            'required' => true,
+            'placeholder' => 'Choisir une Classe au début',
+            'class' => 'AppBundle:Category',
+            'choices' => $categories,
+             'attr' => ['class' => 'mdb-select select-dropdown']
+        ));
+    }
+    
+        function onPreSubmit(FormEvent $event) {
+        $form = $event->getForm();
+        $data = $event->getData();
+        
+        // Search for selected Department and convert it into an Entity
+        $departement = $this->em->getRepository('AppBundle:Departement')->find($data['departement']);
+        
+        $this->addElements($form, $departement);
+    }
+    
+        function onPreSetData(FormEvent $event) {
+        $atelier = $event->getData();
+        $form = $event->getForm();
+
+        // When you create a new event, the Department is always empty
+        $departement = $atelier->getDepartement() ? $atelier->getDepartement() : null;
+        
+        $this->addElements($form, $departement);
+    }
+    
     /**
      * {@inheritdoc}
      */

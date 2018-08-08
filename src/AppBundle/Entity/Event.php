@@ -22,13 +22,22 @@ class Event {
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+    
+    
+    /**
+     * @Assert\NotNull()
+     * @ORM\ManyToOne(targetEntity="Departement", inversedBy="events", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $departement;
 
     /**
      * @Assert\NotNull()
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="events", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $category;
+    
 
     /**
      * @var string
@@ -140,11 +149,6 @@ class Event {
      */
     private $region;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Departement", inversedBy="events", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $departement;
 
     /**
      * @var array

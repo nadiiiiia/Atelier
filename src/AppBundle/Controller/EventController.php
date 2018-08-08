@@ -839,6 +839,45 @@ class EventController extends Controller {
             $event->setValidation(self::VALIDATION_EN_COURS);
         }
     }
+    
+    
+    /**
+     * Returns a JSON string with the neighborhoods of the City with the providen id.
+     * 
+     * @Route("/get-categ-from-department", name="event_list_categories")
+     * @param Request $request
+     * @Method({"GET"})
+     * @return JsonResponse
+     */
+    public function listCategoriesOfDepartmentAction(Request $request)
+    {
+        // Get Entity manager and repository
+        $em = $this->getDoctrine()->getManager();
+        $categRepository = $em->getRepository("AppBundle:Category");
+        
+        // Search the categories that belongs to the department with the given id as GET parameter "departementid"
+        $categories = $categRepository->createQueryBuilder("q")
+            ->where("q.departement = :departementid")
+            ->setParameter("departementid", $request->query->get("departementid"))
+            ->getQuery()
+            ->getResult();
+        
+        // Serialize into an array the data that we need, in this case only name and id
+        // Note: you can use a serializer as well, for explanation purposes, we'll do it manually
+        $responseArray = array();
+        foreach($categories as $category){
+            $responseArray[] = array(
+                "id" => $category->getId(),
+                "name" => $category->getNom()
+            );
+        }
+        
+        // Return array with structure of the neighborhoods of the providen city id
+        return new JsonResponse($responseArray);
+
+        // e.g
+        // [{"id":"3","name":"Treasure Island"},{"id":"4","name":"Presidio of San Francisco"}]
+    }
 
     /**
      * 

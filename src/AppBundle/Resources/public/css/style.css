@@ -213,3 +213,9 @@ input[type=date]:focus:not([readonly]), input[type=datetime-local]:focus:not([re
   padding: 9px;
   border-radius: 3px;
 }
+.validator {
+    padding: 0rem 1rem ;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: .1rem;
+}

@@ -41,15 +41,10 @@ class Departement
      */
     private $events;
     
-        /**
-     * @ORM\OneToMany(targetEntity="Category", mappedBy="departement")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $categories;
+
     
     public function __construct() {
         $this->events = new ArrayCollection();
-        $this->categories = new ArrayCollection();
     }
 
     /**
