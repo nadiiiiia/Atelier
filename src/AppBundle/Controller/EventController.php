@@ -58,7 +58,7 @@ class EventController extends Controller {
         $pagination = $paginator->paginate(
                 $findEvents, $request->query->getInt('page', 1)/* page number */, 6 /* limit per page */
         );
-
+        
         // $events_json = 0; //$this->get('jms_serializer')->serialize($findEvents, 'json');
         $filter_name = 'Tous les Ateliers';
 
@@ -223,6 +223,8 @@ class EventController extends Controller {
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request) {
+        $categories = $this->listCategoriesOfDepartmentAction();
+      //   dump($categories); die;
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $event = new Event();
         $form = $this->createForm('AppBundle\Form\EventType', $event);
@@ -264,6 +266,7 @@ class EventController extends Controller {
 
         return $this->render('AppBundle:default:event/new.html.twig', array(
                     'event' => $event,
+                    'categories'=>$categories,
                     'form' => $form->createView(),
         ));
     }
@@ -842,14 +845,14 @@ class EventController extends Controller {
     
     
     /**
-     * Returns a JSON string with the neighborhoods of the City with the providen id.
+     * Returns a JSON string with the categories of the Class with the providen id.
      * 
      * @Route("/get-categ-from-department", name="event_list_categories")
      * @param Request $request
      * @Method({"GET"})
      * @return JsonResponse
      */
-    public function listCategoriesOfDepartmentAction(Request $request)
+    public function listCategoriesOfDepartmentAction()
     {
         // Get Entity manager and repository
         $em = $this->getDoctrine()->getManager();
@@ -857,8 +860,8 @@ class EventController extends Controller {
         
         // Search the categories that belongs to the department with the given id as GET parameter "departementid"
         $categories = $categRepository->createQueryBuilder("q")
-            ->where("q.departement = :departementid")
-            ->setParameter("departementid", $request->query->get("departementid"))
+            //->where("q.departement = :departementid")
+            //->setParameter("departementid", $request->query->get("departementid"))
             ->getQuery()
             ->getResult();
         
@@ -868,12 +871,13 @@ class EventController extends Controller {
         foreach($categories as $category){
             $responseArray[] = array(
                 "id" => $category->getId(),
-                "name" => $category->getNom()
+                "name" => $category->getNom(),
+                 "data-available-with" => $category->getDepartement()->getId()  
             );
         }
         
         // Return array with structure of the neighborhoods of the providen city id
-        return new JsonResponse($responseArray);
+        return $responseArray;
 
         // e.g
         // [{"id":"3","name":"Treasure Island"},{"id":"4","name":"Presidio of San Francisco"}]

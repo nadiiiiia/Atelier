@@ -157,7 +157,7 @@ class EventType extends AbstractType {
             'placeholder' => 'Choisir une Classe au début',
             'class' => 'AppBundle:Category',
             'choices' => $categories,
-             'attr' => ['class' => 'mdb-select select-dropdown']
+             'attr' => ['class' => 'mdb-select select-dropdown ']
         ));
     }
     

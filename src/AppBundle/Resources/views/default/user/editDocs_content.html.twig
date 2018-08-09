@@ -93,7 +93,7 @@
 
 {{ form_end(form) }}
 
-
+<script type="text/javascript" src="{{asset('bundles/app/js/jquery-3.2.1.min.js')}}"></script>
 <script>
     document.querySelector('#user_cin_titre').required = false;
     document.querySelector('#user_cin_file').required = false;
@@ -105,15 +105,16 @@
 
 
 
+
 </script>
-<script type="text/javascript" src="{{asset('bundles/app/js/jquery-3.2.1.min.js')}}"></script>
+
 
 <script>
 
     var $collectionHolder;
 
 // setup an "add a certif" link
-    var $addCertifButton = $('<button type="button" class="add_Certif_link">Ajouter Certif</button>');
+    var $addCertifButton = $('<button type="button" class="add_Certif_link btn btn-primary-atelier btn-md waves-effect waves-light">Ajouter Certif</button>');
     var $newLinkDiv = $('<div></div>').append($addCertifButton);
 
     jQuery(document).ready(function () {
@@ -159,7 +160,7 @@
         $collectionHolder.data('index', index + 1);
 
         // Display the form in the page in an li, before the "Add a tag" link li
-        var $newFormDiv = $('<div></div>').append(newForm);
+        var $newFormDiv = $('<div class="md-form"></div>').append(newForm);
         $newLinkDiv.before($newFormDiv);
 
         // add a delete link to the new form
@@ -167,7 +168,7 @@
     }
 
     function addCertifFormDeleteLink($certifFormDiv) {
-        var $removeFormButton = $('<button type="button">Supprimer</button>');
+        var $removeFormButton = $('<button type="button" class="btn btn-primary-atelier btn-md waves-effect waves-light">Supprimer</button><hr>');
         $certifFormDiv.append($removeFormButton);
 
         $removeFormButton.on('click', function (e) {

@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+
     <div class="row text-left">
         <!--Grid column-->
         <div class="col-md-1 mb-r">
@@ -23,73 +24,73 @@
 
                     <div class="md-form"> 
                         {{form_widget(form.departement) }}
-                        <div class="error-msg validator alert-danger" role="alert">{{form_errors(form.departement) }}</div>
+                        <div class="error-msg validator " role="alert">{{form_errors(form.departement) }}</div>
                     </div>
                     <div class="md-form">
                         {{form_widget(form.category) }}
-                        <div class="error-msg validator alert-danger" role="alert">{{form_errors(form.category) }}</div>
+                        <div class="error-msg validator " >{{form_errors(form.category) }}</div>
                     </div>
 
                     <div class="md-form">
                         {{ form_label(form.titre) }}
                         {{form_widget(form.titre) }}
-                        <div class="error-msg validator alert-danger" role="alert"></div>
+                        <div class="error-msg validator " role="alert"></div>
                     </div>
 
                     <div class="md-form">
                         {{ form_label(form.description) }}
                         {{form_widget(form.description) }}
-                        <div class="error-msg validator alert-danger" role="alert"></div>
+                        <div class="error-msg validator " role="alert"></div>
                     </div>
 
                     <div class="md-form ">
                         {{ form_label(form.dateDebut) }}
                         {{form_widget(form.dateDebut) }}
-                        <div class="error-msg validator alert-danger" role="alert"></div>
+                        <div class="error-msg validator " role="alert"></div>
                     </div>
                     <div class="md-form">
                         {{ form_label(form.dateFin) }}
                         {{form_widget(form.dateFin) }}
-                        <div class="error-msg validator alert-danger" role="alert"></div>
+                        <div class="error-msg validator " role="alert"></div>
                     </div>
 
                     <div class="md-form">
                         {{ form_label(form.prix) }}
                         {{form_widget(form.prix) }}
-                        <div class="error-msg validator alert-danger" role="alert"></div>
+                        <div class="error-msg validator" role="alert"></div>
                     </div>
                     <div class="md-form">
                         {{ form_label(form.nbrMax) }}
                         {{form_widget(form.nbrMax) }}
-                       <div class="error-msg validator alert-danger" role="alert"></div>
+                        <div class="error-msg validator " role="alert"></div>
                     </div>
 
                     <div class="md-form"> 
                         {{ form_label(form.adresse) }}
                         {{form_widget(form.adresse) }}
-                       <div class="error-msg validator alert-danger" role="alert"></div>
+                        <div class="error-msg validator " role="alert"></div>
                     </div>
 
                     <div class="md-form"> 
                         {{ form_label(form.codeP) }}
                         {{form_widget(form.codeP) }}
-                       <div class="error-msg validator alert-danger" role="alert"></div>
+                        <div class="error-msg validator" role="alert"></div>
                     </div>
 
                     <div class="md-form"> 
                         {{form_widget(form.region) }}
-                        <div class="error-msg validator alert-danger" role="alert"></div>
+                        <div class="error-msg validator " role="alert"></div>
                     </div>
                     <div class="md-form"> 
                         {{form_widget(form.ville) }}
-                        <div class="error-msg validator alert-danger" role="alert"></div>
+                        <div class="error-msg validator " role="alert"></div>
                     </div>
 
                     <div class="md-form"> 
                         {{ form_label(form.images) }}
                         <br><br>
                         {{form_widget(form.images) }}
-                       <div class="error-msg validator alert-danger" role="alert"></div>
+                        <div class="error-msg validator " role="alert"></div>
                     </div>
 
 
@@ -172,28 +173,76 @@
     </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+
     <script>
+
+                function getCateg(categList) {
+                    var categorySelect = $("#category");
+                    // Remove current options
+                    categorySelect.html('');
+                    // Empty value ...
+                    categorySelect.append('<option value> Choisir une catégorie </option>');
+                    $.each(categList, function (key, category) {
+                        categorySelect.append('<option value="' + category.id + '" class="' + category.class + '">' + category.name + '</option>');
+                    });
+                }
+
+
                 $(document).ready(function ()
                 {
-                    //$('#departement').change(function () {
 
-                       // var departSelector = $(this);
-                        var categories = [{"id": "3", "name": "Treasure Island"}, {"id": "4", "name": "Presidio of San Francisco"}];
-                       // alert(categories);
-                        var categorySelect = $("#category");
-
-                        // Remove current options
-                        categorySelect.html('');
-
-                        // Empty value ...
-                        categorySelect.append('<option value> Select a category of ..</option>');
+                    //      getCateg(catTest);
 
 
-                        $.each(categories, function (key, category) {
-                            categorySelect.append('<option value="' + category.id + '">' + category.name + '</option>');
-                        });
-                   //});
+
                 });
+
+    </script>
+    <script type="text/javascript" src="{{asset('bundles/app/js/jquery.chained.min.js')}}"  charset="utf-8"></script>
+    <script type="text/javascript" src="{{asset('bundles/app/js/jquery.chained.js')}}"  charset="utf-8"></script>
+    <script type="text/javascript" charset="utf-8">
+
+   var categories = {{(categories|json_encode|raw)}};
+        $(document).ready(function () {
+            //loadMarque();
+            loadCategory();
+         
+           // alert(categories[0].name)
+                    /*	function loadClass() {
+                     $('#departement').html('')
+                     $.each(carBrands_json, function (i, dept) {
+                     $('#departement').append($('<option>', {
+                     value: dept.id,
+                     text: dept.name
+                     }));
+                     });
+                     }*/
+
+                            function loadCategory() {
+                                
+                                $('#category').html('').append('<option value> Choisir une catégorie </option>');
+                                        $.each(categories, function (i, category) {
+                                            $('#category').append($('<option>', {
+                                                class: category.class,
+                                                value: category.id,
+                                                text: category.name
+                                            }));
+                                        });
+                            }
+
+                  
+                       
+                  
+                })
+    </script>
+    
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+      <script type="text/javascript" src="{{asset('bundles/app/js/jquery.chained.min.js')}}"  charset="utf-8"></script>
+    <script>
+        $("#category").chainedTo("#departement");
 
     </script>
 
