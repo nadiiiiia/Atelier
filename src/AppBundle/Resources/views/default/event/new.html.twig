@@ -177,7 +177,7 @@
 
 
     <script>
-
+ var categories = {{(categories|json_encode|raw)}};
                 function getCateg(categList) {
                     var categorySelect = $("#category");
                     // Remove current options
@@ -193,14 +193,14 @@
                 $(document).ready(function ()
                 {
 
-                    //      getCateg(catTest);
+                       //   getCateg(categories);
 
 
 
                 });
 
     </script>
-
+  <script type="text/javascript" src="{{asset('bundles/app/js/jquery.chained.js')}}"  charset="utf-8"></script>
     <script type="text/javascript" charset="utf-8">
 
    var categories = {{(categories|json_encode|raw)}};
@@ -219,12 +219,12 @@
                      });
                      }*/
 
-                            function loadCategory() {
+                          function loadCategory() {
                                 
                                 $('#category').html('').append('<option value> Choisir une catégorie </option>');
                                         $.each(categories, function (i, category) {
                                             $('#category').append($('<option>', {
-                                                'data-chained': category.class,
+                                                'class': category.parent,
                                                 value: category.id,
                                                 text: category.name
                                             }));
@@ -235,13 +235,14 @@
                        
                   
                 });
+                 $("#category").chained("#departement");
     </script>
     
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-
-      <script type="text/javascript" src="{{asset('bundles/app/js/jquery.chained.min.js')}}"  charset="utf-8"></script>
+    
     <script>
-        $("#category").chainedTo("#departement");
+        $(document).ready(function () {
+       
+    });
 
     </script>
 

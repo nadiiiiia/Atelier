@@ -12,6 +12,8 @@
 namespace AppBundle\Controller;
 
 use FOS\UserBundle\Event\FilterUserResponseEvent;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use FOS\UserBundle\Event\FormEvent;
 use FOS\UserBundle\Event\GetResponseUserEvent;
 use FOS\UserBundle\Form\Factory\FactoryInterface;
@@ -23,6 +25,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use FOS\UserBundle\Controller\RegistrationController as BaseController;
@@ -34,7 +37,46 @@ use ReCaptcha\ReCaptcha; // Include the recaptcha lib
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  * @author Christophe Coevoet <stof@notk.org>
  */
+
 class RegistrationController extends BaseController {
+
+    /**
+     * Registration step 1.
+     *
+     * @Route("/register_step1", name="register_step1")
+     * @Method({"GET", "POST"})
+     */
+    public function registerStep1Action(Request $request) {
+
+        $form = $this->createFormBuilder()
+             ->add('first_name', TextType::class, array(
+                    'attr' => array('class' => 'form-control'),
+                    'label' => 'Prénom'
+                ))
+                ->add('last_name', TextType::class, array(
+                    'attr' => array('class' => 'form-control'),
+                    'label' => 'Nom'
+                ))
+                ->add('date_naissance', TextType::class, array(
+                    'attr' => array('class' => 'form-control birth-day-fr floating-label'),
+                    'label' => 'Date de naissance'
+                ))
+                ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            // data is an array with "name", "email", and "message" keys
+            $data = $form->getData();
+            dump($data);
+            die;
+            $this->get('session')->set('nom', $data['nom']);
+            return $this->redirectToRoute('register_step2');
+        }
+        return $this->render('AppBundle:default:user/register_step1.html.twig', array(
+                    'form' => $form->createView(),
+        ));
+    }
 
     /**
      * @param Request $request
@@ -75,7 +117,7 @@ class RegistrationController extends BaseController {
 
             if ($form->isValid()) {
                 $key = $this->container->getParameter('captcha_server_key');
-  
+
                 $recaptcha = new ReCaptcha($key);
                 $resp = $recaptcha->verify($request->request->get('g-recaptcha-response'), $request->getClientIp());
 
@@ -92,7 +134,7 @@ class RegistrationController extends BaseController {
                     $event = new FormEvent($form, $request);
 
                     $birthDay = $form->get('date_naissance')->getData();
-                 
+
                     $user->setDateNaissance(new \DateTime($birthDay));
                     $event = new FormEvent($form, $request);
 
