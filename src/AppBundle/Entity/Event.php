@@ -48,42 +48,42 @@ class Event {
 
     /**
      * @var string
-     *
+     * @Assert\NotNull()
      * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
 
     /**
      * @var \datetime
-     *
+     * 
      * @ORM\Column(name="date_creation", type="datetime", nullable=true)
      */
     private $dateCreation;
 
     /**
      * @var \datetime
-     *
+     * @Assert\NotNull()
      * @ORM\Column(name="date_debut", type="datetime", nullable=true)
      */
     private $dateDebut;
 
     /**
      * @var \datetime
-     *
+     * @Assert\NotNull()
      * @ORM\Column(name="date_fin", type="datetime", nullable=true)
      */
     private $dateFin;
 
     /**
      * @var float
-     *
+     * @Assert\NotNull()
      * @ORM\Column(name="prix", type="float", length=45)
      */
     private $prix;
 
     /**
      * @var int
-     *
+     * @Assert\NotNull()
      * @ORM\Column(name="nbr_max", type="integer")
      */
     private $nbrMax;
@@ -125,25 +125,27 @@ class Event {
 
     /**
      * @var string
-     *
+     * @Assert\NotNull()
      * @ORM\Column(name="adresse", type="string", length=255, nullable=true)
      */
     private $adresse;
 
     /**
      * @var string
-     *
+     * @Assert\NotNull()
      * @ORM\Column(name="codeP", type="string", length=10, nullable=true)
      */
     private $codeP;
 
     /**
+     * @Assert\NotNull()
      * @ORM\ManyToOne(targetEntity="Ville", inversedBy="events", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $ville;
 
     /**
+     * @Assert\NotNull()
      * @ORM\ManyToOne(targetEntity="Region", inversedBy="events", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
      */
@@ -152,7 +154,7 @@ class Event {
 
     /**
      * @var array
-     *
+     * @Assert\NotNull()
      * @ORM\Column(name="images", type="array", nullable=true)
      */
     private $images;

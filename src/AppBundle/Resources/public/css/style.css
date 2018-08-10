@@ -218,6 +218,6 @@ input[type=date]:focus:not([readonly]), input[type=datetime-local]:focus:not([re
     margin-bottom: 1rem;
     border: 1px solid transparent;
     border-radius: .1rem;
-    color: #721c24;
-    background-color: #f8d7da;
+    color: red;
+   /* background-color: #f8d7da;*/
 }

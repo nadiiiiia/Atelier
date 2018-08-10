@@ -185,7 +185,7 @@
                     // Empty value ...
                     categorySelect.append('<option value> Choisir une catégorie </option>');
                     $.each(categList, function (key, category) {
-                        categorySelect.append('<option value="' + category.id + '" class="' + category.class + '">' + category.name + '</option>');
+                        categorySelect.append('<option value="' + category.id + '" data-chained="' + category.parent + '">' + category.name + '</option>');
                     });
                 }
 
@@ -200,8 +200,7 @@
                 });
 
     </script>
-    <script type="text/javascript" src="{{asset('bundles/app/js/jquery.chained.min.js')}}"  charset="utf-8"></script>
-    <script type="text/javascript" src="{{asset('bundles/app/js/jquery.chained.js')}}"  charset="utf-8"></script>
+
     <script type="text/javascript" charset="utf-8">
 
    var categories = {{(categories|json_encode|raw)}};
@@ -225,7 +224,7 @@
                                 $('#category').html('').append('<option value> Choisir une catégorie </option>');
                                         $.each(categories, function (i, category) {
                                             $('#category').append($('<option>', {
-                                                class: category.class,
+                                                'data-chained': category.class,
                                                 value: category.id,
                                                 text: category.name
                                             }));
@@ -235,7 +234,7 @@
                   
                        
                   
-                })
+                });
     </script>
     
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

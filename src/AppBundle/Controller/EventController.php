@@ -872,7 +872,7 @@ class EventController extends Controller {
             $responseArray[] = array(
                 "id" => $category->getId(),
                 "name" => $category->getNom(),
-                 "data-available-with" => $category->getDepartement()->getId()  
+                 "parent" => $category->getDepartement()->getId()  
             );
         }
         

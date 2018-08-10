@@ -5,28 +5,28 @@
 <div class="md-form"> 
     {{ form_label(form.first_name) }}
     {{form_widget(form.first_name) }}
-    <span class="error-msg"> {{form_errors(form.first_name) }}</span>
+    <div class="error-msg validator"> {{form_errors(form.first_name) }}</div>
 </div>
 <div class="md-form"> 
     {{ form_label(form.last_name) }}
     {{form_widget(form.last_name) }}
-    <span class="error-msg"> {{form_errors(form.last_name) }}</span>
+   <div class="error-msg validator"> {{form_errors(form.last_name) }}</div>
     </div>
     <div class="md-form"> 
         {{ form_label(form.date_naissance) }}
         {{form_widget(form.date_naissance) }}
-        <span class="error-msg"> {{form_errors(form.date_naissance) }}</span>
+       <div class="error-msg validator"> {{form_errors(form.date_naissance) }}</div>
     </div>
     <div class="md-form"> 
         {{ form_label(form.tel) }}
         {{form_widget(form.tel) }}
-        <span class="error-msg"> {{form_errors(form.tel) }}</span>
+        <span class="error-msg"> {{form_errors(form.tel) }}</div>
     </div>
 
 <div class="md-form">
     {{ form_label(form.adresse) }}
     {{form_widget(form.adresse) }}
-    <span class="error-msg">{{form_errors(form.adresse) }}</span>
+    <div class="error-msg validator">{{form_errors(form.adresse) }}</div>
 </div>
 
 <div class="md-form"> 
@@ -38,12 +38,12 @@
         {% set cin_titre = '' %}
     {%endif%}
     {{form_widget(form.cin.titre, {value : cin_titre}) }}
-    <span class="error-msg"></span>
+   <div class="error-msg validator"></div>
 </div>
 <div class="md-form"> 
 
     {{form_widget(form.cin.file) }}
-    <span class="error-msg"></span>
+     <div class="error-msg validator"></div>
 </div>
 <div class="md-form"> 
     {% if  app.user.getCin %}
@@ -57,7 +57,7 @@
     {{ form_label(form.photo) }}
     <br><br>
     {{form_widget(form.photo) }}
-    <span class="error-msg"></span>
+     <div class="error-msg validator"></div>
 </div>
 <div class="md-form"> 
     {% if  app.user.getPhoto %}

@@ -133,7 +133,7 @@ class EventType extends AbstractType {
            // 'data' => $departement,
             'placeholder' => 'Choisir une classe',
             'class' => 'AppBundle:Departement',
-            'attr' => ['class' => 'mdb-select select-dropdown']
+            'attr' => ['class' => 'mdb-select select-dropdown', 'onChange'=>'alert(this)']
         ));
         
         // Categories empty, unless there is a selected departement (Edit View)
