@@ -28,6 +28,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use FOS\UserBundle\Util\LegacyFormHelper;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use FOS\UserBundle\Controller\RegistrationController as BaseController;
 use ReCaptcha\ReCaptcha; // Include the recaptcha lib
 
@@ -47,9 +50,19 @@ class RegistrationController extends BaseController {
      * @Method({"GET", "POST"})
      */
     public function registerStep1Action(Request $request) {
+    //   $email = 
+//dump($request); die;
+    //   $username =$request->get('username');
+    //   $role =$request->get('role');
+     //  if($email != 'email_val' || $email != '' )
+           $this->get('session')->set('email', $request->get('email'));
+    //   if($username != 'username_val' || $username != '' )
+           $this->get('session')->set('username', $request->get('username'));
+     //   if($role != 'role_val' || $role != '' )
+            $this->get('session')->set('role', $request->get('role'));
 
         $form = $this->createFormBuilder()
-             ->add('first_name', TextType::class, array(
+                ->add('first_name', TextType::class, array(
                     'attr' => array('class' => 'form-control'),
                     'label' => 'Prénom'
                 ))
@@ -67,16 +80,22 @@ class RegistrationController extends BaseController {
 
         if ($form->isSubmitted()) {
             // data is an array with "name", "email", and "message" keys
-            $data = $form->getData();
-            dump($data);
-            die;
-            $this->get('session')->set('nom', $data['nom']);
-            return $this->redirectToRoute('register_step2');
+            $data = $form->getData(); 
+           // dump($data);  die;
+           
+            $this->get('session')->set('first_name', $data['first_name']);
+            $this->get('session')->set('last_name', $data['last_name']);
+            $this->get('session')->set('date_naissance', $data['date_naissance']);
+           // dump($this->get('session')); die;
+            return $this->redirectToRoute('fos_user_registration_register');
+          
         }
         return $this->render('AppBundle:default:user/register_step1.html.twig', array(
                     'form' => $form->createView(),
         ));
     }
+
+
 
     /**
      * @param Request $request
@@ -93,11 +112,6 @@ class RegistrationController extends BaseController {
         $dispatcher = $this->get('event_dispatcher');
 
         $user = $userManager->createUser();
-
-        //$user->setEnabled(false);
-        //$user->setRoles(array(User::ROLE_ORGANIZER));
-//        dump($user);
-//        die;
 
 
 
@@ -128,6 +142,7 @@ class RegistrationController extends BaseController {
                             'error', $message
                     );
                 } else {
+                    
 
                     $birthDay = $form->get('date_naissance')->getData();
                     $user->setDateNaissance(new \DateTime($birthDay));
@@ -137,6 +152,13 @@ class RegistrationController extends BaseController {
 
                     $user->setDateNaissance(new \DateTime($birthDay));
                     $event = new FormEvent($form, $request);
+                    
+                    
+                     $this->get('session')->set('first_name', null);
+                      $this->get('session')->set('last_name', null);
+                       $this->get('session')->set('date_naissance', null);
+                        $this->get('session')->set('first_name', null);
+                         $this->get('session')->set('first_name', null);
 
 //                $photo = $user->getPhoto();
 //
@@ -172,7 +194,7 @@ class RegistrationController extends BaseController {
             }
         }
 
-        return $this->render('@FOSUser/Registration/register.html.twig', array(
+        return $this->render('AppBundle:default:user/register_step2.html.twig', array(
                     'form' => $form->createView(),
         ));
     }

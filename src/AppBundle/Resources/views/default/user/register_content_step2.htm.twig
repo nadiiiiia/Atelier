@@ -22,68 +22,75 @@
 
                 <h3 class="text-center">{{ 'layout.register'|trans({}, 'FOSUserBundle') }} (2/2)</h3>
                 <br>
-               <form action="{{ path("register_step2") }}" method="post" >
+                <form action="{{ path("fos_user_registration_register") }}" method="post" id="register_step2">
 
-                <div class="md-form">
-                    <i class="fa fa-envelope prefix grey-text"></i>
-                    <label for="email">E-mail</label>
-                    {{form_widget(form.email, { 'attr': {'class': 'inputbox required'} }) }}
-                    <div class="  alert-danger"> {{ form_errors(form.email) }}</div>
-                </div>
+                    {{form_widget(form.first_name, { 'attr': {'value': app.session.get('first_name')} }) }}
+                    {{form_widget(form.last_name, { 'attr': {'value': app.session.get('last_name')} }) }}
+                    {{form_widget(form.date_naissance, { 'attr': {'value': app.session.get('date_naissance')} }) }}
 
-
-                <div class="md-form">
-                    <i class="fa fa-user-circle prefix grey-text"></i>
-                    <label  for="username" >Username</label>
-                    {{form_widget(form.username, { 'attr': {'class': 'inputbox required'} }) }}
-                    <div class="  alert-danger"> {{ form_errors(form.username) }}</div>
-                </div>
-
-                <div class="md-form">
-                    <i class="fa fa-lock prefix grey-text"></i>
-                    <label for="password">Mot de passe</label>
-                    {{form_widget(form.plainPassword.first) }}
-                    <div class="alert-danger">    {{ form_errors(form.plainPassword.first) }}</div>
-                </div>
-
-                <div class="md-form">
-                    <i class="fa fa-lock prefix grey-text"></i>
-                    <label for="verification">Répéter le mot de passe</label>
-                    {{form_widget(form.plainPassword.second, { 'attr': {'class': 'inputbox required'} }) }}
-                    <div class=" alert-danger">   {{ form_errors(form.plainPassword.second) }}</div>
-             
-                </div>
-                <div class="md-form">
-                    <i class="fa fa-key prefix grey-text"></i>
-                    <label for="password">Choisissez votre type</label>
-                    <br>
-                </div>
-                <div class="md-form">
-                    {{form_widget(form.roles) }}
-                    <div class="  alert-danger"> {{ form_errors(form.roles) }}</div>
-                </div>
-
-
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="checkbox_cgu" value="accept_cgu" >
-                    <label class="form-check-label" for="checkbox_cgu">J’ai lu et j’accepte les <a href="" data-toggle="modal" data-target="#CguModal">conditions d’utilisation</a></label>
-                </div>
-                {%  include 'AppBundle:default:modals/cguModal.html.twig' %}
-
-                <br>
-                <div align="center" class="g-recaptcha" data-sitekey="{{captcha_site_key}}"></div>
-                {% for message in app.flashes('error') %}
-                    <div align="center" class="flash-notice" style="color:red;">
-                        {{ message }}
+                    <div class="md-form">
+                        <i class="fa fa-envelope prefix grey-text"></i>
+                        <label for="email">E-mail</label>
+                        {{form_widget(form.email, { 'attr': {'class': 'inputbox required','value':  app.session.get('email')} }) }}
+                        <div class="  alert-danger"> {{ form_errors(form.email) }}</div>
                     </div>
-                {% endfor %}
-                  <div class="text-left">
-                    <input type="submit" id="_submit" name="_submit" value="précédent" class="btn btn-primary-inverse btn-md waves-effect waves-light" />
-                </div>
-                <div class="text-right">
-                    <input type="submit" id="_submit" name="_submit" value="Inscription" class="btn btn-primary-inverse btn-md waves-effect waves-light" />
-                </div>
-            </form>
+
+
+                    <div class="md-form">
+                        <i class="fa fa-user-circle prefix grey-text"></i>
+                        <label  for="username" >Username</label>
+                        {{form_widget(form.username, { 'attr': {'class': 'inputbox required','value':  app.session.get('username')} }) }}
+                        <div class="  alert-danger"> {{ form_errors(form.username) }}</div>
+                    </div>
+
+                    <div class="md-form">
+                        <i class="fa fa-lock prefix grey-text"></i>
+                        <label for="password">Mot de passe</label>
+                        {{form_widget(form.plainPassword.first) }}
+                        <div class="alert-danger">    {{ form_errors(form.plainPassword.first) }}</div>
+                    </div>
+
+                    <div class="md-form">
+                        <i class="fa fa-lock prefix grey-text"></i>
+                        <label for="verification">Répéter le mot de passe</label>
+                        {{form_widget(form.plainPassword.second, { 'attr': {'class': 'inputbox required'} }) }}
+                        <div class=" alert-danger">   {{ form_errors(form.plainPassword.second) }}</div>
+
+                    </div>
+                    <div class="md-form">
+                        <i class="fa fa-key prefix grey-text"></i>
+                        <label for="roles">Choisissez votre type</label>
+                        <br>
+                    </div>
+                    <div class="md-form">
+                        {{form_widget(form.roles) }}
+                        <div class="  alert-danger"> {{ form_errors(form.roles) }}</div>
+                    </div>
+
+                    <br>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="checkbox_cgu" value="accept_cgu">
+                        <label class="form-check-label" for="checkbox_cgu">J’ai lu et j’accepte les <a href="" data-toggle="modal" data-target="#CguModal">conditions d’utilisation</a></label>
+                    </div>
+                    {%  include 'AppBundle:default:modals/cguModal.html.twig' %}
+
+                    <br>
+                    <div align="center" class="g-recaptcha" data-sitekey="{{captcha_site_key}}"></div>
+                    {% for message in app.flashes('error') %}
+                        <div align="center" class="flash-notice" style="color:red;">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                    <br>
+                    <div class="row">
+                        <div class="col-md-12"  >
+                            <input type="button" id="previous" value="Précédent" class="btn btn-primary-inverse btn-md waves-effect waves-light" >
+                            <div class="pull-right"  >
+                                <input type="submit" id="_submit" name="_submit" value="Inscription" class="btn btn-primary-inverse btn-md waves-effect waves-light"  />
+                            </div> 
+                        </div>
+                    </div>
+                </form>
 
                 <div class="text-center">
                     <h4>Ou</h4>
@@ -142,4 +149,27 @@
          });
 
 
+</script>
+<script>
+    $(document).ready(function () {
+
+        var url = "{{path ('register_step1', {'email': 'email_val', 'username':'username_val', 'role': 'role_val'})}}"; 
+
+   
+  $("#fos_user_registration_form_email").change(function(){
+    url = url.replace("email_val",$("#fos_user_registration_form_email").val());
+});
+  $("#fos_user_registration_form_username").change(function(){
+    url = url.replace("username_val",$("#fos_user_registration_form_username").val());
+});
+  $("#fos_user_registration_form_email").change(function(){
+    url = url.replace("role_val",$("#fos_user_registration_form_roles_0").val());
+});
+        $("#previous").click(function ()
+        {
+            window.location = url;
+        }
+        );
+
+    });
 </script>

@@ -52,12 +52,7 @@
                             <label for="password">Mot de passe</label>
                         </div>
                         <br>
-                  {#      <div align="center" class="g-recaptcha" data-sitekey="6LdFFmIUAAAAAMo0ZpohpKWHoueLjYfejwLdxkhp"></div>
-                        {% for message in app.flashes('error') %}
-                            <div align="center" class="flash-notice" style="color:red;">
-                                {{ message }}
-                            </div>
-                        {% endfor %}#}
+              
                               <div align="center" class="g-recaptcha" data-sitekey="{{captcha_site_key}}"></div>
                 {% for message in app.flashes('error') %}
                     <div align="center" class="flash-notice" style="color:red;">
