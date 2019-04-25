@@ -50,9 +50,9 @@ class RegistrationController extends BaseController {
      * @Method({"GET", "POST"})
      */
     public function registerStep1Action(Request $request) {
-    //   $email = 
+  /*     $email = $request->get('email');
 //dump($request); die;
-    //   $username =$request->get('username');
+       $username =$request->get('username');
     //   $role =$request->get('role');
      //  if($email != 'email_val' || $email != '' )
            $this->get('session')->set('email', $request->get('email'));
@@ -60,7 +60,7 @@ class RegistrationController extends BaseController {
            $this->get('session')->set('username', $request->get('username'));
      //   if($role != 'role_val' || $role != '' )
             $this->get('session')->set('role', $request->get('role'));
-
+*/
         $form = $this->createFormBuilder()
                 ->add('first_name', TextType::class, array(
                     'attr' => array('class' => 'form-control'),

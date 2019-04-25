@@ -8,17 +8,15 @@
             <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Form/CertifType.php</file>
             <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Controller/EventController.php</file>
             <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Resources/views/default/event/new.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Form/RegistrationType.php</file>
-            <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Resources/views/default/event/accueil.html.twig</file>
             <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Resources/views/default/user/register_content_step1.html.twig</file>
             <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Resources/views/default/user/editDocs_content.html.twig</file>
             <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Form/EventType.php</file>
             <file>file:/C:/xampp/htdocs/Atelier__/app/Resources/FOSUserBundle/views/Registration/register_content.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Atelier__/app/Resources/FOSUserBundle/views/Security/login.html.twig</file>
             <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Controller/RegistrationController.php</file>
-            <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Resources/public/css/style.css</file>
+            <file>file:/C:/xampp/htdocs/Atelier__/app/Resources/FOSUserBundle/views/Security/login.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Atelier__/app/Resources/views/base.html.twig</file>
             <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Form/UserType.php</file>
-            <file>file:/C:/xampp/htdocs/Atelier__/src/AppBundle/Entity/Event.php</file>
+            <file>file:/C:/xampp/htdocs/Atelier__/app/Resources/FOSUserBundle/views/Registration/register.html.twig</file>
         </group>
     </open-files>
 </project-private>
